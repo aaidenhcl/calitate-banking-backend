@@ -15,8 +15,7 @@ import javax.persistence.OneToMany;
 
 //@MappedSuperclass
 @Entity
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public abstract class Account {
+public class Account {
 
 	@Id
 	@GeneratedValue
@@ -29,11 +28,8 @@ public abstract class Account {
 	@JoinColumn(name="user_id")
 	User user;
 	
-	@OneToMany(mappedBy = "sendingAccount")
-	List<Transfer> sentTransfers;
-
-	@OneToMany(mappedBy = "receivingAccount")
-	List<Transfer> receivingTransfers;
+	@OneToMany(mappedBy = "account")
+	List<Payment> paymentHistory;
 	
 	public Long getId() {
 		return id;
@@ -67,18 +63,10 @@ public abstract class Account {
 		this.accountNumber = accountNumber;
 	}
 
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-	
 	@Override
 	public String toString() {
 		return "Account [id=" + id + ", balance=" + balance + ", interestRate=" + interestRate + ", accountNumber="
-				+ accountNumber + ", user=" + user + "]";
+				+ accountNumber + "]";
 	}
 
 

@@ -32,10 +32,8 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 
-//@MappedSuperclass
 @Entity
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public abstract class User {
+public class User {
 		
 	@Id
 	@GeneratedValue
@@ -47,6 +45,19 @@ public abstract class User {
 	
 	@OneToMany(mappedBy="user")
 	List<Account> accounts;
+	
+	@OneToMany(mappedBy = "user")
+	List<CreditCard> creditCards;
+	
+	//One to Many Loans
+	@OneToMany(mappedBy="user")
+	List<Loan> loans;
+	
+	@OneToMany(mappedBy="user")
+	List<creditCardRequest> creditCardRequests;
+	
+	@OneToMany(mappedBy="user")
+	List<loanRequest> loanRequests;
 	
 	@JsonIgnoreProperties
 	protected String password;//needed for configuration but do not use.
@@ -67,12 +78,14 @@ public abstract class User {
 		return id;
 	}
 	public void setId(Long id) {
+		System.out.println("HITTING SETTERS");
 		this.id = id;
 	}
 	public String getUsername() {
 		return username;
 	}
 	public void setUsername(String username) {
+		System.out.println("HITTING SETTERS");
 		this.username = username;
 	}
 	
@@ -80,6 +93,7 @@ public abstract class User {
 		return salt;
 	}
 	public void setSalt(byte[] salt) {
+		System.out.println("HITTING SETTERS");
 		this.salt = salt;
 	}
 	public byte[] getHash() {
