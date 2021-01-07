@@ -188,7 +188,7 @@ public class User {
 
 			//VERY IMPORTANT part that checks if the newly generated hashedPassword matches 
 			//the hashedPassword saved to this user instance
-			if(Arrays.equals(this.hash, hashedPassword)) {
+			if(Arrays.equals(this.hash, hashedPassword)/*&& two factor auth here*/) {
 				System.out.println("HASHES ARE EQUAL");				
 				token = this.generateToken(user);
 				validCredentials = true;
