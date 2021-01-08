@@ -2,6 +2,8 @@ package com.example.demo.model;
 
 import javax.persistence.GeneratedValue;
 
+import java.util.Date;
+
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -16,6 +18,9 @@ public class creditCardRequest {
 	private String status;
 	private Double offeredLimit;
 	private Double offeredApr;
+	private Date requestTime;
+	private Date lastUpdated;
+	private String reason;
 	
 	//many creditCardRequsts has one user
 	@ManyToOne

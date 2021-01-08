@@ -1,5 +1,7 @@
 package com.example.demo.model;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -14,6 +16,7 @@ public class Payment {
 	private Long id;
 	private Double amount;
 	private String item;
+	private Date dateCreated;
 	
 	//belongs to credit card
 	@ManyToOne

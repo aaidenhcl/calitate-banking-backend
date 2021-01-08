@@ -1,5 +1,7 @@
 package com.example.demo.model;
 
+import java.util.Date;
+
 import java.security.SecureRandom;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
@@ -42,6 +44,14 @@ public class User {
 	protected String username;
 	protected byte[] salt;
 	protected byte[] hash;
+	protected Date DCB;
+	protected String firstName;
+	protected String lastName;
+	protected String address;
+	protected String region;
+	protected Integer creditScore;
+	protected String profession;
+	protected Date dateCreated;
 	
 	@OneToMany(mappedBy="user")
 	List<Account> accounts;
@@ -67,11 +77,19 @@ public class User {
 	}
 	
 	//I do not think this is ever hit.
-	public User(String username, String password) {
+	public User(String username, String password, Date DCB, String firstName, String lastName, String address, String region, Integer creditScore, String profession, Date dateCreated) {
 		System.out.println("Constructor w/ fields HIT");
 		this.username = username;
 		System.out.println("PASSWORD:: " + password);
 		this.hash = this.hashPassword(password);
+		this.DCB = DCB;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.address = address;
+		this.region = region;
+		this.creditScore = creditScore;
+		this.profession = profession;
+		this.dateCreated = dateCreated;
 	}
 	
 	public Long getId() {
@@ -103,10 +121,77 @@ public class User {
 		this.hash = hash;
 	}
 	
+	public void setDCB(Date dCB) {
+		DCB = dCB;
+	}
+
+	public Date getDCB() {
+		return DCB;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+	
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setRegion(String region) {
+		this.region = region;
+	}
+
+	public String getRegion() {
+		return region;
+	}
+
+	public void setCreditScore(Integer creditScore) {
+		this.creditScore = creditScore;
+	}
+
+	public Integer getCreditScore() {
+		return creditScore;
+	}
+
+	public void setProfession(String profession) {
+		this.profession = profession;
+	}
+
+	public String getProfession() {
+		return profession;
+	}
+
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
+	}
+
+	public Date getDateCreated() {
+		return dateCreated;
+	}
+	
+
 	//merely for setter injection. NOTICE how the password is not being set.
 	public void setPassword(String password) {
 		hashPassword(password);
 	}
+	
+	
 	
 	//for debugging
 	@Override

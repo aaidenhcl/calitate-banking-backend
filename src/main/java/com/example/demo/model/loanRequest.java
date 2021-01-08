@@ -1,5 +1,7 @@
 package com.example.demo.model;
 
+import java.util.Date;
+
 import javax.persistence.GeneratedValue;
 
 import javax.persistence.Id;
@@ -18,9 +20,14 @@ public class loanRequest {
 		private float offeredApr;
 		private Integer termInMonths;
 		private Double minimumMonthlyPayment;
+		private Date requestedTime;
+		private Date updatedTime;
+		private String reason;
 		
 		//many loanRequest has one user
 		@ManyToOne
 		@JoinColumn(name="user_id")
 		public User user;
+		
+		public loanRequest()
 }

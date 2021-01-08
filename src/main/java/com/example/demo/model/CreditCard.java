@@ -24,6 +24,8 @@ public class CreditCard {
 	private Date expirationDate;
 	private String creditCardNumber;
 	private String cvv;
+	private String type;
+	private String status;
 	
 	@ManyToOne
 	@JoinColumn(name="user_id")

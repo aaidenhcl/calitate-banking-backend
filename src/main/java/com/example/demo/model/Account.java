@@ -20,8 +20,10 @@ public class Account {
 	@Id
 	@GeneratedValue
 	protected Long id;
-	protected Double balance;
-	protected Double interestRate;
+	protected Double checkingBalance;
+	protected Double checkingInterestRate;
+	protected Double savingsBalance;
+	protected Double savingsInterestRate;
 	protected String accountNumber;
 	
 	@ManyToOne
@@ -39,28 +41,44 @@ public class Account {
 		this.id = id;
 	}
 
-	public Double getBalance() {
-		return balance;
+	public void setCheckingBalance(Double checkingBalance) {
+		this.checkingBalance = checkingBalance;
 	}
 
-	public void setBalance(Double balance) {
-		this.balance = balance;
+	public Double getCheckingBalance() {
+		return checkingBalance;
 	}
 
-	public Double getInterestRate() {
-		return interestRate;
+	public void setCheckingInterestRate(Double checkingInterestRate) {
+		this.checkingInterestRate = checkingInterestRate;
 	}
 
-	public void setInterestRate(Double interestRate) {
-		this.interestRate = interestRate;
+	public Double getCheckingInterestRate() {
+		return checkingInterestRate;
 	}
 
-	public String getAccountNumber() {
-		return accountNumber;
+	public void setSavingsBalance(Double savingsBalance) {
+		this.savingsBalance = savingsBalance;
+	}
+
+	public Double getSavingsBalance() {
+		return savingsBalance;
+	}
+
+	public void setSavingsInterestRate(Double savingsInterestRate) {
+		this.savingsInterestRate = savingsInterestRate;
+	}
+
+	public Double getSavingsInterestRate() {
+		return savingsInterestRate;
 	}
 
 	public void setAccountNumber(String accountNumber) {
 		this.accountNumber = accountNumber;
+	}
+
+	public String getAccountNumber() {
+		return accountNumber;
 	}
 
 	@Override
