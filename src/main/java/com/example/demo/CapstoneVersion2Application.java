@@ -12,5 +12,3 @@ public class CapstoneVersion2Application {
 
 }
 
-
-//Sammy tag
