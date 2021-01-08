@@ -29,6 +29,7 @@ public class Spend {
 	public DebitCard debitCard;
 
 
+
 	public Long getId() {
 		return id;
 	}
@@ -68,7 +69,6 @@ public class Spend {
 		this.item = item;
 	}
 
-
 	public Date getDateCreated() {
 		return dateCreated;
 	}
@@ -77,7 +77,6 @@ public class Spend {
 	public void setDateCreated(Date dateCreated) {
 		this.dateCreated = dateCreated;
 	}
-
 
 	public CreditCard getCreditCard() {
 		return creditCard;
