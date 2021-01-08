@@ -18,6 +18,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -40,14 +43,19 @@ public class User {
 	protected byte[] salt;
 	protected byte[] hash;
 
-	protected Date DCB;
+	protected Date DOB;
 	protected String firstName;
 	protected String lastName;
 	protected String address;
 	protected String region;
 	protected Integer creditScore;
 	protected String profession;
+	
+	@CreatedDate
 	protected Date dateCreated;
+	
+	@LastModifiedDate
+	protected Date lastUpdated;
 	
 	@OneToMany(mappedBy="user")
 	List<Account> accounts;
@@ -73,19 +81,32 @@ public class User {
 	}
 	
 	//I do not think this is ever hit.
-	public User(String username, String password, Date DCB, String firstName, String lastName, String address, String region, Integer creditScore, String profession, Date dateCreated) {
-		System.out.println("Constructor w/ fields HIT");
+	public User(String username, Date dOB, String firstName, String lastName, String address, String region,
+			Integer creditScore, String profession, String password) {
+		super();
 		this.username = username;
-		System.out.println("PASSWORD:: " + password);
-		this.hash = this.hashPassword(password);
-		this.DCB = DCB;
+		this.DOB = dOB;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.address = address;
 		this.region = region;
 		this.creditScore = creditScore;
 		this.profession = profession;
-		this.dateCreated = dateCreated;
+		hashPassword(password);
+		this.dateCreated = new Date();
+		this.lastUpdated = new Date();
+	}
+	
+	public Date getLastUpdated() {
+		return lastUpdated;
+	}
+
+	public void setLastUpdated(Date lastUpdated) {
+		this.lastUpdated = lastUpdated;
+	}
+
+	public String getPassword() {
+		return password;
 	}
 	
 	public List<Account> getAccounts() {
@@ -157,12 +178,12 @@ public class User {
 		this.hash = hash;
 	}
 	
-	public void setDCB(Date dCB) {
-		DCB = dCB;
+	public void setDOB(Date dOB) {
+		DOB = dOB;
 	}
 
-	public Date getDCB() {
-		return DCB;
+	public Date getDOB() {
+		return DOB;
 	}
 
 	public void setFirstName(String firstName) {
@@ -227,14 +248,16 @@ public class User {
 		hashPassword(password);
 	}
 	
-   @Override
+
+
+	@Override
 	public String toString() {
 		return "User [id=" + id + ", username=" + username + ", salt=" + Arrays.toString(salt) + ", hash="
-				+ Arrays.toString(hash) + ", DCB=" + DCB + ", firstName=" + firstName + ", lastName=" + lastName
+				+ Arrays.toString(hash) + ", DOB=" + DOB + ", firstName=" + firstName + ", lastName=" + lastName
 				+ ", address=" + address + ", region=" + region + ", creditScore=" + creditScore + ", profession="
-				+ profession + ", dateCreated=" + dateCreated + ", accounts=" + accounts + ", creditCards="
-				+ creditCards + ", loans=" + loans + ", creditCardRequests=" + creditCardRequests + ", loanRequests="
-				+ loanRequests + ", password=" + password + "]";
+				+ profession + ", dateCreated=" + dateCreated + ", accounts=" + accounts
+				+ ", creditCards=" + creditCards + ", loans=" + loans + ", creditCardRequests=" + creditCardRequests
+				+ ", loanRequests=" + loanRequests + ", password=" + password + "]";
 	}
 
 	/*

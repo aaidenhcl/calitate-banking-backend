@@ -7,6 +7,10 @@ import java.util.Date;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+
 import javax.persistence.Entity;
 
 @Entity
@@ -18,7 +22,11 @@ public class creditCardRequest {
 	private String status;
 	private Double offeredLimit;
 	private Double offeredApr;
+	
+	@CreatedDate
 	private Date requestTime;
+	
+	@LastModifiedDate
 	private Date lastUpdated;
 	private String reason;
 	
@@ -97,6 +105,8 @@ public class creditCardRequest {
 				+ offeredApr + ", requestTime=" + requestTime + ", lastUpdated=" + lastUpdated + ", reason=" + reason
 				+ ", user=" + user + "]";
 	}
+
+
 	
 	
 	

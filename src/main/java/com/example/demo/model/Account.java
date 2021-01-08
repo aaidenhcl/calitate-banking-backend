@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -8,6 +9,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+
+import org.springframework.data.annotation.CreatedDate;
+
+import org.springframework.data.annotation.LastModifiedDate;
 
 @Entity
 public class Account {
@@ -20,6 +25,12 @@ public class Account {
 	protected Double savingsBalance;
 	protected Double savingsInterestRate;
 	protected String accountNumber;
+	
+	@CreatedDate
+	protected Date dateCreated;
+	
+	@LastModifiedDate
+	protected Date lastUpdate;
 	
 	@ManyToOne
 	@JoinColumn(name="user_id")
@@ -96,9 +107,8 @@ public class Account {
 	public String toString() {
 		return "Account [id=" + id + ", checkingBalance=" + checkingBalance + ", checkingInterestRate="
 				+ checkingInterestRate + ", savingsBalance=" + savingsBalance + ", savingsInterestRate="
-				+ savingsInterestRate + ", accountNumber=" + accountNumber + ", user=" + user + ", paymentHistory="
-				+ paymentHistory + "]";
+				+ savingsInterestRate + ", accountNumber=" + accountNumber + ", dateCreated=" + dateCreated
+				+ ", lastUpdate=" + lastUpdate + ", user=" + user + ", paymentHistory=" + paymentHistory + "]";
 	}
-
 	
 }

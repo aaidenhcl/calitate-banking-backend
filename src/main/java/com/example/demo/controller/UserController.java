@@ -31,12 +31,12 @@ public class UserController {
 	 * Rather, hits hashedPassword method which saves
 	 * a hash and salt to the instance.
 	 */
-	@PostMapping(path="/user")
+	@PostMapping(path="/users")//changed to users from user. update frontend
 	public User createUser(@RequestBody User user){
 		System.out.println(user);
 		repo.save(user);
 		return user;
-	}
+	}//user logger rather than sysout
 	
 	/*
 	 * This route is a little messy at the moment and could
@@ -44,7 +44,7 @@ public class UserController {
 	 * Hits authenticateLogin and RETURNS a JWT token if credentials 
 	 * are valid. returns null if invalid credentials.
 	 */
-	@GetMapping(path="/login/{username}")
+	@PostMapping(path="users/login/{username}")//use post here rather than get
 	public String loginUser(@PathVariable("username") String username, @RequestHeader(value="password") String password) {
 		User foundUser = null;
 
@@ -103,7 +103,7 @@ public class UserController {
 		 * If token is valid then user is retreived from database
 		 * and returned to client.
 		 */
-		@GetMapping(path="/obtainUserData/{username}")
+		@GetMapping(path="/users/{username}")//change obtainUserData to users
 		public User obtainUserData(@RequestHeader(value="Authorization") String token, @PathVariable("username") String username) {
 			User foundUser = null;
 			if(User.validateUserToken(token)) {

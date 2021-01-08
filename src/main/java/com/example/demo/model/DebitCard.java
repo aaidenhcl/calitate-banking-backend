@@ -8,6 +8,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+
 import javax.persistence.Id;
 
 @Entity
@@ -19,6 +23,12 @@ public class DebitCard {
 	private String card_number;
 	private Date expiration_date;
 	private String cvv;
+	
+	@CreatedDate
+	protected Date dateCreated;
+	
+	@LastModifiedDate
+	protected Date lastUpdate;
 	
 	//Debit has one account
 	@ManyToOne
@@ -80,8 +90,11 @@ public class DebitCard {
 	@Override
 	public String toString() {
 		return "DebitCard [id=" + id + ", card_number=" + card_number + ", expiration_date=" + expiration_date
-				+ ", cvv=" + cvv + ", account=" + account + ", spendHistory=" + spendHistory + "]";
+				+ ", cvv=" + cvv + ", dateCreated=" + dateCreated + ", lastUpdate=" + lastUpdate + ", account="
+				+ account + ", spendHistory=" + spendHistory + "]";
 	}
+
+
 	
 	
 	

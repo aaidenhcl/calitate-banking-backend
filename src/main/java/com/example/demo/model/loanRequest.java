@@ -7,6 +7,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+
+import org.springframework.data.annotation.LastModifiedDate;
+
+
+import org.springframework.data.annotation.CreatedDate;
+
 import javax.persistence.Entity;
 
 @Entity
@@ -20,9 +26,15 @@ public class loanRequest {
 		private float offeredApr;
 		private Integer termInMonths;
 		private Double minimumMonthlyPayment;
+		
+		@CreatedDate
 		private Date requestedTime;
+		@LastModifiedDate
 		private Date updatedTime;
+		
 		private String reason;
+		
+		
 		
 		//many loanRequest has one user
 		@ManyToOne
@@ -116,6 +128,8 @@ public class loanRequest {
 					+ ", requestedTime=" + requestedTime + ", updatedTime=" + updatedTime + ", reason=" + reason
 					+ ", user=" + user + "]";
 		}
+
+
 
 		
 }
