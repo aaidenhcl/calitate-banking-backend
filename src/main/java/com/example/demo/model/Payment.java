@@ -1,12 +1,17 @@
 package com.example.demo.model;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 @Entity
 public class Payment {
@@ -16,7 +21,12 @@ public class Payment {
 	private Long id;
 	private Double amount;
 	private String item;
-	private Date dateCreated;
+	
+	@CreatedDate
+	protected Date dateCreated;
+	
+	@LastModifiedDate
+	protected Date lastUpdate;
 	
 	//belongs to credit card
 	@ManyToOne
@@ -108,8 +118,12 @@ public class Payment {
 	@Override
 	public String toString() {
 		return "Payment [id=" + id + ", amount=" + amount + ", item=" + item + ", dateCreated=" + dateCreated
-				+ ", creditCard=" + creditCard + ", loan=" + loan + ", account=" + account + "]";
+				+ ", lastUpdate=" + lastUpdate + ", creditCard=" + creditCard + ", loan=" + loan + ", account="
+				+ account + "]";
 	}
+
+
+
 	
 	
 	

@@ -11,6 +11,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+
 @Entity
 public class CreditCard {
 
@@ -25,6 +28,12 @@ public class CreditCard {
 	private String cvv;
 	private String type;
 	private String status;
+	
+	@CreatedDate
+	protected Date dateCreated;
+	
+	@LastModifiedDate
+	protected Date lastUpdate;
 	
 	@ManyToOne
 	@JoinColumn(name="user_id")
@@ -140,9 +149,12 @@ public class CreditCard {
 	public String toString() {
 		return "CreditCard [id=" + id + ", spendingLimit=" + spendingLimit + ", apr=" + apr + ", balance=" + balance
 				+ ", expirationDate=" + expirationDate + ", creditCardNumber=" + creditCardNumber + ", cvv=" + cvv
-				+ ", type=" + type + ", status=" + status + ", user=" + user + ", spendHistory=" + spendHistory
-				+ ", paymentHistory=" + paymentHistory + "]";
+				+ ", type=" + type + ", status=" + status + ", dateCreated=" + dateCreated + ", lastUpdate="
+				+ lastUpdate + ", user=" + user + ", spendHistory=" + spendHistory + ", paymentHistory="
+				+ paymentHistory + "]";
 	}
+
+
 	
 	
 	

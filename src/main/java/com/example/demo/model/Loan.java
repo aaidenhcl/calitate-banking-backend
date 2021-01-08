@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -8,6 +9,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 @Entity
 public class Loan {
@@ -19,6 +23,12 @@ public class Loan {
 	private Float apr;
 	private Integer termInMonths;
 	private Double minimumMonthlyPayment;
+	
+	@CreatedDate
+	protected Date dateCreated;
+	
+	@LastModifiedDate
+	protected Date lastUpdate;
 	
 	//Many to one user
 	@ManyToOne
@@ -88,9 +98,11 @@ public class Loan {
 	@Override
 	public String toString() {
 		return "Loan [id=" + id + ", principle=" + principle + ", apr=" + apr + ", termInMonths=" + termInMonths
-				+ ", minimumMonthlyPayment=" + minimumMonthlyPayment + ", user=" + user + ", paymentHistory="
-				+ paymentHistory + "]";
+				+ ", minimumMonthlyPayment=" + minimumMonthlyPayment + ", dateCreated=" + dateCreated + ", lastUpdate="
+				+ lastUpdate + ", user=" + user + ", paymentHistory=" + paymentHistory + "]";
 	}
+
+
 	
 	
 	
