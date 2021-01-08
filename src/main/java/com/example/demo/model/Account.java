@@ -2,18 +2,13 @@ package com.example.demo.model;
 
 import java.util.List;
 
-import javax.annotation.Generated;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.InheritanceType;
-import javax.persistence.Inheritance;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToMany;
 
-//@MappedSuperclass
 @Entity
 public class Account {
 
@@ -81,12 +76,29 @@ public class Account {
 		return accountNumber;
 	}
 
-	@Override
-	public String toString() {
-		return "Account [id=" + id + ", balance=" + balance + ", interestRate=" + interestRate + ", accountNumber="
-				+ accountNumber + "]";
+	public User getUser() {
+		return user;
 	}
 
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public List<Payment> getPaymentHistory() {
+		return paymentHistory;
+	}
+
+	public void setPaymentHistory(List<Payment> paymentHistory) {
+		this.paymentHistory = paymentHistory;
+	}
+
+	@Override
+	public String toString() {
+		return "Account [id=" + id + ", checkingBalance=" + checkingBalance + ", checkingInterestRate="
+				+ checkingInterestRate + ", savingsBalance=" + savingsBalance + ", savingsInterestRate="
+				+ savingsInterestRate + ", accountNumber=" + accountNumber + ", user=" + user + ", paymentHistory="
+				+ paymentHistory + "]";
+	}
 
 	
 }
