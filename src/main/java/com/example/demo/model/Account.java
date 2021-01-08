@@ -2,26 +2,23 @@ package com.example.demo.model;
 
 import java.util.List;
 
-import javax.annotation.Generated;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.InheritanceType;
-import javax.persistence.Inheritance;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToMany;
 
-//@MappedSuperclass
 @Entity
 public class Account {
 
 	@Id
 	@GeneratedValue
 	protected Long id;
-	protected Double balance;
-	protected Double interestRate;
+	protected Double checkingBalance;
+	protected Double checkingInterestRate;
+	protected Double savingsBalance;
+	protected Double savingsInterestRate;
 	protected String accountNumber;
 	
 	@ManyToOne
@@ -39,36 +36,69 @@ public class Account {
 		this.id = id;
 	}
 
-	public Double getBalance() {
-		return balance;
+	public void setCheckingBalance(Double checkingBalance) {
+		this.checkingBalance = checkingBalance;
 	}
 
-	public void setBalance(Double balance) {
-		this.balance = balance;
+	public Double getCheckingBalance() {
+		return checkingBalance;
 	}
 
-	public Double getInterestRate() {
-		return interestRate;
+	public void setCheckingInterestRate(Double checkingInterestRate) {
+		this.checkingInterestRate = checkingInterestRate;
 	}
 
-	public void setInterestRate(Double interestRate) {
-		this.interestRate = interestRate;
+	public Double getCheckingInterestRate() {
+		return checkingInterestRate;
 	}
 
-	public String getAccountNumber() {
-		return accountNumber;
+	public void setSavingsBalance(Double savingsBalance) {
+		this.savingsBalance = savingsBalance;
+	}
+
+	public Double getSavingsBalance() {
+		return savingsBalance;
+	}
+
+	public void setSavingsInterestRate(Double savingsInterestRate) {
+		this.savingsInterestRate = savingsInterestRate;
+	}
+
+	public Double getSavingsInterestRate() {
+		return savingsInterestRate;
 	}
 
 	public void setAccountNumber(String accountNumber) {
 		this.accountNumber = accountNumber;
 	}
 
-	@Override
-	public String toString() {
-		return "Account [id=" + id + ", balance=" + balance + ", interestRate=" + interestRate + ", accountNumber="
-				+ accountNumber + "]";
+	public String getAccountNumber() {
+		return accountNumber;
 	}
 
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public List<Payment> getPaymentHistory() {
+		return paymentHistory;
+	}
+
+	public void setPaymentHistory(List<Payment> paymentHistory) {
+		this.paymentHistory = paymentHistory;
+	}
+
+	@Override
+	public String toString() {
+		return "Account [id=" + id + ", checkingBalance=" + checkingBalance + ", checkingInterestRate="
+				+ checkingInterestRate + ", savingsBalance=" + savingsBalance + ", savingsInterestRate="
+				+ savingsInterestRate + ", accountNumber=" + accountNumber + ", user=" + user + ", paymentHistory="
+				+ paymentHistory + "]";
+	}
 
 	
 }

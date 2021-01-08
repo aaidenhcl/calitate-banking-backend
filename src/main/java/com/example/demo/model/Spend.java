@@ -1,5 +1,7 @@
 package com.example.demo.model;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -15,6 +17,7 @@ public class Spend {
 	private Double amount;
 	private String category;
 	private String item;
+	private Date dateCreated;
 	
 	@ManyToOne
 	@JoinColumn(name="credit_card_id")
@@ -24,4 +27,82 @@ public class Spend {
 	@ManyToOne
 	@JoinColumn(name="debit_card_id")
 	public DebitCard debitCard;
+
+
+	public Long getId() {
+		return id;
+	}
+
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+
+	public Double getAmount() {
+		return amount;
+	}
+
+
+	public void setAmount(Double amount) {
+		this.amount = amount;
+	}
+
+
+	public String getCategory() {
+		return category;
+	}
+
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
+
+	public String getItem() {
+		return item;
+	}
+
+
+	public void setItem(String item) {
+		this.item = item;
+	}
+
+
+	public Date getDateCreated() {
+		return dateCreated;
+	}
+
+
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
+	}
+
+
+	public CreditCard getCreditCard() {
+		return creditCard;
+	}
+
+
+	public void setCreditCard(CreditCard creditCard) {
+		this.creditCard = creditCard;
+	}
+
+
+	public DebitCard getDebitCard() {
+		return debitCard;
+	}
+
+
+	public void setDebitCard(DebitCard debitCard) {
+		this.debitCard = debitCard;
+	}
+
+
+	@Override
+	public String toString() {
+		return "Spend [id=" + id + ", amount=" + amount + ", category=" + category + ", item=" + item + ", dateCreated="
+				+ dateCreated + ", creditCard=" + creditCard + ", debitCard=" + debitCard + "]";
+	}
+	
 }
