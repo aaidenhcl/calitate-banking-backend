@@ -1,10 +1,11 @@
 package com.example.demo.model;
 
+import java.util.Date;
+
 import java.security.SecureRandom;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import java.nio.charset.StandardCharsets;
@@ -15,10 +16,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.ManyToOne;
-import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -42,6 +39,15 @@ public class User {
 	protected String username;
 	protected byte[] salt;
 	protected byte[] hash;
+
+	protected Date DCB;
+	protected String firstName;
+	protected String lastName;
+	protected String address;
+	protected String region;
+	protected Integer creditScore;
+	protected String profession;
+	protected Date dateCreated;
 	
 	@OneToMany(mappedBy="user")
 	List<Account> accounts;
@@ -67,11 +73,59 @@ public class User {
 	}
 	
 	//I do not think this is ever hit.
-	public User(String username, String password) {
+	public User(String username, String password, Date DCB, String firstName, String lastName, String address, String region, Integer creditScore, String profession, Date dateCreated) {
 		System.out.println("Constructor w/ fields HIT");
 		this.username = username;
 		System.out.println("PASSWORD:: " + password);
 		this.hash = this.hashPassword(password);
+		this.DCB = DCB;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.address = address;
+		this.region = region;
+		this.creditScore = creditScore;
+		this.profession = profession;
+		this.dateCreated = dateCreated;
+	}
+	
+	public List<Account> getAccounts() {
+		return accounts;
+	}
+	
+	public void setAccounts(List<Account> accounts) {
+		this.accounts = accounts;
+	}
+	
+	public List<CreditCard> getCreditCards() {
+		return creditCards;
+	}
+	
+	public void setCreditCards(List<CreditCard> creditCards) {
+		this.creditCards = creditCards;
+	}
+	
+	public List<Loan> getLoans() {
+		return loans;
+	}
+	
+	public void setLoans(List<Loan> loans) {
+		this.loans = loans;
+	}
+	
+	public List<creditCardRequest> getCreditCardRequests() {
+		return creditCardRequests;
+	}
+	
+	public void setCreditCardRequests(List<creditCardRequest> creditCardRequests) {
+		this.creditCardRequests = creditCardRequests;
+	}
+	
+	public List<loanRequest> getLoanRequests() {
+		return loanRequests;
+	}
+	
+	public void setLoanRequests(List<loanRequest> loanRequests) {
+		this.loanRequests = loanRequests;
 	}
 	
 	public Long getId() {
@@ -103,19 +157,87 @@ public class User {
 		this.hash = hash;
 	}
 	
+	public void setDCB(Date dCB) {
+		DCB = dCB;
+	}
+
+	public Date getDCB() {
+		return DCB;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+	
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setRegion(String region) {
+		this.region = region;
+	}
+
+	public String getRegion() {
+		return region;
+	}
+
+	public void setCreditScore(Integer creditScore) {
+		this.creditScore = creditScore;
+	}
+
+	public Integer getCreditScore() {
+		return creditScore;
+	}
+
+	public void setProfession(String profession) {
+		this.profession = profession;
+	}
+
+	public String getProfession() {
+		return profession;
+	}
+
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
+	}
+
+	public Date getDateCreated() {
+		return dateCreated;
+	}
+	
+
 	//merely for setter injection. NOTICE how the password is not being set.
 	public void setPassword(String password) {
 		hashPassword(password);
 	}
 	
-	//for debugging
-	@Override
+   @Override
 	public String toString() {
 		return "User [id=" + id + ", username=" + username + ", salt=" + Arrays.toString(salt) + ", hash="
-				+ Arrays.toString(hash) + ", password=" + password + "]";
+				+ Arrays.toString(hash) + ", DCB=" + DCB + ", firstName=" + firstName + ", lastName=" + lastName
+				+ ", address=" + address + ", region=" + region + ", creditScore=" + creditScore + ", profession="
+				+ profession + ", dateCreated=" + dateCreated + ", accounts=" + accounts + ", creditCards="
+				+ creditCards + ", loans=" + loans + ", creditCardRequests=" + creditCardRequests + ", loanRequests="
+				+ loanRequests + ", password=" + password + "]";
 	}
-	
-   /*
+
+	/*
 	*this function is hit on user creation
 	*the client end sends a password as a string
 	*this method is hit which encrypts the password and stores as hash and string
