@@ -29,6 +29,16 @@ public class Spend {
 	@LastModifiedDate
 	protected Date lastUpdate;
 	
+	public Date getLastUpdate() {
+		return lastUpdate;
+	}
+
+
+	public void setLastUpdate(Date lastUpdate) {
+		this.lastUpdate = lastUpdate;
+	}
+
+
 	@ManyToOne
 	@JoinColumn(name="credit_card_id")
 	public CreditCard creditCard;

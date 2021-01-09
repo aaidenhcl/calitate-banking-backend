@@ -24,6 +24,22 @@ public class DebitCard {
 	private Date expiration_date;
 	private String cvv;
 	
+	public Date getDateCreated() {
+		return dateCreated;
+	}
+
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
+	}
+
+	public Date getLastUpdate() {
+		return lastUpdate;
+	}
+
+	public void setLastUpdate(Date lastUpdate) {
+		this.lastUpdate = lastUpdate;
+	}
+
 	@CreatedDate
 	protected Date dateCreated;
 	

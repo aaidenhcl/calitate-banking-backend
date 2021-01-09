@@ -27,6 +27,22 @@ public class Loan {
 	@CreatedDate
 	protected Date dateCreated;
 	
+	public Date getDateCreated() {
+		return dateCreated;
+	}
+
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
+	}
+
+	public Date getLastUpdate() {
+		return lastUpdate;
+	}
+
+	public void setLastUpdate(Date lastUpdate) {
+		this.lastUpdate = lastUpdate;
+	}
+
 	@LastModifiedDate
 	protected Date lastUpdate;
 	

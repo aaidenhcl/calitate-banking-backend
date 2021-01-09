@@ -30,8 +30,30 @@ public class Account {
 	protected Date dateCreated;
 	
 	@LastModifiedDate
-	protected Date lastUpdate;
+	protected Date lastUpdated;
 	
+	public Date getDateCreated() {
+		return dateCreated;
+	}
+
+
+
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
+	}
+
+
+
+	public Date getLastUpdated() {
+		return lastUpdated;
+	}
+
+
+
+	public void setLastUpdated(Date lastUpdated) {
+		this.lastUpdated = lastUpdated;
+	}
+
 	@ManyToOne
 	@JoinColumn(name="user_id")
 	User user;
@@ -39,6 +61,25 @@ public class Account {
 	@OneToMany(mappedBy = "account")
 	List<Payment> paymentHistory;
 	
+	public Account() {}
+	
+	
+	
+	public Account(Double checkingBalance, Double checkingInterestRate, Double savingsBalance,
+			Double savingsInterestRate, String accountNumber, User user) {
+		super();
+		this.checkingBalance = checkingBalance;
+		this.checkingInterestRate = checkingInterestRate;
+		this.savingsBalance = savingsBalance;
+		this.savingsInterestRate = savingsInterestRate;
+		this.accountNumber = accountNumber;
+		this.dateCreated = new Date();
+		this.lastUpdated = new Date();
+		this.user = user;
+	}
+
+
+
 	public Long getId() {
 		return id;
 	}
@@ -108,7 +149,7 @@ public class Account {
 		return "Account [id=" + id + ", checkingBalance=" + checkingBalance + ", checkingInterestRate="
 				+ checkingInterestRate + ", savingsBalance=" + savingsBalance + ", savingsInterestRate="
 				+ savingsInterestRate + ", accountNumber=" + accountNumber + ", dateCreated=" + dateCreated
-				+ ", lastUpdate=" + lastUpdate + ", user=" + user + ", paymentHistory=" + paymentHistory + "]";
+				+ ", lastUpdated=" + lastUpdated + ", user=" + user + ", paymentHistory=" + paymentHistory + "]";
 	}
 	
 }
