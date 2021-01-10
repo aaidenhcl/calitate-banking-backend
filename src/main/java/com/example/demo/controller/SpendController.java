@@ -20,10 +20,11 @@ public class SpendController {
 		SpendRepo repo;
 		
 		//Get mapping for editing a spend
-		@GetMapping(path="/spends/search/findById{id}")
+		@GetMapping(path="/spends/:id/edit")
 		public Spend findById(@RequestBody Spend spend){
 			System.out.println("In function");
-			repo.save(spend);
+			
+			spend = (Spend) repo.findById(spend);
 			
 			return spend;
 		}
