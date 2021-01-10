@@ -1,7 +1,10 @@
 package com.example.demo.model;
 
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -48,6 +51,55 @@ public class CreditCard {
 	List<Payment> paymentHistory;
 	
 	public CreditCard () {}
+
+	public CreditCard(Double spendingLimit, Double apr, String type, User user) {
+		super();
+		this.spendingLimit = spendingLimit;
+		this.apr = apr;
+		this.type = type;
+		this.user = user;
+		this.dateCreated = new Date();
+		this.lastUpdate = new Date();
+		this.balance = 0.0d;
+		this.status = "active";
+		this.expirationDate = Date.from(Instant.now().plus(5l, ChronoUnit.YEARS));//use date to generate current date + 5 years
+		this.cvv = generateRandomNumber(3);//some random 3 digit number
+		this.creditCardNumber = generateRandomNumber(16);//some random 16 digit num
+		
+	}
+	
+	private String generateRandomNumber(Integer length) {
+		StringBuilder sb = new StringBuilder(length);
+		Random random = new Random();
+		for(Integer i=0; i<=length; i++) {
+			sb.append(random.ints(10));
+		}
+		return sb.toString();
+	}
+
+	public Date getDateCreated() {
+		return dateCreated;
+	}
+
+
+
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
+	}
+
+
+
+	public Date getLastUpdate() {
+		return lastUpdate;
+	}
+
+
+
+	public void setLastUpdate(Date lastUpdate) {
+		this.lastUpdate = lastUpdate;
+	}
+
+
 
 	public Long getId() {
 		return id;

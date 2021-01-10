@@ -68,7 +68,7 @@ public class User {
 	List<Loan> loans;
 	
 	@OneToMany(mappedBy="user")
-	List<creditCardRequest> creditCardRequests;
+	List<CreditCardRequest> creditCardRequests;
 	
 	@OneToMany(mappedBy="user")
 	List<loanRequest> loanRequests;
@@ -133,11 +133,11 @@ public class User {
 		this.loans = loans;
 	}
 	
-	public List<creditCardRequest> getCreditCardRequests() {
+	public List<CreditCardRequest> getCreditCardRequests() {
 		return creditCardRequests;
 	}
 	
-	public void setCreditCardRequests(List<creditCardRequest> creditCardRequests) {
+	public void setCreditCardRequests(List<CreditCardRequest> creditCardRequests) {
 		this.creditCardRequests = creditCardRequests;
 	}
 	
