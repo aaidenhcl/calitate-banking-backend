@@ -47,22 +47,41 @@ public class CreditCardRequest {
 	
 	/*
 	 * credit card type is processed
+	 * using the users credit score 
+	 * to validate whether user is refused
+	 * or not. 
+	 * if credit score high enough the status
+	 * updates to accepted
 	 */
-	public void processCreditCardRequest() {
+	public CreditCardRequest processCreditCardRequest() {
 		switch(this.cardType) {
 		case "silver":
+			if(this.user.getCreditScore().compareTo(500) > 0) {
+				this.status = "approved";
+				this.offeredLimit = 1000d;
+				
+			}
 			
 			break;
 		case "gold":
-		
+			if(this.user.getCreditScore().compareTo(650) > 0) {
+				//accepted
+			}else {
+				this.status = "refused";
+			}
+			
 			break;
 		case "platinum":
-		
+			if(this.user.getCreditScore().compareTo(500) > 0) {
+				//accepted
+			}
+
 			break;
 		default:
 			System.out.println("Not a valid card type");
 			break;
 		}
+		return this;
 	}
 	
 	public Long getId() {
