@@ -22,6 +22,7 @@ public class Spend {
 	private Double amount;
 	private String category;
 	private String item;
+	private Boolean userNote = false;
 	
 	@CreatedDate
 	protected Date dateCreated;
