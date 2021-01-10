@@ -19,10 +19,11 @@ public class SpendController {
 		@Autowired
 		SpendRepo repo;
 		
-		@GetMapping(path="/spends/:id/edit")
-		public Spend findSpend(@RequestBody Spend spend){
+		//Get mapping for editing a spend
+		@GetMapping(path="/spends/search/findById{id}")
+		public Spend findById(@RequestBody Spend spend){
 			System.out.println("In function");
-//			repo.save(spend);
+			repo.save(spend);
 			
 			return spend;
 		}
