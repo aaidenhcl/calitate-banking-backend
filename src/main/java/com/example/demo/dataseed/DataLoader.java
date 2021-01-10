@@ -10,9 +10,11 @@ import org.springframework.stereotype.Component;
 
 import com.example.demo.dao.AccountRepo;
 import com.example.demo.dao.CreditCardRepo;
+import com.example.demo.dao.CreditCardRequestRepo;
 import com.example.demo.dao.UserRepo;
 import com.example.demo.model.Account;
 import com.example.demo.model.CreditCard;
+import com.example.demo.model.CreditCardRequest;
 import com.example.demo.model.User;
 
 /*
@@ -33,10 +35,10 @@ public class DataLoader implements CommandLineRunner{
 	private AccountRepo accountRepo;
 	
 	@Autowired
-	private CreditCardRepo creditCardRequestRepo;
+	private CreditCardRequestRepo creditCardRequestRepo;
 	
 	@Autowired
-	private CreditCard creditCardRepo;
+	private CreditCardRepo creditCardRepo;
 
 	/*
 	 * Main starting method that calls all 
@@ -141,7 +143,16 @@ public class DataLoader implements CommandLineRunner{
 	 * Seeds credit card request data
 	 */
 	public void loadCreditCardRequestData() {
-		
+		//should save status as refused
+		Long id2 = 2l;
+		Optional<User> userOpt2 = userRepo.findById(id2);
+		if(userOpt2 != null) {		
+			User user2 = userOpt2.get();
+			CreditCardRequest ccr = new CreditCardRequest("gold", user2);
+			creditCardRequestRepo.save(ccr);
+			ccr = ccr.processCreditCardRequest();
+			creditCardRequestRepo.save(ccr);
+		}
 	}
 	
 	public void loadCreditCardData() {
