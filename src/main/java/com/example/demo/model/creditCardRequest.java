@@ -14,15 +14,16 @@ import org.springframework.data.annotation.LastModifiedDate;
 import javax.persistence.Entity;
 
 @Entity
-public class creditCardRequest {
-
+public class CreditCardRequest {
+	
 	@Id
 	@GeneratedValue
 	private Long id;
 	private String status;
 	private Double offeredLimit;
 	private Double offeredApr;
-	
+	private String cardType;
+
 	@CreatedDate
 	private Date requestTime;
 	
@@ -35,6 +36,35 @@ public class creditCardRequest {
 	@JoinColumn(name="user_id")
 	public User user;
 
+	public CreditCardRequest() {}
+	
+	public CreditCardRequest(String cardType, User user) {
+		super();
+		this.cardType = cardType;
+		this.user = user;
+		this.requestTime = new Date();
+	}
+	
+	/*
+	 * credit card type is processed
+	 */
+	public void processCreditCardRequest() {
+		switch(this.cardType) {
+		case "silver":
+			
+			break;
+		case "gold":
+		
+			break;
+		case "platinum":
+		
+			break;
+		default:
+			System.out.println("Not a valid card type");
+			break;
+		}
+	}
+	
 	public Long getId() {
 		return id;
 	}
@@ -97,6 +127,14 @@ public class creditCardRequest {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public String getCardType() {
+		return cardType;
+	}
+
+	public void setCardType(String cardType) {
+		this.cardType = cardType;
 	}
 
 	@Override
