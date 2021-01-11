@@ -1,10 +1,11 @@
 package com.example.demo.model;
 
+import java.util.Date;
+
 import java.security.SecureRandom;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import java.nio.charset.StandardCharsets;
@@ -15,11 +16,10 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.ManyToOne;
-import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToMany;
+
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -32,10 +32,8 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 
-//@MappedSuperclass
 @Entity
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public abstract class User {
+public class User {
 		
 	@Id
 	@GeneratedValue
@@ -44,9 +42,36 @@ public abstract class User {
 	protected String username;
 	protected byte[] salt;
 	protected byte[] hash;
+
+	protected Date DOB;
+	protected String firstName;
+	protected String lastName;
+	protected String address;
+	protected String region;
+	protected Integer creditScore;
+	protected String profession;
+	
+	@CreatedDate
+	protected Date dateCreated;
+	
+	@LastModifiedDate
+	protected Date lastUpdated;
 	
 	@OneToMany(mappedBy="user")
 	List<Account> accounts;
+	
+	@OneToMany(mappedBy = "user")
+	List<CreditCard> creditCards;
+	
+	//One to Many Loans
+	@OneToMany(mappedBy="user")
+	List<Loan> loans;
+	
+	@OneToMany(mappedBy="user")
+	List<CreditCardRequest> creditCardRequests;
+	
+	@OneToMany(mappedBy="user")
+	List<loanRequest> loanRequests;
 	
 	@JsonIgnoreProperties
 	protected String password;//needed for configuration but do not use.
@@ -56,23 +81,86 @@ public abstract class User {
 	}
 	
 	//I do not think this is ever hit.
-	public User(String username, String password) {
-		System.out.println("Constructor w/ fields HIT");
+	public User(String username, Date dOB, String firstName, String lastName, String address, String region,
+			Integer creditScore, String profession, String password) {
+		super();
 		this.username = username;
-		System.out.println("PASSWORD:: " + password);
-		this.hash = this.hashPassword(password);
+		this.DOB = dOB;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.address = address;
+		this.region = region;
+		this.creditScore = creditScore;
+		this.profession = profession;
+		hashPassword(password);
+		this.dateCreated = new Date();
+		this.lastUpdated = new Date();
+	}
+	
+	public Date getLastUpdated() {
+		return lastUpdated;
+	}
+
+	public void setLastUpdated(Date lastUpdated) {
+		this.lastUpdated = lastUpdated;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+	
+	public List<Account> getAccounts() {
+		return accounts;
+	}
+	
+	public void setAccounts(List<Account> accounts) {
+		this.accounts = accounts;
+	}
+	
+	public List<CreditCard> getCreditCards() {
+		return creditCards;
+	}
+	
+	public void setCreditCards(List<CreditCard> creditCards) {
+		this.creditCards = creditCards;
+	}
+	
+	public List<Loan> getLoans() {
+		return loans;
+	}
+	
+	public void setLoans(List<Loan> loans) {
+		this.loans = loans;
+	}
+	
+	public List<CreditCardRequest> getCreditCardRequests() {
+		return creditCardRequests;
+	}
+	
+	public void setCreditCardRequests(List<CreditCardRequest> creditCardRequests) {
+		this.creditCardRequests = creditCardRequests;
+	}
+	
+	public List<loanRequest> getLoanRequests() {
+		return loanRequests;
+	}
+	
+	public void setLoanRequests(List<loanRequest> loanRequests) {
+		this.loanRequests = loanRequests;
 	}
 	
 	public Long getId() {
 		return id;
 	}
 	public void setId(Long id) {
+		System.out.println("HITTING SETTERS");
 		this.id = id;
 	}
 	public String getUsername() {
 		return username;
 	}
 	public void setUsername(String username) {
+		System.out.println("HITTING SETTERS");
 		this.username = username;
 	}
 	
@@ -80,6 +168,7 @@ public abstract class User {
 		return salt;
 	}
 	public void setSalt(byte[] salt) {
+		System.out.println("HITTING SETTERS");
 		this.salt = salt;
 	}
 	public byte[] getHash() {
@@ -89,19 +178,89 @@ public abstract class User {
 		this.hash = hash;
 	}
 	
+	public void setDOB(Date dOB) {
+		DOB = dOB;
+	}
+
+	public Date getDOB() {
+		return DOB;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+	
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setRegion(String region) {
+		this.region = region;
+	}
+
+	public String getRegion() {
+		return region;
+	}
+
+	public void setCreditScore(Integer creditScore) {
+		this.creditScore = creditScore;
+	}
+
+	public Integer getCreditScore() {
+		return creditScore;
+	}
+
+	public void setProfession(String profession) {
+		this.profession = profession;
+	}
+
+	public String getProfession() {
+		return profession;
+	}
+
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
+	}
+
+	public Date getDateCreated() {
+		return dateCreated;
+	}
+	
+
 	//merely for setter injection. NOTICE how the password is not being set.
 	public void setPassword(String password) {
 		hashPassword(password);
 	}
 	
-	//for debugging
+
+
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", username=" + username + ", salt=" + Arrays.toString(salt) + ", hash="
-				+ Arrays.toString(hash) + ", password=" + password + "]";
+				+ Arrays.toString(hash) + ", DOB=" + DOB + ", firstName=" + firstName + ", lastName=" + lastName
+				+ ", address=" + address + ", region=" + region + ", creditScore=" + creditScore + ", profession="
+				+ profession + ", dateCreated=" + dateCreated + ", accounts=" + accounts
+				+ ", creditCards=" + creditCards + ", loans=" + loans + ", creditCardRequests=" + creditCardRequests
+				+ ", loanRequests=" + loanRequests + ", password=" + password + "]";
 	}
-	
-   /*
+
+	/*
 	*this function is hit on user creation
 	*the client end sends a password as a string
 	*this method is hit which encrypts the password and stores as hash and string
@@ -174,7 +333,7 @@ public abstract class User {
 
 			//VERY IMPORTANT part that checks if the newly generated hashedPassword matches 
 			//the hashedPassword saved to this user instance
-			if(Arrays.equals(this.hash, hashedPassword)) {
+			if(Arrays.equals(this.hash, hashedPassword)/*&& two factor auth here*/) {
 				System.out.println("HASHES ARE EQUAL");				
 				token = this.generateToken(user);
 				validCredentials = true;
