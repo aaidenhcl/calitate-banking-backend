@@ -43,6 +43,7 @@ public class CreditCardRequest {
 		this.cardType = cardType;
 		this.user = user;
 		this.requestTime = new Date();
+		processCreditCardRequest();
 	}
 	
 	/*
@@ -53,35 +54,57 @@ public class CreditCardRequest {
 	 * if credit score high enough the status
 	 * updates to accepted
 	 */
-	public CreditCardRequest processCreditCardRequest() {
+	public void processCreditCardRequest() {
 		switch(this.cardType) {
 		case "silver":
-			if(this.user.getCreditScore().compareTo(500) > 0) {
+			if(this.user.getCreditScore().compareTo(500) >= 0) {
 				this.status = "approved";
 				this.offeredLimit = 1000d;
-				
+				this.offeredApr = 0.27d;
+			} else {
+				this.status = "refused";
+				this.reason = "Credit score too low";
 			}
-			
+			this.lastUpdated = new Date();			
 			break;
 		case "gold":
-			if(this.user.getCreditScore().compareTo(650) > 0) {
+			if(this.user.getCreditScore().compareTo(650) >= 0) {
 				//accepted
-			}else {
+				this.status = "approved";
+				this.offeredLimit = 10000d;
+				this.offeredApr = 0.15d;
+			} else {
 				this.status = "refused";
+				this.reason = "Credit score too low";
 			}
-			
+			this.lastUpdated = new Date();			
 			break;
 		case "platinum":
-			if(this.user.getCreditScore().compareTo(500) > 0) {
+			if(this.user.getCreditScore().compareTo(750) >= 0) {
 				//accepted
+				this.status = "approved";
+				this.offeredLimit = 50000d;
+				this.offeredApr = 0.07d;
+			} else {
+				this.status = "refused";
+				this.reason = "Credit score too low";
 			}
-
+			this.lastUpdated = new Date();
 			break;
 		default:
 			System.out.println("Not a valid card type");
 			break;
 		}
-		return this;
+	}
+	
+//	public CreditCard acceptOffer() {
+//		System.out.println("Offer accepted");
+//		CreditCard creditCard = new CreditCard();
+//	}
+	
+	public void declineOffer() {
+		System.out.println("Credit card offer was declined");
+		this.status = "declined";
 	}
 	
 	public Long getId() {

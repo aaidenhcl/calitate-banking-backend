@@ -143,15 +143,53 @@ public class DataLoader implements CommandLineRunner{
 	 * Seeds credit card request data
 	 */
 	public void loadCreditCardRequestData() {
-		//should save status as refused
-		Long id2 = 2l;
-		Optional<User> userOpt2 = userRepo.findById(id2);
-		if(userOpt2 != null) {		
-			User user2 = userOpt2.get();
-			CreditCardRequest ccr = new CreditCardRequest("gold", user2);
-			creditCardRequestRepo.save(ccr);
-			ccr = ccr.processCreditCardRequest();
-			creditCardRequestRepo.save(ccr);
+		
+		try{
+			//Credit card request 1 data seeded
+			//all of user 2's ccr's
+			Long id1 = 1l;
+			Long id2 = 2l;
+			Long id3 = 3l;
+			Optional<User> userOpt1 = userRepo.findById(id1);
+			Optional<User> userOpt2 = userRepo.findById(id2);
+			Optional<User> userOpt3 = userRepo.findById(id3);
+
+			if(userOpt1 != null || userOpt2 != null || userOpt3 != null  ) {		
+				User user1 = userOpt1.get();
+				User user2 = userOpt2.get();
+				User user3 = userOpt3.get();
+				
+				//user 1's requests...
+				//should save status as refused with reason
+				CreditCardRequest ccr1 = new CreditCardRequest("platinum", user1);
+				creditCardRequestRepo.save(ccr1);
+
+				//should save status as approved
+				CreditCardRequest ccr2 = new CreditCardRequest("gold", user1);
+				creditCardRequestRepo.save(ccr2);
+				
+				//should save status as approved
+				CreditCardRequest ccr3 = new CreditCardRequest("silver", user1);
+				creditCardRequestRepo.save(ccr3);
+				
+				//should save status as refused with reason
+				CreditCardRequest ccr4 = new CreditCardRequest("gold", user2);
+				creditCardRequestRepo.save(ccr4);
+				
+				//should save status as approved
+				CreditCardRequest ccr5 = new CreditCardRequest("silver", user2);
+				creditCardRequestRepo.save(ccr5);
+				
+				//should save status as approved
+				CreditCardRequest ccr6 = new CreditCardRequest("platinum", user3);
+				creditCardRequestRepo.save(ccr6);
+				
+				//should save status as approved
+				CreditCardRequest ccr7 = new CreditCardRequest("gold", user3);
+				creditCardRequestRepo.save(ccr7);
+			}
+		}catch (Exception e) {
+			System.err.println(e);
 		}
 	}
 	
