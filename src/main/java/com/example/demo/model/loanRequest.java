@@ -16,7 +16,7 @@ import org.springframework.data.annotation.CreatedDate;
 import javax.persistence.Entity;
 
 @Entity
-public class loanRequest {
+public class LoanRequest {
 
 		@Id
 		@GeneratedValue
