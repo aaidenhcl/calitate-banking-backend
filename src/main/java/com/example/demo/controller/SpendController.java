@@ -2,8 +2,11 @@ package com.example.demo.controller;
 
 
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,11 +23,17 @@ public class SpendController {
 		SpendRepo repo;
 		
 		//Get mapping for editing a spend
-		@GetMapping(path="/spends/{id}/edit")
-		public Spend findById(@RequestBody Spend spend){
-			System.out.println("In function");
+		@GetMapping(path="/spends/{id}")
+		public Spend getSpend(@PathVariable("id") Long id){
 			
-			spend = (Spend) repo.findById(spend);
+			Optional<Spend> spendOpt = repo.findById(id);
+			
+			if (spendOpt == null) {
+				return null;
+			}
+			
+			Spend spend = spendOpt.get();
+			
 			
 			return spend;
 		}
