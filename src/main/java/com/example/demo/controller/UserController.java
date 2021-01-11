@@ -44,8 +44,8 @@ public class UserController {
 	 * Hits authenticateLogin and RETURNS a JWT token if credentials 
 	 * are valid. returns null if invalid credentials.
 	 */
-	@PostMapping(path="users/login/{username}")//use post here rather than get
-	public void loginUser(@PathVariable("username") String username, @RequestHeader(value="password") String password) {
+	@GetMapping(path="users/login/{username}")//use post here rather than get
+	public Boolean loginUser(@PathVariable("username") String username, @RequestHeader(value="password") String password) {
 		User foundUser = null;
 
 		//this is a bit messy but it parses JSON down to the
@@ -81,16 +81,18 @@ public class UserController {
 			//returns token if user auth successful
 			if(foundUser != null) {
 				if(foundUser.authenticateLogin(password, foundUser)){
-					//make 2fa code textbox visible
+					return true;
 				}
 			} else {
 				//if credentials incorrect
 				System.out.println("LOGIN FAILED");
+				return false;
 			} 
 		}catch (Exception e){
 			System.out.println("No user found with that username.");
 			System.err.println("ERROR: " + e);
 		}
+		return false;
 		}
 	
 	
