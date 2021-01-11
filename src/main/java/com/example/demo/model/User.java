@@ -68,10 +68,10 @@ public class User {
 	List<Loan> loans;
 	
 	@OneToMany(mappedBy="user")
-	List<creditCardRequest> creditCardRequests;
+	List<CreditCardRequest> creditCardRequests;
 	
 	@OneToMany(mappedBy="user")
-	List<loanRequest> loanRequests;
+	List<LoanRequest> loanRequests;
 	
 	@JsonIgnoreProperties
 	protected String password;//needed for configuration but do not use.
@@ -133,19 +133,19 @@ public class User {
 		this.loans = loans;
 	}
 	
-	public List<creditCardRequest> getCreditCardRequests() {
+	public List<CreditCardRequest> getCreditCardRequests() {
 		return creditCardRequests;
 	}
 	
-	public void setCreditCardRequests(List<creditCardRequest> creditCardRequests) {
+	public void setCreditCardRequests(List<CreditCardRequest> creditCardRequests) {
 		this.creditCardRequests = creditCardRequests;
 	}
 	
-	public List<loanRequest> getLoanRequests() {
+	public List<LoanRequest> getLoanRequests() {
 		return loanRequests;
 	}
 	
-	public void setLoanRequests(List<loanRequest> loanRequests) {
+	public void setLoanRequests(List<LoanRequest> loanRequests) {
 		this.loanRequests = loanRequests;
 	}
 	
