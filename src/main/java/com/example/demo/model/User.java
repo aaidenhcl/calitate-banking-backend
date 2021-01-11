@@ -12,10 +12,17 @@ import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.security.MessageDigest;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
+import org.hibernate.annotations.LazyCollectionOption;
+import org.hibernate.annotations.LazyCollection;
+
 import javax.persistence.OneToMany;
 
 import org.springframework.data.annotation.CreatedDate;
@@ -36,7 +43,7 @@ import io.jsonwebtoken.Jwts;
 public class User {
 		
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	protected Long id;
 	@Column(unique = true)
 	protected String username;
@@ -50,6 +57,7 @@ public class User {
 	protected String region;
 	protected Integer creditScore;
 	protected String profession;
+	protected String email;
 	
 	@CreatedDate
 	protected Date dateCreated;
@@ -57,17 +65,17 @@ public class User {
 	@LastModifiedDate
 	protected Date lastUpdated;
 	
-	@OneToMany(mappedBy="user")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy="user", cascade = CascadeType.ALL)
 	List<Account> accounts;
 	
-	@OneToMany(mappedBy = "user")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user",  cascade = CascadeType.ALL)
 	List<CreditCard> creditCards;
 	
 	//One to Many Loans
 	@OneToMany(mappedBy="user")
 	List<Loan> loans;
 	
-	@OneToMany(mappedBy="user")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy="user",  cascade = CascadeType.ALL)
 	List<CreditCardRequest> creditCardRequests;
 	
 	@OneToMany(mappedBy="user")
@@ -95,6 +103,23 @@ public class User {
 		hashPassword(password);
 		this.dateCreated = new Date();
 		this.lastUpdated = new Date();
+	}
+	
+	public User(String username, Date dOB, String firstName, String lastName, String address, String region,
+			Integer creditScore, String profession, String password, String email) {
+		super();
+		this.username = username;
+		this.DOB = dOB;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.address = address;
+		this.region = region;
+		this.creditScore = creditScore;
+		this.profession = profession;
+		hashPassword(password);
+		this.dateCreated = new Date();
+		this.lastUpdated = new Date();
+		this.email = email;
 	}
 	
 	public Date getLastUpdated() {

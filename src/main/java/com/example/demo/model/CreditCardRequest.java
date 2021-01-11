@@ -97,10 +97,15 @@ public class CreditCardRequest {
 		}
 	}
 	
-//	public CreditCard acceptOffer() {
-//		System.out.println("Offer accepted");
-//		CreditCard creditCard = new CreditCard();
-//	}
+	public CreditCard acceptOffer() {
+		if(this.status == "approved") {			
+			System.out.println("Offer accepted");
+			CreditCard creditCard = new CreditCard(this.offeredLimit, this.offeredApr, this.cardType, this.user);
+			return creditCard;
+		}
+		System.out.println("You cannot accept this credit card");
+		return null;
+	}
 	
 	public void declineOffer() {
 		System.out.println("Credit card offer was declined");

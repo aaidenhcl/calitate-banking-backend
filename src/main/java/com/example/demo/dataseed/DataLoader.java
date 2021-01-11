@@ -89,7 +89,7 @@ public class DataLoader implements CommandLineRunner{
 				date3 = new SimpleDateFormat("MM/dd/yyyy").parse("11/07/1996");
 				
 				User user3 = new User("mattInDaHawse", date3, "Matthew", "Krueger", "Chicken Biscuit Rd., 21341", "Texas",
-						790, "FBI", "veryGoodPassword");
+						790, "FBI", "veryGoodPassword", "kruegermatthewr@gmail.com");
 				userRepo.save(user3);
 			}catch (Exception e) {
 				System.err.println("Issue creating user. ERROR: " + e);
@@ -150,6 +150,7 @@ public class DataLoader implements CommandLineRunner{
 			Long id1 = 1l;
 			Long id2 = 2l;
 			Long id3 = 3l;
+			
 			Optional<User> userOpt1 = userRepo.findById(id1);
 			Optional<User> userOpt2 = userRepo.findById(id2);
 			Optional<User> userOpt3 = userRepo.findById(id3);
@@ -187,6 +188,28 @@ public class DataLoader implements CommandLineRunner{
 				//should save status as approved
 				CreditCardRequest ccr7 = new CreditCardRequest("gold", user3);
 				creditCardRequestRepo.save(ccr7);
+				
+				
+				//users accepting/declining the credit card requests
+				try {			
+//					System.out.println(user1);
+//					CreditCard cred1 = user1.getCreditCardRequests().get(1).acceptOffer();
+					CreditCard cred1 = ccr2.acceptOffer();
+					creditCardRepo.save(cred1);
+					
+//					user1.getCreditCardRequests().get(1).declineOffer();
+//					
+//					System.out.println(user2);
+//					CreditCard cred2 = user2.getCreditCardRequests().get(1).acceptOffer();
+//					creditCardRepo.save(cred2);
+//
+//					System.out.println(user3);
+//					CreditCard cred3 = user3.getCreditCardRequests().get(0).acceptOffer();
+//					creditCardRepo.save(cred3);
+				}catch (Exception e) {
+					System.err.println("ERROR IN CreditCard loader:: " + e);
+				}
+	
 			}
 		}catch (Exception e) {
 			System.err.println(e);

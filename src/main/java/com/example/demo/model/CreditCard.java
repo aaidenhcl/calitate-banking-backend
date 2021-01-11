@@ -2,6 +2,7 @@ package com.example.demo.model;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -62,7 +63,15 @@ public class CreditCard {
 		this.lastUpdate = new Date();
 		this.balance = 0.0d;
 		this.status = "active";
-		this.expirationDate = Date.from(Instant.now().plus(5l, ChronoUnit.YEARS));//use date to generate current date + 5 years
+		try {			
+			Calendar c = Calendar.getInstance();
+			c.setTime(new Date());
+			c.add(Calendar.YEAR, 5);
+			this.expirationDate = c.getTime();
+//			this.expirationDate = Date.from(Instant.now().plus(5l, ChronoUnit.YEARS));//use date to generate current date + 5 years
+		}catch (Exception e) {
+			System.err.println("Issue with CHRONO"+e);
+		}
 		this.cvv = generateRandomNumber(3);//some random 3 digit number
 		this.creditCardNumber = generateRandomNumber(16);//some random 16 digit num
 		
@@ -72,8 +81,9 @@ public class CreditCard {
 		StringBuilder sb = new StringBuilder(length);
 		Random random = new Random();
 		for(Integer i=0; i<=length; i++) {
-			sb.append(random.ints(10));
+			sb.append(random.nextInt(10));
 		}
+		System.out.println("GENERATED NUMBER::: "+sb.toString());
 		return sb.toString();
 	}
 
