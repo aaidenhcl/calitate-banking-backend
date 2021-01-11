@@ -45,7 +45,7 @@ public class UserController {
 	 * are valid. returns null if invalid credentials.
 	 */
 	@PostMapping(path="users/login/{username}")//use post here rather than get
-	public String loginUser(@PathVariable("username") String username, @RequestHeader(value="password") String password) {
+	public void loginUser(@PathVariable("username") String username, @RequestHeader(value="password") String password) {
 		User foundUser = null;
 
 		//this is a bit messy but it parses JSON down to the
@@ -70,7 +70,6 @@ public class UserController {
 //		reconstructedUtilMap.keySet().forEach(System.out::println);
 //		System.out.println(reconstructedUtilMap.get(keySet[0]));
 				
-		String token = null;
 		//finds user by username and auithenticates the user's credentials
 		try {
 			//retrieves User from database
@@ -81,22 +80,47 @@ public class UserController {
 			//VERY IMPORTANT authenticates the user
 			//returns token if user auth successful
 			if(foundUser != null) {
-				token = foundUser.authenticateLogin(password, foundUser);
-				if(token != null) {
-					return token;
+				if(foundUser.authenticateLogin(password, foundUser)){
+					//make 2fa code textbox visible
 				}
 			} else {
 				//if credentials incorrect
 				System.out.println("LOGIN FAILED");
-				return null;
 			} 
 		}catch (Exception e){
 			System.out.println("No user found with that username.");
 			System.err.println("ERROR: " + e);
 		}
-			return token;
 		}
 	
+	
+	@GetMapping(path="users/login/2fa/{username}")
+	public String twoFactorAuth(@PathVariable("username") String username, @RequestHeader(value="twoFactorAuth") String code) {
+		
+		String token = null;
+		User foundUser = repo.findByUsername(username).get(0);
+		try {
+			
+			if (foundUser.getTwoFactorAuth().equals(code)) {
+				token = foundUser.authenticate2FA(foundUser);
+				if (token != null) {
+					foundUser.setTwoFactorAuth(null);
+					return token;
+				}
+				else {
+					System.out.println("LOGIN FAILED");
+					foundUser.setTwoFactorAuth(null);
+					return null;
+				}
+			}
+		}
+		catch (Exception e) {
+			System.err.println("ERROR: " + e);
+		}
+		foundUser.setTwoFactorAuth(null);
+		return token;
+		
+	}
 		/*
 		 * This route takes a token as a header and validates that token.
 		 * Token is checked for validity as well as expiration.

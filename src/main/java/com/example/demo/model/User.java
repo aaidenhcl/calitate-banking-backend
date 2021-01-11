@@ -40,6 +40,8 @@ import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 
 import com.example.demo.model.CreditCardRequest;
+import com.example.demo.utilities.EmailMessage;
+import com.example.demo.utilities.EmailSender;
 
 @Entity
 public class User {
@@ -49,6 +51,22 @@ public class User {
 	protected Long id;
 	@Column(unique = true)
 	protected String username;
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getTwoFactorAuth() {
+		return twoFactorAuth;
+	}
+
+	public void setTwoFactorAuth(String twoFactorAuth) {
+		this.twoFactorAuth = twoFactorAuth;
+	}
+
 	protected byte[] salt;
 	protected byte[] hash;
 
@@ -60,6 +78,7 @@ public class User {
 	protected Integer creditScore;
 	protected String profession;
 	protected String email;
+	protected String twoFactorAuth = null;
 	
 	@CreatedDate
 	protected Date dateCreated;
@@ -338,12 +357,12 @@ public class User {
 	 * This is the login method. When the login route is hit this middleware will
 	 * validate that the password is correct. 
 	 * */
-	public String authenticateLogin(String password, User user) {
+	public boolean authenticateLogin(String password, User user) {
 		MessageDigest md;
-		Boolean validCredentials = false;
+		
 		System.out.println("PASSWORD SENT TO MIDDLEWARE: " + password);
-		String token = null;
-
+		
+		boolean success = false;
 		
 		//alot of this wil look similar to hashedPassword
 		try {
@@ -353,19 +372,37 @@ public class User {
 			
 			//updating the digest with the proper salt that was stored on this instance
 			//for digest computation when hashing
-			md.update(this.salt);			
-			
+			md.update(this.salt);		
 			//using the digest, with updated salt and proper algorithm to generate the hashedPassword
 			byte[] hashedPassword = md.digest(password.getBytes(StandardCharsets.UTF_8));
 
 			//VERY IMPORTANT part that checks if the newly generated hashedPassword matches 
 			//the hashedPassword saved to this user instance
-			if(Arrays.equals(this.hash, hashedPassword)/*&& two factor auth here*/) {
-				System.out.println("HASHES ARE EQUAL");				
-				token = this.generateToken(user);
-				validCredentials = true;
+			if(Arrays.equals(this.hash, hashedPassword)) {
+				
+				System.out.println("HASHES ARE EQUAL");	
+				
+				//2 factor auth
+				//generate String
+				
+				user.twoFactorAuth = "";
+				
+				for (int i = 0; i < 8; i ++) {
+					user.twoFactorAuth += (char)('a'+(int)(Math.random() * 26));
+				}
+				
+				
+				String to = user.email;
+				String from = "TeamCalitate@gmail.com";
+				String messageBody = "Your code is "+user.twoFactorAuth;
+				EmailMessage message = new EmailMessage(to,from,"Two Factor Authorization Code", messageBody);
+				if (!EmailSender.SendEmail(message)) {
+						System.out.println("Email issue");
+				}
+				
+				success = true;
+							
 			}
-			
 			
 			//Debugging purposes
 			StringBuilder sb1 = new StringBuilder();
@@ -392,6 +429,17 @@ public class User {
 		}catch(Exception e) {
 			System.err.println("Error in authenticateLogin ConsumerUser class: " + e);
 		}
+		return success;
+	}
+	
+	public String authenticate2FA(User user) {
+		
+		String token = null;
+		Boolean validCredentials = false;
+		
+		token = this.generateToken(user);
+		validCredentials = true;
+
 		if(!validCredentials) {
 			return null;
 		}
