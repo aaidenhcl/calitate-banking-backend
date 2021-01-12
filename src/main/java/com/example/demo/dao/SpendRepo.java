@@ -10,5 +10,4 @@ import com.example.demo.model.Spend;
 @Component
 public interface SpendRepo extends JpaRepository<Spend, Long> {
 	
-	List<Spend> findById(Spend id);
 }

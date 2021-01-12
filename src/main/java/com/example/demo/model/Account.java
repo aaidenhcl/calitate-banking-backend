@@ -149,7 +149,7 @@ public class Account {
 		return "Account [id=" + id + ", checkingBalance=" + checkingBalance + ", checkingInterestRate="
 				+ checkingInterestRate + ", savingsBalance=" + savingsBalance + ", savingsInterestRate="
 				+ savingsInterestRate + ", accountNumber=" + accountNumber + ", dateCreated=" + dateCreated
-				+ ", lastUpdated=" + lastUpdated + ", user=" + user + ", paymentHistory=" + paymentHistory + "]";
+				+ ", lastUpdated=" + lastUpdated  + ", paymentHistory=" + paymentHistory + "]";
 	}
 	
 }

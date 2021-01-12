@@ -7,3 +7,7 @@ insert into credit_card (id) values (1);
 --(aaiden)
 --insert into user (id, username, password, credit_score) values (1, 'bob', 'asd', 700);
 --insert into credit_card_request (id, status, user_id) values (11, 'approved', 1 );
+
+--Add spends
+--Samiylo
+insert into spend(id) values (1);
