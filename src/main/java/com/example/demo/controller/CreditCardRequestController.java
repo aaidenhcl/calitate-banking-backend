@@ -1,6 +1,5 @@
 package com.example.demo.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +20,8 @@ public class CreditCardRequestController {
 	@GetMapping(path="/creditCardRequests/status")
 	public List<CreditCardRequest> getRequest() {
 		
-		List<CreditCardRequest> allRequests = repo.findAll();
+		//Calls Repo method.
+		List<CreditCardRequest> allRequests = repo.findAllStatus();
 		return allRequests;
 	}
 

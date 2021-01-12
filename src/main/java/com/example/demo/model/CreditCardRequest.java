@@ -11,6 +11,8 @@ import javax.persistence.ManyToOne;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.Entity;
 
 @Entity
@@ -32,6 +34,7 @@ public class CreditCardRequest {
 	private String reason;
 	
 	//many creditCardRequsts has one user
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="user_id")
 	public User user;
