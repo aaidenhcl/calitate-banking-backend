@@ -10,3 +10,4 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface CreditCardRequestRepo extends JpaRepository<CreditCardRequest, Long>{
 
 }
+ 
