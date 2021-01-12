@@ -11,6 +11,8 @@ import javax.persistence.ManyToOne;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.Entity;
 
 @Entity
@@ -32,6 +34,7 @@ public class CreditCardRequest {
 	private String reason;
 	
 	//many creditCardRequsts has one user
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="user_id")
 	public User user;
@@ -98,7 +101,7 @@ public class CreditCardRequest {
 	}
 	
 	public CreditCard acceptOffer() {
-		if(this.status == "approved") {			
+		if(this.status.equals("approved")) {			
 			System.out.println("Offer accepted");
 			CreditCard creditCard = new CreditCard(this.offeredLimit, this.offeredApr, this.cardType, this.user);
 			return creditCard;
@@ -118,6 +121,8 @@ public class CreditCardRequest {
 
 	public void setId(Long id) {
 		this.id = id;
+		this.requestTime = new Date();
+		processCreditCardRequest();
 	}
 
 	public String getStatus() {
@@ -188,7 +193,7 @@ public class CreditCardRequest {
 	public String toString() {
 		return "creditCardRequest [id=" + id + ", status=" + status + ", offeredLimit=" + offeredLimit + ", offeredApr="
 				+ offeredApr + ", requestTime=" + requestTime + ", lastUpdated=" + lastUpdated + ", reason=" + reason
-				+ ", user=" + user + "]";
+				+ "]";
 	}
 
 

@@ -18,6 +18,8 @@ import javax.persistence.OneToMany;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class CreditCard {
 
@@ -39,15 +41,18 @@ public class CreditCard {
 	@LastModifiedDate
 	protected Date lastUpdate;
 	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="user_id")
 	User user;
 	
 //	add has many spends
+	@JsonIgnore
 	@OneToMany(mappedBy = "creditCard")
 	List<Spend> spendHistory;
 	
 	//has many payments
+	@JsonIgnore
 	@OneToMany(mappedBy = "creditCard")
 	List<Payment> paymentHistory;
 	
