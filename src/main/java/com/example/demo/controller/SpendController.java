@@ -19,13 +19,15 @@ import com.example.demo.model.Account;
 import com.example.demo.model.Spend;
 import com.example.demo.dao.SpendRepo;
 
+
 @RestController
 public class SpendController {
 
 		@Autowired
 		SpendRepo repo;
 		
-		//Index route
+		
+		//Index route / get All
 		@GetMapping(path= "/spends")
 		public List<Spend> getSpends() {
 			
@@ -34,7 +36,7 @@ public class SpendController {
 			return list;
 		}
 		
-		//Get route
+		//Get route / Find
 		@GetMapping(path="/spends/{id}")
 		public Spend getSpend(@PathVariable("id") Long id){
 			
@@ -52,8 +54,8 @@ public class SpendController {
 			return spend;
 		}
 		
-		//Post Route
-		//Works for Update
+		//Post Route / Save / Update
+		//Confirmed functionality
 		@PostMapping(path = "/spends")
 		public void create( Spend newSpend) {
 			
