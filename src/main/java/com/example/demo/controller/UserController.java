@@ -11,8 +11,10 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
@@ -44,8 +46,8 @@ public class UserController {
 	 * Hits authenticateLogin and RETURNS a JWT token if credentials 
 	 * are valid. returns null if invalid credentials.
 	 */
-	@PostMapping(path="users/login/{username}")//use post here rather than get
-	public String loginUser(@PathVariable("username") String username, @RequestHeader(value="password") String password) {
+	@GetMapping(path="users/login/{username}")//use post here rather than get
+	public Boolean loginUser(@PathVariable("username") String username, @RequestHeader(value="password") String password) {
 		User foundUser = null;
 
 		//this is a bit messy but it parses JSON down to the
@@ -70,7 +72,6 @@ public class UserController {
 //		reconstructedUtilMap.keySet().forEach(System.out::println);
 //		System.out.println(reconstructedUtilMap.get(keySet[0]));
 				
-		String token = null;
 		//finds user by username and auithenticates the user's credentials
 		try {
 			//retrieves User from database
@@ -81,22 +82,52 @@ public class UserController {
 			//VERY IMPORTANT authenticates the user
 			//returns token if user auth successful
 			if(foundUser != null) {
-				token = foundUser.authenticateLogin(password, foundUser);
-				if(token != null) {
-					return token;
+				if(foundUser.authenticateLogin(password, foundUser)){
+					repo.save(foundUser);
+					return true;
 				}
 			} else {
 				//if credentials incorrect
 				System.out.println("LOGIN FAILED");
-				return null;
+				return false;
 			} 
 		}catch (Exception e){
 			System.out.println("No user found with that username.");
 			System.err.println("ERROR: " + e);
 		}
-			return token;
+		return false;
 		}
 	
+	
+	@GetMapping(path="users/login/2fa/{username}")
+	public String twoFactorAuth(@PathVariable("username") String username, @RequestHeader(value="twoFactorAuth") String code) {
+		
+		String token = null;
+		User foundUser = repo.findByUsername(username).get(0);
+		System.out.println("USER FOUND IN AUTH::: " + foundUser);
+		try {
+			
+			if (foundUser.getTwoFactorAuth().equals(code)) {
+				token = foundUser.authenticate2FA(foundUser);
+				if (token != null) {
+					foundUser.setTwoFactorAuth(null);
+					return token;
+				}
+				else {
+					System.out.println("LOGIN FAILED");
+					foundUser.setTwoFactorAuth(null);
+					return null;
+				}
+			}
+		}
+		catch (Exception e) {
+			System.err.println("ERROR: " + e);
+		}
+		foundUser.setTwoFactorAuth(null);
+		repo.save(foundUser);
+		return token;
+		
+	}
 		/*
 		 * This route takes a token as a header and validates that token.
 		 * Token is checked for validity as well as expiration.
