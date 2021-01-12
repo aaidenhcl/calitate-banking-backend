@@ -28,6 +28,7 @@ import javax.persistence.OneToMany;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -88,7 +89,7 @@ public class User {
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy="user", cascade = CascadeType.ALL)
 	List<Account> accounts;
-	
+
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user",  cascade = CascadeType.ALL)
 	List<CreditCard> creditCards;
 	
@@ -297,17 +298,22 @@ public class User {
 
 
 
-
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", username=" + username + ", salt=" + Arrays.toString(salt) + ", hash="
-				+ Arrays.toString(hash) + ", DOB=" + DOB + ", firstName=" + firstName + ", lastName=" + lastName
-				+ ", address=" + address + ", region=" + region + ", creditScore=" + creditScore + ", profession="
-				+ profession + ", email=" + email + ", twoFactorAuth=" + twoFactorAuth + ", dateCreated=" + dateCreated
-				+ ", lastUpdated=" + lastUpdated + ", accounts=" + accounts + ", creditCards=" + creditCards
-				+ ", loans=" + loans + ", creditCardRequests=" + creditCardRequests + ", loanRequests=" + loanRequests
-				+ ", password=" + password + "]";
+		// TODO Auto-generated method stub
+		return this.username;
 	}
+
+//	@Override
+//	public String toString() {
+//		return "User [id=" + id + ", username=" + username + ", salt=" + Arrays.toString(salt) + ", hash="
+//				+ Arrays.toString(hash) + ", DOB=" + DOB + ", firstName=" + firstName + ", lastName=" + lastName
+//				+ ", address=" + address + ", region=" + region + ", creditScore=" + creditScore + ", profession="
+//				+ profession + ", email=" + email + ", twoFactorAuth=" + twoFactorAuth + ", dateCreated=" + dateCreated
+//				+ ", lastUpdated=" + lastUpdated + ", accounts=" + accounts + ", creditCards=" + creditCards
+//				+ ", loans=" + loans + ", creditCardRequests=" + creditCardRequests + ", loanRequests=" + loanRequests
+//				+ ", password=" + password + "]";
+//	}
 
 	/*
 	*this function is hit on user creation

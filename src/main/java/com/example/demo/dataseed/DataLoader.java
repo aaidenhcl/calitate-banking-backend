@@ -56,7 +56,7 @@ public class DataLoader implements CommandLineRunner{
 	 * Loads users for testing
 	 */
 	private void loadUserData() {
-		if(userRepo.count() == 0) {
+		if(true/*userRepo.count() == 0*/) {
 			
 			//SETTING USER 1
 			Date date1 = null;
@@ -67,6 +67,7 @@ public class DataLoader implements CommandLineRunner{
 				User user1 = new User("jeremy_beremy", date1, "Jeremy", "Matthew", "101 Rock and Hardplace drive, 78321", "Michigan",
 						650, "cobbler", "verySecretPassword");
 				userRepo.save(user1);
+				System.out.println("IS THIS WORKING?");
 			}catch (Exception e) {
 				System.err.println("Issue creating user. ERROR: " + e);
 			}
@@ -106,16 +107,17 @@ public class DataLoader implements CommandLineRunner{
 		if(accountRepo.count() < 1) {
 			System.out.println("ACCOUNT SEED CONDITIONAL PASSED");			
 			try {				
-				Long id1 = 1l;
+				Long id1 = 2l;
 				Optional<User> userOpt1 = userRepo.findById(id1);
 				if(userOpt1 != null) {
 					User user1 = userOpt1.get();
+					System.out.println("OPtional is okay");
 					Account account1 = new Account(5000d, 0.1d, 30000d,
 							0.2d, "019273001", user1);
 					accountRepo.save(account1);
 				}
 				
-				Long id2 = 2l;
+				Long id2 = 3l;
 				Optional<User> userOpt2 = userRepo.findById(id2);
 				if(userOpt2 != null) {
 					User user2 = userOpt2.get();
@@ -124,7 +126,7 @@ public class DataLoader implements CommandLineRunner{
 					accountRepo.save(account2);
 				}
 				
-				Long id3 = 3l;
+				Long id3 = 4l;
 				Optional<User> userOpt3 = userRepo.findById(id3);
 				if(userOpt3 != null) {
 					User user3 = userOpt3.get();

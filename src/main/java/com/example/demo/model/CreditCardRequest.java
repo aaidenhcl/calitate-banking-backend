@@ -101,7 +101,7 @@ public class CreditCardRequest {
 	}
 	
 	public CreditCard acceptOffer() {
-		if(this.status == "approved") {			
+		if(this.status.equals("approved")) {			
 			System.out.println("Offer accepted");
 			CreditCard creditCard = new CreditCard(this.offeredLimit, this.offeredApr, this.cardType, this.user);
 			return creditCard;
@@ -121,6 +121,8 @@ public class CreditCardRequest {
 
 	public void setId(Long id) {
 		this.id = id;
+		this.requestTime = new Date();
+		processCreditCardRequest();
 	}
 
 	public String getStatus() {
@@ -190,8 +192,8 @@ public class CreditCardRequest {
 	@Override
 	public String toString() {
 		return "CreditCardRequest [id=" + id + ", status=" + status + ", offeredLimit=" + offeredLimit + ", offeredApr="
-				+ offeredApr + ", cardType=" + cardType + ", requestTime=" + requestTime + ", lastUpdated="
-				+ lastUpdated + ", reason=" + reason + ", user=" + user + "]";
+				+ offeredApr + ", requestTime=" + requestTime + ", lastUpdated=" + lastUpdated + ", reason=" + reason
+				+ "]";
 	}
 
 	
