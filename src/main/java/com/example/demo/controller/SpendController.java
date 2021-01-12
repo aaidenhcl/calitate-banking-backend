@@ -1,6 +1,9 @@
 package com.example.demo.controller;
 
+import java.util.List;
 import java.util.Optional;
+
+import javax.persistence.PostUpdate;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -22,6 +25,15 @@ public class SpendController {
 		@Autowired
 		SpendRepo repo;
 		
+		//Index route
+		@GetMapping(path= "/spends")
+		public List<Spend> getSpends() {
+			
+			List<Spend> list = repo.findAll();
+			
+			return list;
+		}
+		
 		//Get route
 		@GetMapping(path="/spends/{id}")
 		public Spend getSpend(@PathVariable("id") Long id){
@@ -41,6 +53,7 @@ public class SpendController {
 		}
 		
 		//Post Route
+		//Works for Update
 		@PostMapping(path = "/spends")
 		public void create( Spend newSpend) {
 			
@@ -52,11 +65,15 @@ public class SpendController {
 			
 		}
 		
+		
 		//Delete Route
 		@DeleteMapping(path= "/spends/{id}")
 		public void delete(@PathVariable("id") Spend spend) {
 			
+			//Testing
 			System.out.println("In Spends" + spend);
+			
+			//Delete spend from repo
 			repo.delete(spend);
 		}
 }
