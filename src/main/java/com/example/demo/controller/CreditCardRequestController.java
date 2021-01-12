@@ -21,7 +21,9 @@ public class CreditCardRequestController {
 	public List<CreditCardRequest> getRequest() {
 		
 		//Calls Repo method.
-		List<CreditCardRequest> allRequests = repo.findAllStatus();
+		List<CreditCardRequest> allRequests = repo.getStatusList();
+	
+		
 		return allRequests;
 	}
 

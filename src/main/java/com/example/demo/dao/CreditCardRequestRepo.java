@@ -14,8 +14,11 @@ import org.springframework.data.jpa.repository.Query;
 public interface CreditCardRequestRepo extends JpaRepository<CreditCardRequest, Long>{
 	
 	
-	
+	//test
 	@Query(value = "select * from credit_card_request;" , nativeQuery = true)
 	public List<CreditCardRequest> findAllStatus();
+	
+	@Query(value = "select * from credit_card_request;", nativeQuery = true)
+	public List<CreditCardRequest> getStatusList();
 }
  
