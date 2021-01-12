@@ -1,10 +1,9 @@
 package com.example.demo.controller;
 
-
-
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -51,6 +50,14 @@ public class SpendController {
 			//Save 
 			repo.save(newSpend);
 			
+		}
+		
+		//Delete Route
+		@DeleteMapping(path= "/spends/{id}")
+		public void delete(@PathVariable("id") Spend spend) {
+			
+			System.out.println("In Spends" + spend);
+			repo.delete(spend);
 		}
 }
 
