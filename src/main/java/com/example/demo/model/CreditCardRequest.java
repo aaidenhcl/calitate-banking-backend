@@ -186,10 +186,12 @@ public class CreditCardRequest {
 
 	@Override
 	public String toString() {
-		return "creditCardRequest [id=" + id + ", status=" + status + ", offeredLimit=" + offeredLimit + ", offeredApr="
-				+ offeredApr + ", requestTime=" + requestTime + ", lastUpdated=" + lastUpdated + ", reason=" + reason
-				+ ", user=" + user + "]";
+		return "CreditCardRequest [id=" + id + ", status=" + status + ", offeredLimit=" + offeredLimit + ", offeredApr="
+				+ offeredApr + ", cardType=" + cardType + ", requestTime=" + requestTime + ", lastUpdated="
+				+ lastUpdated + ", reason=" + reason + ", user=" + user + "]";
 	}
+
+	
 
 
 	
