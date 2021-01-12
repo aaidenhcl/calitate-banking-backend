@@ -6,3 +6,4 @@ insert into credit_card(id) values (1);
 --Add spends
 --Samiylo
 insert into spend(id) values (1);
+
