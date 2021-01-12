@@ -48,7 +48,10 @@ public class EmailMessage {
 	public void setMsgBody(String msgBody) {
 		this.msgBody = msgBody;
 	}
-	
-	
-	
+
+	@Override
+	public String toString() {
+		return "EmailMessage [toAddr=" + toAddr + ", fromAddr=" + fromAddr + ", subject=" + subject + ", msgBody="
+				+ msgBody + "]";
+	}
 }

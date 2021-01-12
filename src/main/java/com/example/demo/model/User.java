@@ -296,14 +296,17 @@ public class User {
 	
 
 
+
+
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", username=" + username + ", salt=" + Arrays.toString(salt) + ", hash="
 				+ Arrays.toString(hash) + ", DOB=" + DOB + ", firstName=" + firstName + ", lastName=" + lastName
 				+ ", address=" + address + ", region=" + region + ", creditScore=" + creditScore + ", profession="
-				+ profession + ", dateCreated=" + dateCreated + ", accounts=" + accounts
-				+ ", creditCards=" + creditCards + ", loans=" + loans + ", creditCardRequests=" + creditCardRequests
-				+ ", loanRequests=" + loanRequests + ", password=" + password + "]";
+				+ profession + ", email=" + email + ", twoFactorAuth=" + twoFactorAuth + ", dateCreated=" + dateCreated
+				+ ", lastUpdated=" + lastUpdated + ", accounts=" + accounts + ", creditCards=" + creditCards
+				+ ", loans=" + loans + ", creditCardRequests=" + creditCardRequests + ", loanRequests=" + loanRequests
+				+ ", password=" + password + "]";
 	}
 
 	/*
@@ -364,7 +367,7 @@ public class User {
 		
 		boolean success = false;
 		
-		//alot of this wil look similar to hashedPassword
+		//alot of this will look similar to hashedPassword
 		try {
 			
 			//Making sure to use the same algorithm as we did when creating the users
@@ -385,17 +388,19 @@ public class User {
 				//2 factor auth
 				//generate String
 				
-				user.twoFactorAuth = "";
+				this.twoFactorAuth = "";
 				
 				for (int i = 0; i < 8; i ++) {
-					user.twoFactorAuth += (char)('a'+(int)(Math.random() * 26));
+					this.twoFactorAuth += (char)('a'+(int)(Math.random() * 26));
 				}
 				
+				System.out.println("two factor::: " + this.twoFactorAuth);
 				
-				String to = user.email;
+				String to = this.email;
 				String from = "TeamCalitate@gmail.com";
-				String messageBody = "Your code is "+user.twoFactorAuth;
+				String messageBody = "Your code is "+this.twoFactorAuth;
 				EmailMessage message = new EmailMessage(to,from,"Two Factor Authorization Code", messageBody);
+				System.out.println(message);
 				if (!EmailSender.SendEmail(message)) {
 						System.out.println("Email issue");
 				}
