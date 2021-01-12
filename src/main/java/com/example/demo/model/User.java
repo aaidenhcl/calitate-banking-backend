@@ -476,7 +476,7 @@ public class User {
 					.setSubject(user.getUsername())
 					.setId(UUID.randomUUID().toString())
 					.setIssuedAt(Date.from(Instant.now()))
-					.setExpiration(Date.from(Instant.now().plus(5l, ChronoUnit.MINUTES)))
+					.setExpiration(Date.from(Instant.now().plus(500l, ChronoUnit.MINUTES)))
 					.signWith(hmacKey)
 					.compact(); 
 			

@@ -11,8 +11,10 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
@@ -81,6 +83,7 @@ public class UserController {
 			//returns token if user auth successful
 			if(foundUser != null) {
 				if(foundUser.authenticateLogin(password, foundUser)){
+					repo.save(foundUser);
 					return true;
 				}
 			} else {
@@ -101,6 +104,7 @@ public class UserController {
 		
 		String token = null;
 		User foundUser = repo.findByUsername(username).get(0);
+		System.out.println("USER FOUND IN AUTH::: " + foundUser);
 		try {
 			
 			if (foundUser.getTwoFactorAuth().equals(code)) {
@@ -120,6 +124,7 @@ public class UserController {
 			System.err.println("ERROR: " + e);
 		}
 		foundUser.setTwoFactorAuth(null);
+		repo.save(foundUser);
 		return token;
 		
 	}
