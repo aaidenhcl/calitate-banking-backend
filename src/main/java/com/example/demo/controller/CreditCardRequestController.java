@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import java.util.ArrayList;
 import java.util.Optional;
 import java.util.List;
 
@@ -22,6 +23,28 @@ public class CreditCardRequestController {
 
 	@Autowired
 	CreditCardRequestRepo repo;
+
+	
+	
+	//Story 35
+	@GetMapping(path="/creditCardRequests/approvals/regionProfession")
+	public Integer approvalsProfessionRegion(@RequestParam String profession, @RequestParam String region){
+		
+		List<CreditCardRequest> approvals = new ArrayList<>();
+		if (!region.isEmpty() && !profession.isEmpty()) {
+			System.out.println("Both");
+			approvals = repo.findByUserRegionAndUserProfession(region, profession);
+		}
+		else if (!region.isEmpty()) {
+			approvals = repo.findByUserRegion(region);
+		}
+		else if (!profession.isEmpty()) {
+			approvals = repo.findByUserProfession(profession);
+		}
+		return approvals.size();
+	}
+
+	
 	
 	@Autowired
 	UserRepo userRepo;
