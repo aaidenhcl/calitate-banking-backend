@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import java.util.Map;
+
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +21,8 @@ import com.example.demo.dao.CreditCardRequestRepo;
 import com.example.demo.dao.SpendRepo;
 import com.example.demo.model.CreditCard;
 import com.example.demo.model.CreditCardRequest;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import org.springframework.web.bind.annotation.RestController;
 
@@ -39,6 +44,13 @@ public class CreditCardController {
 	@Autowired
 	CreditCardBO bo;
 	
+	/*
+	 * Hit this route to either accept or decline a credit card request offer
+	 * queries the credit card request 
+	 * credit card object is created and saved if request param == accepted
+	 * credit card request acceptOffer method instantiates credit card
+	 * credit card is saved and returned
+	 */
 	@PostMapping(path="/creditCards")
 	public CreditCard createCreditCards(@RequestParam Long ccrId, @RequestParam String status) {
 		
@@ -61,6 +73,7 @@ public class CreditCardController {
 	}
 	
 	
+
 	
 	
 	//Samiylo - Story36
@@ -89,4 +102,33 @@ public class CreditCardController {
 		return  spends;
 	}
 	
+
+	/*
+	 * returns map of categories with total accumulated amount
+	 * as value
+	 */
+	@GetMapping(path="/creditCards/{id}/patterns")
+	public String analyzeSpendingPatterns(@PathVariable("id") Long id) {
+		CreditCard creditCard = bo.findById(id);
+		Map<String, Double> spendsMap = bo.categorizeSpendsByAmount(creditCard);
+		GsonBuilder builder = new GsonBuilder();
+		Gson gson = builder.create();
+		
+		return gson.toJson(spendsMap);
+	}
+	
+	
+	/*
+	 * Similar to analyzeSpendingPatterns but maps categories to percentage of use
+	 */
+	@GetMapping(path="/creditCards/{id}/patterns/stats")
+	public String analyzeSpendingPatternsStats(@PathVariable("id") Long id) {
+		CreditCard creditCard = bo.findById(id);
+		Map<String, Double> spendsMap = bo.categorizeSpendsByStats(creditCard);
+		GsonBuilder builder = new GsonBuilder();
+		Gson gson = builder.create();
+		
+		return gson.toJson(spendsMap);
+	}
+
 }
