@@ -12,7 +12,5 @@ import org.springframework.stereotype.Component;
 @Component
 public interface CreditCardRepo extends JpaRepository<CreditCard, Long>{
 	
-//	@Query(value= "SELECT * FROM spend", nativeQuery = true)
-//    public List<Spend> getAllStatement();
 
 }

@@ -76,12 +76,14 @@ public class CreditCardController {
 		System.out.println(id);
 		
 		Optional<CreditCard> history = repo.findById(id);
-		
-		List<Spend> spends = history.get().getSpendHistory();
+//		List<Spend> list = spendRepo.getAllStatement(id);
 		
 		if (history == null) {
 			return null;
 		}
+		
+		List<Spend> spends = history.get().getSpendHistory();
+	
 		
 		//I want to return a list of spends for specific credit card
 		return  spends;
