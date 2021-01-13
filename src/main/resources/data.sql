@@ -10,10 +10,11 @@ insert into credit_card_request (id, status, user_id) values (1, 'approved', 1 )
 
 --Add spends
 --Samiylo
-insert into spend(id) values (1);
+insert into spend(id, amount, category, item, user_note, credit_card_id) values (1, 300, 'Technology', 'iPad', true, 1);
 
 --Matthew
 insert into user(id, profession, region) values (2, 'Fry Cook', 'Texas'); 
+
 insert into credit_card_request (id, status, card_type, user_id) values (2, 'approved', 'gold', 1);
 
 --user story 36
@@ -52,4 +53,5 @@ insert into spend(id, amount, category, item, credit_card_id) values(19, 10, 'en
 
 
 insert into credit_card_request (id, status, card_type, user_id, request_time) values (10, 'Approved', 'gold', 1, '20201220');
+
 
