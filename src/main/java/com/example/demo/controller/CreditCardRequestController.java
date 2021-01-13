@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import com.example.demo.bo.CreditCardRequestBO;
 import com.example.demo.dao.CreditCardRequestRepo;
 import com.example.demo.dao.UserRepo;
 import com.example.demo.model.CreditCardRequest;
@@ -24,6 +25,9 @@ public class CreditCardRequestController {
 	
 	@Autowired
 	UserRepo userRepo;
+	
+	@Autowired
+	CreditCardRequestBO bo;
 	
 	@PostMapping(path="creditCardRequests")
 	public CreditCardRequest createCreditCardRequest(@RequestParam String cardType, @RequestParam Long user) {

@@ -8,6 +8,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 
+import com.example.demo.bo.CreditCardBO;
 import com.example.demo.dao.CreditCardRepo;
 import com.example.demo.dao.CreditCardRequestRepo;
 import com.example.demo.model.CreditCard;
@@ -23,6 +24,9 @@ public class CreditCardController {
 	
 	@Autowired
 	CreditCardRequestRepo ccrRepo;
+	
+	@Autowired
+	CreditCardBO bo;
 	
 	@PostMapping(path="/creditCards")
 	public CreditCard createCreditCards(@RequestParam Long ccrId, @RequestParam String status) {
