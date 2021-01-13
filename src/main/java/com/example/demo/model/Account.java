@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -18,7 +19,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 public class Account {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	protected Long id;
 	protected Double checkingBalance;
 	protected Double checkingInterestRate;
@@ -149,7 +150,7 @@ public class Account {
 		return "Account [id=" + id + ", checkingBalance=" + checkingBalance + ", checkingInterestRate="
 				+ checkingInterestRate + ", savingsBalance=" + savingsBalance + ", savingsInterestRate="
 				+ savingsInterestRate + ", accountNumber=" + accountNumber + ", dateCreated=" + dateCreated
-				+ ", lastUpdated=" + lastUpdated + ", user=" + user + ", paymentHistory=" + paymentHistory + "]";
+				+ ", lastUpdated=" + lastUpdated  + ", paymentHistory=" + paymentHistory + "]";
 	}
 	
 }
