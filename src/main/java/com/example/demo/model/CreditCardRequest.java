@@ -1,6 +1,7 @@
 package com.example.demo.model;
 
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 
 import java.util.Date;
 
@@ -19,7 +20,7 @@ import javax.persistence.Entity;
 public class CreditCardRequest {
 	
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String status;
 	private Double offeredLimit;
