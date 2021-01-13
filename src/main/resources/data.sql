@@ -1,6 +1,6 @@
 --Remember to comment all queries with reason and your name :D 
 --for testing purposes
---insert into credit_card (id) values (1);
+insert into credit_card (id) values (1);
 
 
 --really dont need these but these skeletons may come in handy in the future 
@@ -10,9 +10,9 @@ insert into credit_card_request (id, status, user_id) values (1, 'approved', 1 )
 
 --Add spends
 --Samiylo
-insert into spend(id) values (1);
+insert into spend(id, amount, category, item, user_note, credit_card_id) values (1, 300, 'Technology', 'iPad', true, 1);
 
 --Matthew
-insert into user(id, profession, region) values (4, 'Fry Cook', 'Texas'); 
-insert into credit_card_request (id, status, card_type, user_id) values (11, 'Approved', 'gold', 4);
+insert into user(id, profession, region) values (2, 'Fry Cook', 'Texas'); 
+insert into credit_card_request (id, status, card_type, user_id) values (2, 'Approved', 'gold', 1);
 
