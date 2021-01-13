@@ -66,7 +66,7 @@ public class CreditCardRequest {
 				this.offeredLimit = 1000d;
 				this.offeredApr = 0.27d;
 			} else {
-				this.status = "refused";
+				this.status = "rejected";
 				this.reason = "Credit score too low";
 			}
 			this.lastUpdated = new Date();			
@@ -78,7 +78,7 @@ public class CreditCardRequest {
 				this.offeredLimit = 10000d;
 				this.offeredApr = 0.15d;
 			} else {
-				this.status = "refused";
+				this.status = "rejected";
 				this.reason = "Credit score too low";
 			}
 			this.lastUpdated = new Date();			
@@ -90,7 +90,7 @@ public class CreditCardRequest {
 				this.offeredLimit = 50000d;
 				this.offeredApr = 0.07d;
 			} else {
-				this.status = "refused";
+				this.status = "rejected";
 				this.reason = "Credit score too low";
 			}
 			this.lastUpdated = new Date();
@@ -107,7 +107,8 @@ public class CreditCardRequest {
 			CreditCard creditCard = new CreditCard(this.offeredLimit, this.offeredApr, this.cardType, this.user);
 			return creditCard;
 		}
-		System.out.println("You cannot accept this credit card");
+		//this should probably be a throws
+		System.out.println("You cannot accept this credit card because you were rejected");
 		return null;
 	}
 	
