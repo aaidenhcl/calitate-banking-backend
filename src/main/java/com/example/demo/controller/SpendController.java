@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-//import com.example.demo.bo.SpendBO;
+import com.example.demo.bo.SpendBO;
 import com.example.demo.dao.AccountRepo;
 import com.example.demo.model.Account;
 import com.example.demo.model.Spend;
@@ -28,7 +28,7 @@ public class SpendController {
 		SpendRepo repo;
 		
 		@Autowired
-		//SpendBO bo;
+		SpendBO bo;
 		
 		//Index route / get All
 		@GetMapping(path= "/spends")
