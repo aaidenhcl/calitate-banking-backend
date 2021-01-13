@@ -51,4 +51,5 @@ insert into spend(id, amount, category, item, credit_card_id) values(19, 10, 'en
 
 
 
+insert into credit_card_request (id, status, card_type, user_id, request_time) values (10, 'Approved', 'gold', 1, '20201220');
 

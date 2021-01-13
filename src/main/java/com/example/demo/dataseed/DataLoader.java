@@ -152,8 +152,6 @@ public class DataLoader implements CommandLineRunner{
 			Long id1 = (Long)userRepo.count();
 			Long id2 = (Long)userRepo.count()-1;
 			Long id3 = (Long)userRepo.count()-2;
-			System.out.println(creditCardRequestRepo.count());
-			System.out.println("HIT!!!");
 			
 			Optional<User> userOpt1 = userRepo.findById(id1);
 			Optional<User> userOpt2 = userRepo.findById(id2);

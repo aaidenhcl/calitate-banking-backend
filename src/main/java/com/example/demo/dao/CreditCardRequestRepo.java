@@ -8,6 +8,7 @@ import com.example.demo.model.User;
 import java.util.List;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -20,6 +21,8 @@ public interface CreditCardRequestRepo extends JpaRepository<CreditCardRequest, 
 	List<CreditCardRequest> findByUserProfession(String profession);
 	List<CreditCardRequest> findByUserRegionAndUserProfession(String region, String profession);
 	
+	@Query(value = "SELECT * FROM credit_card_request WHERE request_time BETWEEN CAST(?1 AS DATE) AND CAST(?2 AS DATE);", nativeQuery = true)
+	List<CreditCardRequest> findByRequestTime(String start, String end);
 	
 	
 	//test

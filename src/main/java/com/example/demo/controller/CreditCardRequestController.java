@@ -1,6 +1,9 @@
 package com.example.demo.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Optional;
 import java.util.List;
 import java.util.Map;
@@ -34,6 +37,12 @@ public class CreditCardRequestController {
 	
 	@Autowired
 	CreditCardRequestBO bo;
+  
+	//Story32
+	@GetMapping(path="/creditCardRequests/dateRange")
+	public Integer requestsByDateRange(@RequestParam String start, @RequestParam String end) {
+		return repo.findByRequestTime(start, end).size();
+	}
 	
 	@GetMapping(path="/creditCardRequests/rejected")
 	public String findAllCountRejectedAndReason(){
