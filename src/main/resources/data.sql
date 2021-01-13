@@ -13,6 +13,6 @@ insert into credit_card_request (id, status, user_id) values (1, 'approved', 1 )
 insert into spend(id) values (1);
 
 --Matthew
-insert into user(id, profession, region) values (4, 'Fry Cook', 'Texas'); 
-insert into credit_card_request (id, status, card_type, user_id) values (11, 'Approved', 'gold', 4);
+insert into user(id, profession, region) values (2, 'Fry Cook', 'Texas'); 
+insert into credit_card_request (id, status, card_type, user_id, request_time) values (2, 'Approved', 'gold', 1, '20201220');
 

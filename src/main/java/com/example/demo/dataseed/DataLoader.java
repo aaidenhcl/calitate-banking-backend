@@ -149,9 +149,9 @@ public class DataLoader implements CommandLineRunner{
 		try{
 			//Credit card request 1 data seeded
 			//all of user 2's ccr's
-			Long id1 = 1l;
-			Long id2 = 2l;
-			Long id3 = 3l;
+			Long id1 = 3l;
+			Long id2 = 4l;
+			Long id3 = 5l;
 			
 			Optional<User> userOpt1 = userRepo.findById(id1);
 			Optional<User> userOpt2 = userRepo.findById(id2);
