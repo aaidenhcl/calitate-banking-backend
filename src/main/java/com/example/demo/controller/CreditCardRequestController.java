@@ -1,14 +1,11 @@
 package com.example.demo.controller;
 
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.dao.CreditCardRequestRepo;
@@ -20,22 +17,15 @@ public class CreditCardRequestController {
 	@Autowired
 	CreditCardRequestRepo repo;
 
-	//Story 31
-	//untested
-	@GetMapping(path="/creditCardRequests/requests/byDate")
-	public List<CreditCardRequest> requestsByDate(@RequestHeader(value="startDate") Date startDate, @RequestHeader(value="endDate") Date endDate){
-		
-		return null;
-		
-	}
 	
-	//Story 34
-	//untested
-	@GetMapping(path="/creditCardRequests/requests/approvals/regionProfession")
-	public Integer approvalsProfessionRegion(@RequestHeader(value="profession") String profession, @RequestHeader(value="region") String region){
+	
+	//Story 35
+	@GetMapping(path="/creditCardRequests/approvals/regionProfession")
+	public Integer approvalsProfessionRegion(@RequestParam String profession, @RequestParam String region){
 		
 		List<CreditCardRequest> approvals = new ArrayList<>();
 		if (!region.isEmpty() && !profession.isEmpty()) {
+			System.out.println("Both");
 			approvals = repo.findByUserRegionAndUserProfession(region, profession);
 		}
 		else if (!region.isEmpty()) {
