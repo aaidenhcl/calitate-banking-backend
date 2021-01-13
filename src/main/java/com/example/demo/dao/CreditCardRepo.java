@@ -1,7 +1,7 @@
 package com.example.demo.dao;
 
 import com.example.demo.model.CreditCard;
-import com.example.demo.model.CreditCardStatement;
+import com.example.demo.model.Spend;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 @Component
 public interface CreditCardRepo extends JpaRepository<CreditCard, Long>{
 	
-	@Query("SELECT new com.example.demo.model.CreditCardStatement(Spend.id, Spend.amount, Spend.category, Spend.item, Spend.userNote) FROM Spend")
-    public List<CreditCardStatement> getStatement();
+//	@Query(value= "SELECT * FROM spend", nativeQuery = true)
+//    public List<Spend> getAllStatement();
 
 }

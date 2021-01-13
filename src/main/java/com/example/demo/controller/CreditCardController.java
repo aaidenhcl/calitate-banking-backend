@@ -18,7 +18,6 @@ import com.example.demo.dao.CreditCardRequestRepo;
 import com.example.demo.dao.SpendRepo;
 import com.example.demo.model.CreditCard;
 import com.example.demo.model.CreditCardRequest;
-import com.example.demo.model.CreditCardStatement;
 
 import org.springframework.web.bind.annotation.RestController;
 
@@ -70,19 +69,22 @@ public class CreditCardController {
 	@GetMapping(path= "/creditCards/{id}/spends")
 	
 	//Grab creditCard id from route
-	public List<CreditCardStatement> getStatement(@PathVariable("id") Long id) {
+	public List<Spend> getStatement(@PathVariable("id") Long id) {
 		
 		//Test
 		System.out.println("samiylo - CreditCardController/getStatement()");
 		System.out.println(id);
 		
-		List<CreditCardStatement> history = repo.getStatement();
+		Optional<CreditCard> history = repo.findById(id);
+		
+		List<Spend> spends = history.get().getSpendHistory();
+		
 		if (history == null) {
 			return null;
 		}
 		
 		//I want to return a list of spends for specific credit card
-		return history;
+		return  spends;
 	}
 	
 }
