@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.bo.UserBO;
 import com.example.demo.dao.UserRepo;
 //import com.example.demo.model.ConsumerUser;
 import com.example.demo.model.User;
@@ -25,6 +26,9 @@ public class UserController {
 
 	@Autowired
 	UserRepo repo;
+	
+	@Autowired
+	UserBO bo;
 	
 	/*
 	 * On save, this route is going to hit the User default method.

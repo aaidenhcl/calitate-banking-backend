@@ -14,14 +14,15 @@ import com.example.demo.service.Region;
 @Component
 public interface SpendRepo extends JpaRepository<Spend, Long> {
 	
-	/*
-	@Query(value = "SELECT u.region, COUNT(s.amount) FROM User U, Credit_Card c, Spend S WHERE u.id = c.user_id AND c.id = s.credit_card_id GROUP BY u.region ORDER BY u.region ASC", nativeQuery=true)
-    public List<RegionSpend> getJoinInformation();
-  	*/
+
 	
-	//return spends for all regions
+	//return spends and sales for all regions
 	@Query("SELECT new com.example.demo.service.Region(u.region, SUM(s.amount) AS summed, COUNT(u.region) AS sale) FROM User u JOIN u.creditCards c JOIN c.spendHistory s GROUP BY u.region ORDER BY summed ASC")
     public List<Region> getRegionStats();
 	
+
+//	@Query("FROM spend where credit_card_id = ?1")
+//    public List<Spend> getAllStatement(Long credit_card_id);
+
 	
 }
