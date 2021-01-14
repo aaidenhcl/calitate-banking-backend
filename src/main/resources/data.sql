@@ -5,6 +5,16 @@
 --user dump
 insert into user (id, username, password, credit_score, email,region) values (1, 'bob', 'asd', 700, 'aaidenplays@yahoo.com','Texas');
 insert into user(id, username, profession, region) values (2, 'spongebob', 'Fry Cook', 'Under Da Sea'); 
+
+
+
+--really dont need these but these skeletons may come in handy in the future 
+--(aaiden)
+insert into credit_card (id, user_id) values (1,1);
+insert into credit_card_request (id, status, user_id) values (1, 'approved', 1 );
+
+--More spends
+--Jeremy
 INSERT INTO USER(ID,REGION) VALUES (3,'Texas');
 INSERT INTO USER(ID,REGION) VALUES (4, 'Michigan');
 INSERT INTO USER(ID,REGION) VALUES (5, 'Michigan');
@@ -65,6 +75,11 @@ INSERT INTO SPEND(id,amount,credit_card_id) VALUES (21,15.0,7);
 INSERT INTO SPEND(id,amount,credit_card_id) VALUES (22,15.0,8);
 
 --payment dump
+insert into credit_card_request (id, status, card_type, user_id, request_time) values (10, 'Approved', 'gold', 1, '20201220');
+
+--for user story 43 need payments to calculate spend and payment differences
+--Aaiden
+insert into account (id, checking_balance, account_number, user_id) values (1, 1000, '989451001', 1);
 insert into payment(id, amount, account_id, credit_card_id) values (1, 50, 1, 1);
 insert into payment(id, amount, account_id, credit_card_id) values (2, 10, 1, 1);
 insert into payment(id, amount, account_id, credit_card_id) values (3, 20, 1, 1);

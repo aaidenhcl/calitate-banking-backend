@@ -5,9 +5,15 @@ import com.example.demo.dao.UserRepo;
 import com.example.demo.model.CreditCard;
 //import com.example.demo.model.ConsumerUser;
 import com.example.demo.model.User;
+
 import com.example.demo.service.Demographics;
 import com.example.demo.service.RegionSale;
 import com.example.demo.service.RegionSpend;
+
+import com.example.demo.utilities.DevUtil;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 
 import java.util.Arrays;
 import java.util.List;
@@ -184,4 +190,40 @@ public class UserController {
 			
 		}
 	
+		/*
+		 * This route gets a user's spend and payment histories
+		 * find accumulated total of both
+		 * returns classification depending on amount owed and credit score
+		 * 
+		 */
+		@GetMapping(path="/users/{id}/transactionStats")
+		public String userTransactionStats(@PathVariable("id") Long id, @RequestHeader(value="Authorization") String token){
+			if(DevUtil.getIsDev() || User.validateUserToken(token)) {						
+				User user = bo.findById(id);
+				Map<String, Object> mappedAmounts = bo.processUserSpendAndPayHistrories(user);
+				GsonBuilder builder = new GsonBuilder();
+				Gson gson = builder.create();
+				
+				return gson.toJson(mappedAmounts);
+			}
+			return null;
+		}
+		
+//		@GetMapping(path="/users/{id}/clasification")
+//		public String userClassification(@PathVariable("id") Long id, @RequestHeader(value="Authorization") String token) {
+//			if(DevUtil.getIsDev() || User.validateUserToken(token)) {						
+//				
+//			}
+//			return null;
+//		}
+		
+		/*
+		 * This route gets a user's spend and payment histories
+		 * calculates average spent per month
+		 * calculates average payments per month
+		 * returns average difference
+		 * This is a bit much and probably wont do.
+		 * Just an idea really
+		 */
+		
 }

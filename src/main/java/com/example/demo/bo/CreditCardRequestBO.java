@@ -3,6 +3,8 @@ package com.example.demo.bo;
 import com.example.demo.dao.CreditCardRequestRepo;
 import com.example.demo.model.CreditCardRequest;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -35,6 +37,52 @@ public class CreditCardRequestBO {
 			}
 		}
 		return ccrMap;
+	}
+	
+	
+	/*Story 42
+	 * Takes a list of requests and returns the average time'
+	 * Return average time to respond to a request
+	 */
+	@SuppressWarnings("deprecation")
+	public Integer getTimeAvg() {
+		System.out.println("sammy : CreditCardRequestBO/getTimeAvg()");
+		
+		//Grab all requests
+		List<CreditCardRequest> requests = repo.findAll();
+		List<Integer> times = new ArrayList<Integer>();
+		Integer totalTimes = 0;
+		
+		//Traverse all requests
+		for (CreditCardRequest x: requests) {
+			
+			//Check if times are not null
+			if (x.getRequestTime() != null && x.getLastUpdated() != null) {
+				
+				Integer request = x.getRequestTime().getHours();
+				Integer lastUpdate = x.getLastUpdated().getHours();
+				
+				//System.out.println("Request time: " + request);
+				//System.out.println("Last Update Time: " + lastUpdate);
+				
+				times.add(lastUpdate - request);
+			}
+			else {
+				//System.out.println("Request Time is null");
+			}
+		}
+		
+		//Total time gets reset to 0 here/ why?
+		for (Integer x: times) {
+			//System.out.println(x);
+			totalTimes += x;
+			System.out.println(totalTimes);
+		}
+		
+		
+		totalTimes = totalTimes/times.size();
+		
+		return totalTimes;
 	}
 	
 }
