@@ -8,8 +8,22 @@ insert into credit_card (id) values (1);
 insert into user (id, username, password, credit_score, email) values (1, 'bob', 'asd', 700, 'aaidenplays@yahoo.com');
 insert into credit_card_request (id, status, user_id) values (1, 'approved', 1 );
 
---Add spends
---Samiylo
+
+--More spends
+--Jeremy
+INSERT INTO USER(ID,REGION) VALUES (3,'Texas');
+INSERT INTO USER(ID,REGION) VALUES (4, 'Michigan');
+INSERT INTO USER(ID,REGION) VALUES (5, 'Michigan');
+
+INSERT INTO CREDIT_CARD(ID,USER_ID) VALUES (2,4);
+INSERT INTO CREDIT_CARD(ID,USER_ID) VALUES (3,5);
+INSERT INTO CREDIT_CARD(ID,USER_ID) VALUES (4,5);
+
+INSERT INTO SPEND(id,amount,credit_card_id) VALUES (20,10.0,2);
+INSERT INTO SPEND(id,amount,credit_card_id) VALUES (21,15.0,3);
+INSERT INTO SPEND(id,amount,credit_card_id) VALUES (2,15.0,4);
+----
+
 insert into spend(id, amount, category, item, user_note, credit_card_id) values (1, 300, 'Technology', 'iPad', true, 1);
 
 --Matthew
@@ -53,5 +67,6 @@ insert into spend(id, amount, category, item, credit_card_id) values(19, 10, 'en
 
 
 insert into credit_card_request (id, status, card_type, user_id, request_time) values (10, 'Approved', 'gold', 1, '20201220');
+
 
 
