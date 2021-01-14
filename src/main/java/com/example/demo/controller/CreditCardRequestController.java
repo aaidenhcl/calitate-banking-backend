@@ -126,11 +126,11 @@ public class CreditCardRequestController {
 	 * Will have to set a minimum wait time
 	 */
 	@GetMapping(path="/creditCardRequests/average")
-	public Integer getAverageRequestTime(@RequestHeader("Authorization") String token) {
+	public Long getAverageRequestTime(@RequestHeader("Authorization") String token) {
 		if(DevUtil.getIsDev() || User.validateUserToken(token)) {
 			System.out.println("sammy : CrediCardRequestController/getAverageRequestTime()");
-			Integer time = bo.getTimeAvg();
-			System.out.println("Time in hours: " + time);
+			Long time = bo.getTimeAvg();
+			System.out.println("Time in minutes: " + time);
 		
 			return time;
 		}

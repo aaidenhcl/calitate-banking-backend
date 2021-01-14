@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -45,13 +46,13 @@ public class CreditCardRequestBO {
 	 * Return average time to respond to all requests
 	 */
 	@SuppressWarnings("deprecation")
-	public Integer getTimeAvg() {
+	public Long getTimeAvg() {
 		System.out.println("sammy : CreditCardRequestBO/getTimeAvg()");
 		
 		//Grab all requests
 		List<CreditCardRequest> requests = repo.findAll();
-		List<Integer> times = new ArrayList<Integer>();
-		Integer totalTimes = 0;
+		List<Long> times = new ArrayList<Long>();
+		Long totalTimes = (long) 0.0;
 		
 		//Traverse all requests
 		for (CreditCardRequest x: requests) {
@@ -59,28 +60,28 @@ public class CreditCardRequestBO {
 			//Check if times are not null
 			if (x.getRequestTime() != null && x.getLastUpdated() != null) {
 				
-				Integer request = x.getRequestTime().getHours();
-				Integer lastUpdate = x.getLastUpdated().getHours();
-				
 				//Test
-//				Date  testReq = x.getRequestTime();
-//				Date testLast = x.getLastUpdated();
-//				System.out.println(testReq);
-//				System.out.println(testLast);
+				Date  testReq = x.getRequestTime();
+				Date testLast = x.getLastUpdated();
+				
+				long diffInMili = Math.abs(testLast.getTime() - testReq.getTime());
+				long diff = TimeUnit.MINUTES.convert(diffInMili, TimeUnit.MILLISECONDS);
+				
+				System.out.println(diff);
 				
 				//System.out.println("Request time: " + request);
 				//System.out.println("Last Update Time: " + lastUpdate);
 				
-				times.add(lastUpdate - request);
+				times.add(diff);
 			}
 			else {
 				//System.out.println("Request Time is null");
 			}
 		}
 		
-		//Total time gets reset to 0 here/ why?
-		for (Integer x: times) {
-			//System.out.println(x);
+		
+		for (Long x: times) {
+			
 			totalTimes += x;
 			//System.out.println(totalTimes);
 		}
