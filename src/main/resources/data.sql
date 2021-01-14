@@ -11,3 +11,17 @@ insert into credit_card (id) values (1);
 --Add spends
 --Samiylo
 insert into spend(id) values (1);
+
+--More spends
+--Jeremy
+INSERT INTO USER(ID,REGION) VALUES (4,'Texas');
+INSERT INTO USER(ID,REGION) VALUES (5, 'Michigan');
+INSERT INTO USER(ID,REGION) VALUES (6, 'Michigan');
+
+INSERT INTO CREDIT_CARD(ID,USER_ID) VALUES (2,4);
+INSERT INTO CREDIT_CARD(ID,USER_ID) VALUES (3,5);
+INSERT INTO CREDIT_CARD(ID,USER_ID) VALUES (4,5);
+
+INSERT INTO SPEND(id,amount,credit_card_id) VALUES (2,10.0,2);
+INSERT INTO SPEND(id,amount,credit_card_id) VALUES (3,15.0,3);
+INSERT INTO SPEND(id,amount,credit_card_id) VALUES (4,15.0,4);

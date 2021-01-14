@@ -14,18 +14,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.dao.AccountRepo;
-import com.example.demo.model.Account;
 import com.example.demo.model.Spend;
+import com.example.demo.service.Region;
+import com.example.demo.service.RegionSpend;
+
 import com.example.demo.dao.SpendRepo;
-
-
 @RestController
 public class SpendController {
 
 		@Autowired
 		SpendRepo repo;
-		
 		
 		//Index route / get All
 		@GetMapping(path= "/spends")
@@ -52,6 +50,13 @@ public class SpendController {
 			
 			
 			return spend;
+		}
+		
+		
+		@GetMapping(path="/regionStats")
+		public List<Region> getRegionStats(){
+			List<Region> rs = repo.getRegionStats();
+			return rs;
 		}
 		
 		//Post Route / Save / Update
