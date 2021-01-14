@@ -21,7 +21,7 @@ INSERT INTO CREDIT_CARD(ID,USER_ID) VALUES (4,5);
 
 INSERT INTO SPEND(id,amount,credit_card_id) VALUES (20,10.0,2);
 INSERT INTO SPEND(id,amount,credit_card_id) VALUES (21,15.0,3);
-INSERT INTO SPEND(id,amount,credit_card_id) VALUES (2,15.0,4);
+INSERT INTO SPEND(id,amount,credit_card_id) VALUES (22,15.0,4);
 ----
 
 insert into spend(id, amount, category, item, user_note, credit_card_id) values (1, 300, 'Technology', 'iPad', true, 1);
