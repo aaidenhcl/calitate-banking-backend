@@ -5,8 +5,12 @@ import com.example.demo.dao.UserRepo;
 import com.example.demo.model.CreditCard;
 //import com.example.demo.model.ConsumerUser;
 import com.example.demo.model.User;
+import com.example.demo.service.Demographics;
+import com.example.demo.service.RegionSale;
+import com.example.demo.service.RegionSpend;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -165,6 +169,19 @@ public class UserController {
 				}
 			//}
 			return 0.0;
+		}
+		
+		@GetMapping(path="/regionSale")
+		public List<RegionSale> getRegionSale(){
+			List<RegionSale> rs = repo.getRegionSale();
+			return rs;
+		}
+		
+		@GetMapping(path="/demographics")
+		public List<Demographics> getUserDemographics() {
+			List<Demographics> dl = repo.getDemographics();
+			return dl;
+			
 		}
 	
 }
