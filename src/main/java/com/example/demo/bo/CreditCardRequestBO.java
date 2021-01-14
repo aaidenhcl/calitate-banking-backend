@@ -3,6 +3,7 @@ package com.example.demo.bo;
 import com.example.demo.dao.CreditCardRequestRepo;
 import com.example.demo.model.CreditCardRequest;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -41,8 +42,7 @@ public class CreditCardRequestBO {
 	
 	
 	/*Story 42
-	 * Takes a list of requests and returns the average time'
-	 * Return average time to respond to a request
+	 * Return average time to respond to all requests
 	 */
 	@SuppressWarnings("deprecation")
 	public Integer getTimeAvg() {
@@ -62,6 +62,12 @@ public class CreditCardRequestBO {
 				Integer request = x.getRequestTime().getHours();
 				Integer lastUpdate = x.getLastUpdated().getHours();
 				
+				//Test
+//				Date  testReq = x.getRequestTime();
+//				Date testLast = x.getLastUpdated();
+//				System.out.println(testReq);
+//				System.out.println(testLast);
+				
 				//System.out.println("Request time: " + request);
 				//System.out.println("Last Update Time: " + lastUpdate);
 				
@@ -76,10 +82,10 @@ public class CreditCardRequestBO {
 		for (Integer x: times) {
 			//System.out.println(x);
 			totalTimes += x;
-			System.out.println(totalTimes);
+			//System.out.println(totalTimes);
 		}
 		
-		
+		//Divide total hours by number of requests
 		totalTimes = totalTimes/times.size();
 		
 		return totalTimes;
