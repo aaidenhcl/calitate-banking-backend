@@ -13,7 +13,7 @@ import javax.persistence.OneToMany;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
-
+//Jeremy Commit
 @Entity
 public class Spend {
 
