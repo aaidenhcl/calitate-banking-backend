@@ -114,5 +114,7 @@ public class CreditCardRequestController {
 	@GetMapping(path="/creditCardRequests/average")
 	public void getAverageRequestTime() {
 		System.out.println("sammy : CrediCardRequestController/getAverageRequestTime()");
+		Integer time = bo.getTimeAvg();
+		System.out.println(time);
 	}
 }

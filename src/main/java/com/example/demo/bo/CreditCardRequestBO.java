@@ -3,6 +3,7 @@ package com.example.demo.bo;
 import com.example.demo.dao.CreditCardRequestRepo;
 import com.example.demo.model.CreditCardRequest;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -42,10 +43,31 @@ public class CreditCardRequestBO {
 	 * Takes a list of requests and returns the average time'
 	 * 
 	 */
-	public String getTimeAvg() {
+	@SuppressWarnings("deprecation")
+	public Integer getTimeAvg() {
+		System.out.println("sammy : CreditCardRequestBO/getTimeAvg()");
 		
+		//Grab all requests
+		List<CreditCardRequest> requests = repo.findAll();
+		Integer time = null;
 		
-		return new String();
+		//Traverse all requests
+		for (CreditCardRequest x: requests) {
+			
+			//Check if times are not null
+			if (x.getRequestTime() != null && x.getLastUpdated() != null) {
+				
+				Integer request = x.getRequestTime().getDay();
+				Integer lastUpdate = x.getLastUpdated().getDay();
+				
+				time = lastUpdate - request;
+			}
+			else {
+				System.out.println("Time is null");
+			}
+		}
+		
+		return time;
 	}
 	
 }
