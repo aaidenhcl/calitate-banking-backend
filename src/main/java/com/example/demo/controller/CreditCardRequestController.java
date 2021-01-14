@@ -119,4 +119,18 @@ public class CreditCardRequestController {
 		}
 		return null;
 	}
+	
+	
+	/*Story 42
+	 * First return a list of CCRequests
+	 * Then return a double
+	 */
+	@GetMapping(path="/creditCardRequests/average")
+	public Integer getAverageRequestTime() {
+		System.out.println("sammy : CrediCardRequestController/getAverageRequestTime()");
+		Integer time = bo.getTimeAvg();
+		System.out.println("Time in hours: " + time);
+		
+		return time;
+	}
 }
