@@ -105,4 +105,14 @@ public class CreditCardRequestController {
 		
 		return allRequests;
 	}
+	
+	
+	/*Story 42
+	 * First return a list of CCRequests
+	 * Then return a double
+	 */
+	@GetMapping(path="/creditCardRequests/average")
+	public void getAverageRequestTime() {
+		System.out.println("sammy : CrediCardRequestController/getAverageRequestTime()");
+	}
 }

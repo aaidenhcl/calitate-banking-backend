@@ -37,4 +37,15 @@ public class CreditCardRequestBO {
 		return ccrMap;
 	}
 	
+	
+	/*Story 42
+	 * Takes a list of requests and returns the average time'
+	 * 
+	 */
+	public String getTimeAvg() {
+		
+		
+		return new String();
+	}
+	
 }
