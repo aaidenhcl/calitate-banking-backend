@@ -122,15 +122,20 @@ public class CreditCardRequestController {
 	
 	
 	/*Story 42
-	 * First return a list of CCRequests
-	 * Then return a double
+	 * This route is responsible for providing the average time all requests take
+	 * Will have to set a minimum wait time
 	 */
 	@GetMapping(path="/creditCardRequests/average")
-	public Integer getAverageRequestTime() {
-		System.out.println("sammy : CrediCardRequestController/getAverageRequestTime()");
-		Integer time = bo.getTimeAvg();
-		System.out.println("Time in hours: " + time);
+	public Long getAverageRequestTime(@RequestHeader("Authorization") String token) {
+		if(DevUtil.getIsDev() || User.validateUserToken(token)) {
+			System.out.println("sammy : CrediCardRequestController/getAverageRequestTime()");
+			Long time = bo.getTimeAvg();
+			System.out.println("Time in minutes: " + time);
 		
-		return time;
+			return time;
+		}
+		else {
+			return null;
+		}
 	}
 }
