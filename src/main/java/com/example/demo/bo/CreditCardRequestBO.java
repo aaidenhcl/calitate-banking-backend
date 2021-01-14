@@ -42,7 +42,7 @@ public class CreditCardRequestBO {
 	
 	/*Story 42
 	 * Takes a list of requests and returns the average time'
-	 * 
+	 * Return average time to respond to a request
 	 */
 	@SuppressWarnings("deprecation")
 	public Integer getTimeAvg() {
@@ -59,23 +59,28 @@ public class CreditCardRequestBO {
 			//Check if times are not null
 			if (x.getRequestTime() != null && x.getLastUpdated() != null) {
 				
-				Integer request = x.getRequestTime().getMinutes();
-				Integer lastUpdate = x.getLastUpdated().getMinutes();
+				Integer request = x.getRequestTime().getHours();
+				Integer lastUpdate = x.getLastUpdated().getHours();
+				
+				//System.out.println("Request time: " + request);
+				//System.out.println("Last Update Time: " + lastUpdate);
 				
 				times.add(lastUpdate - request);
 			}
 			else {
-				System.out.println("Request Time is null");
+				//System.out.println("Request Time is null");
 			}
 		}
 		
+		//Total time gets reset to 0 here/ why?
 		for (Integer x: times) {
-			System.out.println(x);
-			totalTimes =+ x;
+			//System.out.println(x);
+			totalTimes += x;
 			System.out.println(totalTimes);
 		}
 		
-//		totalTimes = totalTimes/times.size();
+		
+		totalTimes = totalTimes/times.size();
 		
 		return totalTimes;
 	}

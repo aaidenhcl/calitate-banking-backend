@@ -112,9 +112,11 @@ public class CreditCardRequestController {
 	 * Then return a double
 	 */
 	@GetMapping(path="/creditCardRequests/average")
-	public void getAverageRequestTime() {
+	public Integer getAverageRequestTime() {
 		System.out.println("sammy : CrediCardRequestController/getAverageRequestTime()");
 		Integer time = bo.getTimeAvg();
-		System.out.println("Time in minutes: " + time);
+		System.out.println("Time in hours: " + time);
+		
+		return time;
 	}
 }
