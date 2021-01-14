@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.bo.UserBO;
 import com.example.demo.dao.UserRepo;
+import com.example.demo.model.CreditCard;
 //import com.example.demo.model.ConsumerUser;
 import com.example.demo.model.User;
 
@@ -150,6 +151,20 @@ public class UserController {
 				}
 			}
 				return null;
+		}
+		
+		@GetMapping(path="/users/{username}/totalCredit")
+		public Double obtainUserTotalCredit(/*@RequestHeader(value="Authorization") String token, */@PathVariable("username") String username) {
+			
+			//if (User.validateUserToken(token)) {
+				try {
+					return bo.findTotalCreditLimitByUsername(username);
+				}
+				catch(Exception e) {
+					System.err.println("Error in totalCredit");
+				}
+			//}
+			return 0.0;
 		}
 	
 }
