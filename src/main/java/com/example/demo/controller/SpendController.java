@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 import com.example.demo.model.Spend;
-import com.example.demo.service.Region;
 import com.example.demo.service.RegionSpend;
 
 import com.example.demo.bo.SpendBO;
@@ -73,11 +72,13 @@ public class SpendController {
 		}
 		
 		
-		@GetMapping(path="/regionStats")
-		public List<Region> getRegionStats(){
-			List<Region> rs = repo.getRegionStats();
+		//Get spending based on region
+		@GetMapping(path="/regionSpend")
+		public List<RegionSpend> getRegionSpend(){
+			List<RegionSpend> rs = repo.getRegionSpend();
 			return rs;
 		}
+		
 		
 		//Post Route / Save / Update
 		//Confirmed functionality

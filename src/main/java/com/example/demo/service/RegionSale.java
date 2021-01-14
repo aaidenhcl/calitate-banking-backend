@@ -1,18 +1,17 @@
 package com.example.demo.service;
 
 
-public class Region{
-	
+public class RegionSale{
 
 	private String region;
-	private Double amount;
 	private Long sale;
 	
-	public Region(String region, Double amount, Long sale){
+	
+	public RegionSale(String region, Long sale){
 		this.region = region;
-		this.amount = amount;
 		this.sale = sale;
 	}
+
 
 	public String getRegion() {
 		return region;
@@ -23,15 +22,6 @@ public class Region{
 	}
 
 
-	public Double getAmount() {
-		return amount;
-	}
-
-
-	public void setAmount(Double amount) {
-		this.amount = amount;
-	}
-	
 	public Long getSale() {
 		return sale;
 	}
@@ -42,5 +32,5 @@ public class Region{
 	}
 
 
-	
+
 }
