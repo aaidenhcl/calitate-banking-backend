@@ -13,7 +13,10 @@ insert into credit_card_request (id, status, user_id) values (1, 'approved', 1 )
 insert into spend(id, amount, category, item, user_note, credit_card_id) values (1, 300, 'Technology', 'iPad', true, 1);
 
 --Matthew
-insert into user(id, profession, region) values (2, 'Fry Cook', 'Texas'); 
+insert into user(id, username, profession, region) values (2, 'spongebob', 'Fry Cook', 'Under Da Sea'); 
+insert into credit_card (id,spending_limit, status, user_id) values (3, 5000.0, 'active', 2);
+insert into credit_card (id,spending_limit, status, user_id) values (4, 15000.0, 'active', 2);
+insert into credit_card (id,spending_limit, status, user_id) values (5, 15000.0, 'inactive', 2);
 
 insert into credit_card_request (id, status, card_type, user_id) values (2, 'approved', 'gold', 1);
 
