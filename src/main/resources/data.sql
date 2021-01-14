@@ -11,6 +11,7 @@ insert into credit_card_request (id, status, user_id) values (1, 'approved', 1 )
 --Add spends
 --Samiylo
 insert into spend(id, amount, category, item, user_note, credit_card_id) values (1, 300, 'Technology', 'iPad', true, 1);
+insert into credit_card_request(id, last_updated, request_time, status, user_id) values(18, '2021-01-14 12:05:40.251', '2021-01-14 12:05:15.251', 'rejected', 1);
 
 --Matthew
 insert into user(id, profession, region) values (2, 'Fry Cook', 'Texas'); 

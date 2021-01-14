@@ -3,6 +3,7 @@ package com.example.demo.bo;
 import com.example.demo.dao.CreditCardRequestRepo;
 import com.example.demo.model.CreditCardRequest;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -49,7 +50,8 @@ public class CreditCardRequestBO {
 		
 		//Grab all requests
 		List<CreditCardRequest> requests = repo.findAll();
-		Integer time = null;
+		List<Integer> times = new ArrayList<Integer>();
+		Integer totalTimes = 0;
 		
 		//Traverse all requests
 		for (CreditCardRequest x: requests) {
@@ -57,17 +59,25 @@ public class CreditCardRequestBO {
 			//Check if times are not null
 			if (x.getRequestTime() != null && x.getLastUpdated() != null) {
 				
-				Integer request = x.getRequestTime().getDay();
-				Integer lastUpdate = x.getLastUpdated().getDay();
+				Integer request = x.getRequestTime().getMinutes();
+				Integer lastUpdate = x.getLastUpdated().getMinutes();
 				
-				time = lastUpdate - request;
+				times.add(lastUpdate - request);
 			}
 			else {
-				System.out.println("Time is null");
+				System.out.println("Request Time is null");
 			}
 		}
 		
-		return time;
+		for (Integer x: times) {
+			System.out.println(x);
+			totalTimes =+ x;
+			System.out.println(totalTimes);
+		}
+		
+//		totalTimes = totalTimes/times.size();
+		
+		return totalTimes;
 	}
 	
 }

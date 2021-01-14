@@ -115,6 +115,6 @@ public class CreditCardRequestController {
 	public void getAverageRequestTime() {
 		System.out.println("sammy : CrediCardRequestController/getAverageRequestTime()");
 		Integer time = bo.getTimeAvg();
-		System.out.println(time);
+		System.out.println("Time in minutes: " + time);
 	}
 }
