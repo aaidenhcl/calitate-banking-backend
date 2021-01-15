@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.bo.UserBO;
 import com.example.demo.dao.UserRepo;
+import com.example.demo.exceptions.NotAuthorizedException;
 import com.example.demo.model.CreditCard;
 import com.example.demo.model.Payment;
 import com.example.demo.model.User;
@@ -153,7 +154,7 @@ public class UserController {
 		 * and returned to client.
 		 */
 		@GetMapping(path="/users/{username}")//change obtainUserData to users
-		public User obtainUserData(@RequestHeader(value="Authorization") String token, @PathVariable("username") String username) {
+		public User obtainUserData(@RequestHeader(value="Authorization") String token, @PathVariable("username") String username) throws NotAuthorizedException{
 			User foundUser = null;
 			if(User.validateUserToken(token)) {
 				try {
@@ -163,7 +164,7 @@ public class UserController {
 					System.err.println("Error in obtainUserData" + e);
 				}
 			}
-				return null;
+			throw new NotAuthorizedException("User is not authorized");
 		}
 
 		@GetMapping(path="/users/{username}/totalCredit")
@@ -199,13 +200,16 @@ public class UserController {
 			return toReturn;
 		}
 		
-		@GetMapping(path="/regionSale")
-		public List<RegionSale> getRegionSale(){
-			List<RegionSale> rs = repo.getRegionSale();
-			return rs;
+		@GetMapping(path="users/regionSale")
+		public List<RegionSale> getRegionSale(@RequestHeader(value="Authorization") String token) throws NotAuthorizedException{
+			if(DevUtil.getIsDev() || User.validateUserToken(token)) {										
+				List<RegionSale> rs = bo.getRegionSale();
+				return rs;
+			}
+			throw new NotAuthorizedException("User is not authorized");
 		}
-
-		@GetMapping(path="/demographics")
+		
+		@GetMapping(path="users/demographics")
 		public List<Demographics> getUserDemographics() {
 			List<Demographics> dl = repo.getDemographics();
 			return dl;
@@ -218,9 +222,9 @@ public class UserController {
 		 * returns classification depending on amount owed and credit score
 		 *
 		 */
-		@GetMapping(path="/users/{id}/transactionStats")
-		public String userTransactionStats(@PathVariable("id") Long id, @RequestHeader(value="Authorization") String token){
-			if(DevUtil.getIsDev() || User.validateUserToken(token)) {
+		@GetMapping(path="/users/{id}/classification")
+		public String userTransactionStats(@PathVariable("id") Long id, @RequestHeader(value="Authorization") String token) throws NotAuthorizedException{
+			if(DevUtil.getIsDev() || User.validateUserToken(token)) {						
 				User user = bo.findById(id);
 				Map<String, Object> mappedAmounts = bo.processUserSpendAndPayHistrories(user);
 				GsonBuilder builder = new GsonBuilder();
@@ -228,17 +232,8 @@ public class UserController {
 
 				return gson.toJson(mappedAmounts);
 			}
-			return null;
+			throw new NotAuthorizedException("User is not authorized");
 		}
-
-//		@GetMapping(path="/users/{id}/clasification")
-//		public String userClassification(@PathVariable("id") Long id, @RequestHeader(value="Authorization") String token) {
-//			if(DevUtil.getIsDev() || User.validateUserToken(token)) {
-//
-//			}
-//			return null;
-//		}
-
 		/*
 		 * This route gets a user's spend and payment histories
 		 * calculates average spent per month
