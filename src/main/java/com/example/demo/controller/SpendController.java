@@ -73,10 +73,13 @@ public class SpendController {
 		
 		
 		//Get spending based on region
-		@GetMapping(path="/regionSpend")
-		public List<RegionSpend> getRegionSpend(){
-			List<RegionSpend> rs = repo.getRegionSpend();
+		@GetMapping(path="spends/regionSpend")
+		public List<RegionSpend> getRegionSpend(@RequestHeader("Authorization") String token){
+			if(DevUtil.getIsDev() || User.validateUserToken(token)) {
+			List<RegionSpend> rs = bo.getRegionSpend();
 			return rs;
+			}
+			return null;
 		}
 		
 		

@@ -5,7 +5,7 @@ import com.example.demo.dao.UserRepo;
 import com.example.demo.model.CreditCard;
 //import com.example.demo.model.ConsumerUser;
 import com.example.demo.model.User;
-
+import com.example.demo.service.AgeDemographics;
 import com.example.demo.service.Demographics;
 import com.example.demo.service.RegionSale;
 import com.example.demo.service.RegionSpend;
@@ -14,10 +14,17 @@ import com.example.demo.utilities.DevUtil;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -177,18 +184,100 @@ public class UserController {
 			return 0.0;
 		}
 		
-		@GetMapping(path="/regionSale")
-		public List<RegionSale> getRegionSale(){
-			List<RegionSale> rs = repo.getRegionSale();
-			return rs;
+		
+		//method returns sale based on region
+
+		
+		//method returns count of professions from users
+		@GetMapping(path="users/demographics/profession")
+		public List<Demographics> getDemographicsProfession(@RequestHeader(value="Authorization") String token){
+			if(DevUtil.getIsDev() || User.validateUserToken(token)) {
+				List<Demographics> dl = bo.getDemographicsProfession();
+				return dl;
+			}
+			return null;
 		}
 		
-		@GetMapping(path="/demographics")
-		public List<Demographics> getUserDemographics() {
-			List<Demographics> dl = repo.getDemographics();
-			return dl;
+		
+		//method returns count of regions from users
+		@GetMapping(path="users/demographics/region")
+		public List<Demographics> getDemographicsRegion(@RequestHeader(value="Authorization") String token){
+			if(DevUtil.getIsDev() || User.validateUserToken(token)){
+				List<Demographics> rl = bo.getDemographicsRegion();
+				return rl;
+			}
+			return null;
 			
 		}
+		
+		//method returns dob of users
+		
+		//method returns count of ages of users
+		@GetMapping(path="users/demographics/age")
+		public List<AgeDemographics> getDemographicsAge(@RequestHeader(value="Authorization") String token){
+			if(DevUtil.getIsDev() || User.validateUserToken(token)){
+				List<AgeDemographics> adl = new ArrayList<AgeDemographics>();
+				
+				for(Integer i = 18; i < 100;i+=10) {
+					List<User> ul = bo.getDemographicsAge(i,i+10);
+					if(i==18) {
+						adl.add(new AgeDemographics((i + " - " + (i+12)),(Integer)ul.size()));
+						i=20;
+					}
+					adl.add(new AgeDemographics((i + " - " + (i+10)),(Integer)ul.size()));
+				}
+				return adl;
+			}	
+			return null;
+			
+		}
+				
+				/*Old code using gson
+				LocalDate today = LocalDate.now();
+				Integer ageCategory = 20;
+				
+				String display = ((ageCategory-10) + " - " + ageCategory);
+				Map<String,Integer> ageMap = new TreeMap<>();
+				ageMap.put(display,0);
+				
+				for(AgeDemographics ad: adl){
+					if(ad.getAge() != null) {
+						LocalDate dob = ad.getAge().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+						Integer age = Period.between(dob,today).getYears();
+						System.out.println(age);
+						if(age <= ageCategory){
+							System.out.println("Age category");
+							Integer count = ageMap.get(display);
+							ageMap.put(display,count+1);
+						}else if(ageCategory < 100){
+							System.out.println("Going up");
+							ageCategory+=10;
+							display = ((ageCategory-10) + " - " + ageCategory);
+							ageMap.put(display,0);
+						}
+					}
+				}
+				GsonBuilder builder = new GsonBuilder();
+				Gson gson = builder.create();
+				return gson.toJson(ageMap);
+			}
+			
+
+		
+		//method returns count of regions from users using gson
+		@GetMapping(path="users/demographics/gson/region")
+		public String regionDemographics() {			
+			List<User> user = repo.findAll();
+			System.out.println("User list returned");
+			Map<String, Integer> regMap = bo.categorizeByRegion(user);
+			GsonBuilder builder = new GsonBuilder();
+			Gson gson = builder.create();
+			
+			return gson.toJson(regMap);
+			
+		}
+		
+		*/
 	
 		/*
 		 * This route gets a user's spend and payment histories
@@ -208,6 +297,8 @@ public class UserController {
 			}
 			return null;
 		}
+		
+		
 		
 //		@GetMapping(path="/users/{id}/clasification")
 //		public String userClassification(@PathVariable("id") Long id, @RequestHeader(value="Authorization") String token) {
