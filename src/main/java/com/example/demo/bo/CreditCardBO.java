@@ -3,9 +3,12 @@ package com.example.demo.bo;
 import com.example.demo.dao.CreditCardRepo;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.TimeZone;
 import java.util.TreeMap;
 
 import com.example.demo.model.CreditCard;
@@ -79,6 +82,40 @@ public class CreditCardBO {
 	 */
 	public List<CreditCard> getPendingExpirations() {
 		
-		return new ArrayList<CreditCard>();
+		//Grab all Credit Cards
+		List<CreditCard> all = repo.findAll();
+		List<CreditCard> expiring = new ArrayList<>();
+		Calendar localCalendar = Calendar.getInstance(TimeZone.getDefault());
+		Date currentTime = localCalendar.getTime();
+        
+		
+		//For each credit card
+		for (CreditCard x : all) {
+			if (x.getExpirationDate() != null) {
+			
+				Date expiration = x.getExpirationDate();
+				//System.out.println(expiration);
+				
+				/*
+				 * Add 3 months to current date and check to see
+				 * if its before the expiration date
+				 */
+				localCalendar.add(Calendar.MONTH, 3);
+				if (currentTime.before(expiration)) {
+				
+					System.out.println("Not expiring in 3 months");
+				
+					System.out.println(localCalendar.getTime());
+				}
+				else {
+					
+					System.out.println("Expiring within 3 months");
+					expiring.add(x);
+				}
+				
+			}
+		}
+		
+		return expiring;
 	}
 }
