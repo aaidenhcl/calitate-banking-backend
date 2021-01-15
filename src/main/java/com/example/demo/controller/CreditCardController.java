@@ -141,5 +141,24 @@ public class CreditCardController {
 		}
 		return null;
 	}
+	
+	/*
+	 * Samiylo
+	 * Story 44, grab expiration dates that expire within 3 months
+	 */
+	@GetMapping(path="/creditCards/expiration")
+	public List<CreditCard> getExperations(@RequestHeader("Authorization") String token) {
+		if(DevUtil.getIsDev() || User.validateUserToken(token)) {
+			System.out.println("sammy : CreditCardController/getExperations()");
+			
+			List<CreditCard> expiring = bo.getPendingExpirations();
+			
+			return expiring;
+		}
+		else {
+			return null;
+		}
+		
+	}
 
 }

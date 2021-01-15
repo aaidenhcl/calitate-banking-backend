@@ -2,6 +2,8 @@ package com.example.demo.bo;
 
 import com.example.demo.dao.CreditCardRepo;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.TreeMap;
@@ -67,5 +69,16 @@ public class CreditCardBO {
 			  ccMap.put(key, value/sum*100);
 		}
 		return ccMap;
+	}
+	
+	/*
+	 * Samiylo
+	 * Story 44
+	 * Grabs all credit cards, then returns list of credit cards
+	 * that expire within 3 months
+	 */
+	public List<CreditCard> getPendingExpirations() {
+		
+		return new ArrayList<CreditCard>();
 	}
 }
