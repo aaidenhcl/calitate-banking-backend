@@ -4,7 +4,6 @@ import com.example.demo.bo.UserBO;
 import com.example.demo.dao.UserRepo;
 import com.example.demo.model.CreditCard;
 import com.example.demo.model.Payment;
-//import com.example.demo.model.ConsumerUser;
 import com.example.demo.model.User;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -198,6 +197,8 @@ public class UserController {
 				toReturn.put(last4,  toAdd);
 			}
 			return toReturn;
+		}
+		
 		@GetMapping(path="/regionSale")
 		public List<RegionSale> getRegionSale(){
 			List<RegionSale> rs = repo.getRegionSale();
