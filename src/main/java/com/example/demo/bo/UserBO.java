@@ -5,6 +5,7 @@ import com.example.demo.model.CreditCard;
 
 import com.example.demo.model.Spend;
 import com.example.demo.model.User;
+import com.example.demo.service.RegionSale;
 
 import java.util.List;
 import java.util.Map;
@@ -31,6 +32,10 @@ public class UserBO {
 
 	@Autowired
 	UserRepo repo;
+	
+	public List<RegionSale> getRegionSale(){
+		return repo.getRegionSale();
+	}
 	
 	public User findByUsername(String username) {
 		return repo.findByUsername(username).get(0);

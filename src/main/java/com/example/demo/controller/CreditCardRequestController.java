@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import com.example.demo.bo.CreditCardRequestBO;
 import com.example.demo.dao.CreditCardRequestRepo;
 import com.example.demo.dao.UserRepo;
+import com.example.demo.exceptions.NotAuthorizedException;
 import com.example.demo.model.CreditCardRequest;
 import com.example.demo.model.User;
 import com.example.demo.utilities.DevUtil;
@@ -42,15 +43,15 @@ public class CreditCardRequestController {
   
 	//Story32
 	@GetMapping(path="/creditCardRequests/dateRange")
-	public Integer requestsByDateRange(@RequestParam String start, @RequestParam String end, @RequestHeader("Authorization") String token) {
+	public Integer requestsByDateRange(@RequestParam String start, @RequestParam String end, @RequestHeader("Authorization") String token)  throws NotAuthorizedException{
 		if(DevUtil.getIsDev() || User.validateUserToken(token)) {											
 			return repo.findByRequestTime(start, end).size();
 		}
-		return null;
+		throw new NotAuthorizedException("User is not authorized");
 	}
 	
 	@GetMapping(path="/creditCardRequests/rejected")
-	public String findAllCountRejectedAndReason(@RequestHeader("Authorization") String token){
+	public String findAllCountRejectedAndReason(@RequestHeader("Authorization") String token)  throws NotAuthorizedException{
 		if(DevUtil.getIsDev() || User.validateUserToken(token)) {														
 			Map<String, Integer> ccrMap = bo.findAllCountRejectedAndReason();
 			GsonBuilder builder = new GsonBuilder();
@@ -58,12 +59,12 @@ public class CreditCardRequestController {
 			
 			return gson.toJson(ccrMap);
 		}
-		return null;
+		throw new NotAuthorizedException("User is not authorized");
 	}
 	
 	//Story 35
 	@GetMapping(path="/creditCardRequests/approvals/regionProfession")
-	public Integer approvalsProfessionRegion(@RequestParam String profession, @RequestParam String region, @RequestHeader("Authorization") String token){
+	public Integer approvalsProfessionRegion(@RequestParam String profession, @RequestParam String region, @RequestHeader("Authorization") String token)  throws NotAuthorizedException{
 		if(DevUtil.getIsDev() || User.validateUserToken(token)) {											
 			List<CreditCardRequest> approvals = new ArrayList<>();
 			if (!region.isEmpty() && !profession.isEmpty()) {
@@ -78,7 +79,7 @@ public class CreditCardRequestController {
 			}
 			return approvals.size();
 		}
-		return null;
+		throw new NotAuthorizedException("User is not authorized");
 	}
 
 	/*
@@ -89,7 +90,7 @@ public class CreditCardRequestController {
 	 * Credit Card Request object is returned. 
 	 */
 	@PostMapping(path="creditCardRequests")
-	public CreditCardRequest createCreditCardRequest(@RequestParam String cardType, @RequestParam Long user, @RequestHeader("Authorization") String token) {
+	public CreditCardRequest createCreditCardRequest(@RequestParam String cardType, @RequestParam Long user, @RequestHeader("Authorization") String token)  throws NotAuthorizedException {
 		if(DevUtil.getIsDev() || User.validateUserToken(token)) {														
 			System.out.println("body Request::: " + cardType);
 			System.out.println("userID::: " + user);
@@ -104,12 +105,12 @@ public class CreditCardRequestController {
 			}
 			return null;
 		}
-		return null;
+		throw new NotAuthorizedException("User is not authorized");
 	}
 	
 	//Get Status of CreditCardRequests
 	@GetMapping(path="/creditCardRequests/status")
-	public List<CreditCardRequest> getRequest(@RequestHeader("Authorization") String token) {
+	public List<CreditCardRequest> getRequest(@RequestHeader("Authorization") String token) throws NotAuthorizedException {
 		if(DevUtil.getIsDev() || User.validateUserToken(token)) {		
 			//Calls Repo method.
 			List<CreditCardRequest> allRequests = repo.getStatusList();
@@ -117,7 +118,7 @@ public class CreditCardRequestController {
 		
 			return allRequests;
 		}
-		return null;
+		throw new NotAuthorizedException("User is not authorized");
 	}
 	
 	
@@ -126,7 +127,7 @@ public class CreditCardRequestController {
 	 * Will have to set a minimum wait time
 	 */
 	@GetMapping(path="/creditCardRequests/average")
-	public Long getAverageRequestTime(@RequestHeader("Authorization") String token) {
+	public Long getAverageRequestTime(@RequestHeader("Authorization") String token) throws NotAuthorizedException {
 		if(DevUtil.getIsDev() || User.validateUserToken(token)) {
 			System.out.println("sammy : CrediCardRequestController/getAverageRequestTime()");
 			Long time = bo.getTimeAvg();
@@ -134,8 +135,6 @@ public class CreditCardRequestController {
 		
 			return time;
 		}
-		else {
-			return null;
-		}
+		throw new NotAuthorizedException("User is not authorized");
 	}
 }
