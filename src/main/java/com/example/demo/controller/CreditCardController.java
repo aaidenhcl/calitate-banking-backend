@@ -26,6 +26,7 @@ import com.example.demo.exceptions.NotAuthorizedException;
 import com.example.demo.model.CreditCard;
 import com.example.demo.model.CreditCardRequest;
 import com.example.demo.model.User;
+import com.example.demo.service.RegionSale;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -81,7 +82,14 @@ public class CreditCardController {
 	}
 	
 	
-
+	@GetMapping(path="creditCards/regionSale")
+	public List<RegionSale> getRegionSale(@RequestHeader(value="Authorization") String token){
+		if(DevUtil.getIsDev() || User.validateUserToken(token)) {	
+			List<RegionSale> rs = bo.getRegionSale();
+			return rs;
+		}
+		return null;
+	}
 	
 	
 	//Samiylo - Story36

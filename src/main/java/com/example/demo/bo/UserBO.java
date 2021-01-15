@@ -5,7 +5,12 @@ import com.example.demo.model.CreditCard;
 
 import com.example.demo.model.Spend;
 import com.example.demo.model.User;
+
+import com.example.demo.service.AgeDemographics;
+import com.example.demo.service.Demographics;
+import com.example.demo.utilities.DevUtil;
 import com.example.demo.service.RegionSale;
+
 
 import java.util.List;
 import java.util.Map;
@@ -26,6 +31,8 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 
 @Component
 public class UserBO {
@@ -58,6 +65,39 @@ public class UserBO {
 			return user;
 		}
 		return null;
+	}
+	
+	//method returns count of professions from user database
+	public List<Demographics> getDemographicsProfession(){
+			List<Demographics> dpl = repo.getDemographicsProfession();
+			return dpl;
+	}
+	
+	//method returns count of regions from user database
+	public List<Demographics> getDemographicsRegion(){
+		List<Demographics> drl = repo.getDemographicsRegion();
+		return drl;
+   }	
+	
+	//method returns count of age ranges from user database
+	public List<User> getDemographicsAge(Integer lower, Integer upper){
+		List<User> ul = repo.getDemographicsAge(lower, upper);
+		return ul;
+	}
+	
+	
+	//method return map of <region, users in region>
+	public Map<String, Integer> categorizeByRegion(List<User> user) {
+		Map<String, Integer> regMap = new TreeMap<>();
+		for(User u: user) {
+			if(regMap.containsKey(u.getRegion())) {
+				Integer count = regMap.get(u.getRegion());
+				regMap.put(u.getRegion(), count + 1);
+			} else {
+				regMap.put(u.getRegion(),1);
+			}
+		}
+		return regMap;
 	}
 	
 	public Map<String, Object> processUserSpendAndPayHistrories(User user){

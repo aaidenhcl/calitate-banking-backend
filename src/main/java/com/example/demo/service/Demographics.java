@@ -2,28 +2,28 @@ package com.example.demo.service;
 
 public class Demographics {
 	
-	private String profession;
-	private Long count;
+	private String category;
+	private Long users;
 	
-	public Demographics(String profession, Long count) {
-		this.profession = profession;
-		this.count = count;
+	public Demographics(String category, Long users) {
+		this.category = category;
+		this.users = users;
 	}
 
-	public String getProfession() {
-		return profession;
+	public String getCategory() {
+		return category;
 	}
 
-	public void setProfession(String profession) {
-		this.profession = profession;
+	public void setCategory(String category) {
+		this.category = category;
 	}
 
-	public Long getCount() {
-		return count;
+	public Long getUsers() {
+		return users;
 	}
 
-	public void setCount(Long count) {
-		this.count = count;
+	public void setUsers(Long users) {
+		this.users = users;
 	}
 
 	

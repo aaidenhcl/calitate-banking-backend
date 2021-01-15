@@ -3,8 +3,6 @@ package com.example.demo.bo;
 import com.example.demo.dao.CreditCardRepo;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -13,9 +11,14 @@ import java.util.TreeMap;
 
 import com.example.demo.model.CreditCard;
 import com.example.demo.model.Spend;
+import com.example.demo.model.User;
+import com.example.demo.service.RegionSale;
+import com.example.demo.utilities.DevUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 
 @Component
 public class CreditCardBO {
@@ -53,6 +56,11 @@ public class CreditCardBO {
 			}
 		}
 		return ccMap;
+	}
+
+	public List<RegionSale> getRegionSale(){	
+			List<RegionSale> rs = repo.getRegionSale();
+			return rs;
 	}
 	
 	/*

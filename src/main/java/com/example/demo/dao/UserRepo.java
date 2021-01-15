@@ -8,20 +8,29 @@ import org.springframework.stereotype.Component;
 
 import com.example.demo.model.User;
 import com.example.demo.service.Demographics;
-import com.example.demo.service.RegionSale;
+
 
 @Component
 public interface UserRepo extends JpaRepository<User, Long>{
 
 	List<User> findByUsername(String username);
 	
-	//Need to find way to use category as a parameter
+	//Query that retrieves user profession demographics
 	@Query("SELECT new com.example.demo.service.Demographics(u.profession AS title, COUNT(u.profession) AS total) FROM User u GROUP BY title ORDER BY title ASC")
-	public List<Demographics> getDemographics();
+	public List<Demographics> getDemographicsProfession();
+	
+	//Query that receives user region demographics
+	@Query("SELECT new com.example.demo.service.Demographics(u.region AS region, COUNT(u.region) AS total) FROM User u GROUP BY region ORDER BY region ASC")
+	public List<Demographics> getDemographicsRegion();
+	
+	//Query that retrieves ages of users
+	@Query(value="SELECT * FROM User WHERE DATEDIFF(YEAR,DOB,CURRENT_TIMESTAMP) BETWEEN ?1 AND ?2",nativeQuery = true)
+	public List<User> getDemographicsAge(Integer lowerAge, Integer UpperAge);
 	
 	
-	@Query("SELECT new com.example.demo.service.RegionSale(u.region, COUNT(c.id) AS sale) FROM User u JOIN u.creditCards c GROUP BY u.region ORDER BY u.region ASC")
-	public List<RegionSale> getRegionSale();
-	
+	/*old query to select all data from user
+	@Query("SELECT u FROM User u")
+	public List<User> getAllUsers();
+	*/
 	
 }
