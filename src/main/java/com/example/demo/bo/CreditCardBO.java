@@ -85,8 +85,10 @@ public class CreditCardBO {
 		//Grab all Credit Cards
 		List<CreditCard> all = repo.findAll();
 		List<CreditCard> expiring = new ArrayList<>();
+		
+		//Create local calendar with and instantiate current time
 		Calendar localCalendar = Calendar.getInstance(TimeZone.getDefault());
-		Date currentTime = localCalendar.getTime();
+		
         
 		
 		//For each credit card
@@ -94,22 +96,23 @@ public class CreditCardBO {
 			if (x.getExpirationDate() != null) {
 			
 				Date expiration = x.getExpirationDate();
-				//System.out.println(expiration);
 				
 				/*
 				 * Add 3 months to current date and check to see
 				 * if its before the expiration date
 				 */
 				localCalendar.add(Calendar.MONTH, 3);
+				Date currentTime = localCalendar.getTime();
 				if (currentTime.before(expiration)) {
 				
 					System.out.println("Not expiring in 3 months");
-				
-					System.out.println(localCalendar.getTime());
+			
 				}
 				else {
 					
-					System.out.println("Expiring within 3 months");
+					/*
+					 * If CC is expiring within 3 months, then add it to expiring list
+					 */
 					expiring.add(x);
 				}
 				
