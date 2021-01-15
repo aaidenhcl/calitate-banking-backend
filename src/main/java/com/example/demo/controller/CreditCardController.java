@@ -95,16 +95,16 @@ public class CreditCardController {
 	//Samiylo - Story36
 	//A Credit card can view statements
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	@GetMapping(path= "/creditCards/{accountNo}/spends")
+	@GetMapping(path= "/creditCards/spends")
 	
 	//Grab creditCard id from route
-	public List<Spend> getStatement(@PathVariable("accountNo") String accountNo, @RequestHeader("Authorization") String token) throws NotAuthorizedException{
+	public List<Spend> getStatement(@RequestHeader("cardNo") String cardNo, @RequestHeader("Authorization") String token) throws NotAuthorizedException{
 		if(DevUtil.getIsDev() || User.validateUserToken(token)) {												
 			//Test
 			System.out.println("samiylo - CreditCardController/getStatement()");
-			System.out.println(accountNo);
+			System.out.println(cardNo);
 			
-			CreditCard history = bo.findByCreditCardNumber(accountNo);
+			CreditCard history = bo.findByCreditCardNumber(cardNo);
 
 			List<Spend> spends = history.getSpendHistory();
 			
@@ -120,10 +120,10 @@ public class CreditCardController {
 	 * returns map of categories with total accumulated amount
 	 * as value
 	 */
-	@GetMapping(path="/creditCards/{id}/patterns")
-	public String analyzeSpendingPatterns(@PathVariable("id") Long id, @RequestHeader("Authorization") String token) throws NotAuthorizedException{
+	@GetMapping(path="/creditCards/patterns")
+	public String analyzeSpendingPatterns(@RequestHeader("cardNo") String cardNo, @RequestHeader("Authorization") String token) throws NotAuthorizedException{
 		if(DevUtil.getIsDev() || User.validateUserToken(token)) {			
-			CreditCard creditCard = bo.findById(id);
+			CreditCard creditCard = bo.findByCreditCardNumber(cardNo);
 			Map<String, Double> spendsMap = bo.categorizeSpendsByAmount(creditCard);
 			GsonBuilder builder = new GsonBuilder();
 			Gson gson = builder.create();
@@ -137,10 +137,10 @@ public class CreditCardController {
 	/*
 	 * Similar to analyzeSpendingPatterns but maps categories to percentage of use
 	 */
-	@GetMapping(path="/creditCards/{id}/patterns/stats")
-	public String analyzeSpendingPatternsStats(@PathVariable("id") Long id, @RequestHeader("Authorization") String token) throws NotAuthorizedException {
+	@GetMapping(path="/creditCards/patterns/stats")
+	public String analyzeSpendingPatternsStats(@RequestHeader("cardNo") String cardNo, @RequestHeader("Authorization") String token) throws NotAuthorizedException {
 		if(DevUtil.getIsDev() || User.validateUserToken(token)) {						
-			CreditCard creditCard = bo.findById(id);
+			CreditCard creditCard = bo.findByCreditCardNumber(cardNo);
 			Map<String, Double> spendsMap = bo.categorizeSpendsByStats(creditCard);
 			GsonBuilder builder = new GsonBuilder();
 			Gson gson = builder.create();
