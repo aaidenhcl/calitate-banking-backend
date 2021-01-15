@@ -56,6 +56,16 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
         return ResponseEntity.badRequest().body(new ApiError(new Date(),"failure",body));
     }
     
+    @ExceptionHandler(CorruptDatabaseException.class)
+    public ResponseEntity<Object> handleDuplicateDepartmentFoundException(
+    		CorruptDatabaseException ex, WebRequest request) {
+
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("message", "values for credit card status and/or spending_limit cannot be null. check your records");
+
+        return ResponseEntity.badRequest().body(new ApiError(new Date(),"failure",body));
+    }
+    
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Object> handleAllOtherException(
     		Exception ex, WebRequest request) {

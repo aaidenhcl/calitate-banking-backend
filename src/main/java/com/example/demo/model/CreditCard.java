@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -30,6 +31,7 @@ public class CreditCard {
 	private Double apr;
 	private Double balance;
 	private Date expirationDate;
+	@Column(unique = true)
 	private String creditCardNumber;
 	private String cvv;
 	private String type;

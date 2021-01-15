@@ -1,44 +1,30 @@
 --Remember to comment all queries with reason and your name :D 
 --for testing purposes
 --really dont need these but these skeletons may come in handy in the future
-
 --user dump
 insert into user (id, username, password, credit_score, email,region) values (1, 'bob', 'asd', 700, 'aaidenplays@yahoo.com','Texas');
 insert into user(id, username, profession, region) values (2, 'spongebob', 'Fry Cook', 'Under Da Sea');
-
-
-
-
-
 --More spends
 --Jeremy
 INSERT INTO USER(ID,REGION) VALUES (3,'Texas');
 INSERT INTO USER(ID,REGION) VALUES (4, 'Michigan');
 INSERT INTO USER(ID,REGION) VALUES (5, 'Michigan');
-
 --credit_card dump
-insert into credit_card (id,user_id, spending_limit, credit_card_number, balance) values (1,1,15000.0,'1234567890123456', 10000.0);
+insert into credit_card (id,user_id, spending_limit, credit_card_number, balance) values (1,1,15000.0,'12345678901456', 10000.0);
 insert into credit_card (id,user_id) values (2,2);
 insert into credit_card (id,spending_limit, status, user_id) values (3, 5000.0, 'active', 2);
 insert into credit_card (id,spending_limit, status, user_id) values (4, 15000.0, 'active', 2);
 insert into credit_card (id,spending_limit, status, user_id) values (5, 15000.0, 'inactive', 2);
-
-
-
 INSERT INTO CREDIT_CARD(ID,USER_ID) VALUES (6,3);
 INSERT INTO CREDIT_CARD(ID,USER_ID) VALUES (7,4);
 INSERT INTO CREDIT_CARD(ID,USER_ID) VALUES (8,5);
-
 --Samiylo
 insert into credit_card (id, apr, balance, credit_card_number, cvv, expiration_date, spending_limit, status, type, user_id) values (11, 0.20, 154.00, 1234567891532458, 4567, '2021-02-15 11:00:09.472', 5000.00, 'active', 'silver', 1);
-
 insert into credit_card (id, user_id, spending_limit, credit_card_number, balance) values (9,1,15000.0,'1234567890123456', 10000.0);
-insert into credit_card (id,user_id, spending_limit, credit_card_number, balance) values (10,1,15000.0,'1234567890123456', 10000.0);
-
+insert into credit_card (id,user_id, spending_limit, credit_card_number, balance) values (10,1,15000.0,'12345678901234', 10000.0);
 
 --account dump
 insert into account (id, checking_balance, account_number, user_id) values (2, 1000, '989451001', 1);
-
 --credit_card_request dump
 --user story 36
 --for No of credit card rejected along with reasons
@@ -56,7 +42,6 @@ insert into credit_card_request (id, status, card_type, user_id, request_time) v
 --really dont need these but these skeletons may come in handy in the future
 --(aaiden)
 insert into credit_card_request (id, status, user_id) values (11, 'approved', 1 );
-
 --spend dump
 --user story 38
 --for Credit card usage/spend pattern –E.g., Grocery/ Fitness/ Entertainment etc.
@@ -83,7 +68,6 @@ insert into spend(id, amount, category, item, credit_card_id) values(19, 10, 'en
 INSERT INTO SPEND(id,amount,credit_card_id) VALUES (20,10.0,6);
 INSERT INTO SPEND(id,amount,credit_card_id) VALUES (21,15.0,7);
 INSERT INTO SPEND(id,amount,credit_card_id) VALUES (22,15.0,8);
-
 --payment dump
 --for user story 43 need payments to calculate spend and payment differences
 --Aaiden
