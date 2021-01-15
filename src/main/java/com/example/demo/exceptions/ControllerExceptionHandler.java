@@ -51,7 +51,7 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
     		NotAuthorizedException ex, WebRequest request) {
 
         Map<String, Object> body = new LinkedHashMap<>();
-        body.put("message", "Duplicate Department Found");
+        body.put("message", "User is not authorized");
 
         return ResponseEntity.badRequest().body(new ApiError(new Date(),"failure",body));
     }

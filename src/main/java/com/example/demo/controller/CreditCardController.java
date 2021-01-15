@@ -21,11 +21,13 @@ import com.example.demo.bo.CreditCardBO;
 import com.example.demo.dao.CreditCardRepo;
 import com.example.demo.dao.CreditCardRequestRepo;
 import com.example.demo.dao.SpendRepo;
+import com.example.demo.exceptions.NotAuthorizedException;
 import com.example.demo.model.CreditCard;
 import com.example.demo.model.CreditCardRequest;
 import com.example.demo.model.User;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
 
 import org.springframework.web.bind.annotation.RestController;
 
@@ -55,7 +57,7 @@ public class CreditCardController {
 	 * credit card is saved and returned
 	 */
 	@PostMapping(path="/creditCards")
-	public CreditCard createCreditCards(@RequestParam Long ccrId, @RequestParam String status, @RequestHeader("Authorization") String token) {
+	public CreditCard createCreditCards(@RequestParam Long ccrId, @RequestParam String status, @RequestHeader("Authorization") String token) throws NotAuthorizedException {
 		if(DevUtil.getIsDev() || User.validateUserToken(token)) {									
 			Optional<CreditCardRequest> ccrOpt = ccrRepo.findById(ccrId);
 			if(ccrId != null) {
@@ -73,7 +75,7 @@ public class CreditCardController {
 			}
 		}
 		
-		return null;
+		throw new NotAuthorizedException("User is not authorized");
 	}
 	
 	
@@ -86,7 +88,7 @@ public class CreditCardController {
 	@GetMapping(path= "/creditCards/{id}/spends")
 	
 	//Grab creditCard id from route
-	public List<Spend> getStatement(@PathVariable("id") Long id, @RequestHeader("Authorization") String token) {
+	public List<Spend> getStatement(@PathVariable("id") Long id, @RequestHeader("Authorization") String token) throws NotAuthorizedException{
 		if(DevUtil.getIsDev() || User.validateUserToken(token)) {												
 			//Test
 			System.out.println("samiylo - CreditCardController/getStatement()");
@@ -105,7 +107,7 @@ public class CreditCardController {
 			//I want to return a list of spends for specific credit card
 			return  spends;
 		}
-		return null;
+		throw new NotAuthorizedException("User is not authorized");
 	}
 	
 
@@ -114,7 +116,7 @@ public class CreditCardController {
 	 * as value
 	 */
 	@GetMapping(path="/creditCards/{id}/patterns")
-	public String analyzeSpendingPatterns(@PathVariable("id") Long id, @RequestHeader("Authorization") String token) {
+	public String analyzeSpendingPatterns(@PathVariable("id") Long id, @RequestHeader("Authorization") String token) throws NotAuthorizedException{
 		if(DevUtil.getIsDev() || User.validateUserToken(token)) {			
 			CreditCard creditCard = bo.findById(id);
 			Map<String, Double> spendsMap = bo.categorizeSpendsByAmount(creditCard);
@@ -123,8 +125,7 @@ public class CreditCardController {
 			
 			return gson.toJson(spendsMap);
 		}
-		System.out.println("NOT AUTHENTICATED");
-		return null;
+		throw new NotAuthorizedException("User is not authorized");
 	}
 	
 	
@@ -132,7 +133,7 @@ public class CreditCardController {
 	 * Similar to analyzeSpendingPatterns but maps categories to percentage of use
 	 */
 	@GetMapping(path="/creditCards/{id}/patterns/stats")
-	public String analyzeSpendingPatternsStats(@PathVariable("id") Long id, @RequestHeader("Authorization") String token) {
+	public String analyzeSpendingPatternsStats(@PathVariable("id") Long id, @RequestHeader("Authorization") String token) throws NotAuthorizedException {
 		if(DevUtil.getIsDev() || User.validateUserToken(token)) {						
 			CreditCard creditCard = bo.findById(id);
 			Map<String, Double> spendsMap = bo.categorizeSpendsByStats(creditCard);
@@ -141,7 +142,7 @@ public class CreditCardController {
 			
 			return gson.toJson(spendsMap);
 		}
-		return null;
+		throw new NotAuthorizedException("User is not authorized");
 	}
 
 }

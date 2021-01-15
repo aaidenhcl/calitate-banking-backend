@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.bo.AccountBO;
 import com.example.demo.dao.AccountRepo;
+import com.example.demo.exceptions.NotAuthorizedException;
 import com.example.demo.model.Account;
 import com.example.demo.model.User;
 import com.example.demo.utilities.DevUtil;
@@ -22,12 +23,12 @@ public class AccountController {
 	AccountBO bo;
 	
 	@PostMapping(path="/account")
-	public Account createUser(@RequestBody Account account, @RequestHeader("Authorization") String token){
+	public Account createUser(@RequestBody Account account, @RequestHeader("Authorization") String token) throws NotAuthorizedException{
 		if(DevUtil.getIsDev() || User.validateUserToken(token)) {								
 			System.out.println(account);
 			repo.save(account);
 			return account;
-		}
-		return null;
+		}		
+		throw new NotAuthorizedException("User is not authorized");
 	}
 }
