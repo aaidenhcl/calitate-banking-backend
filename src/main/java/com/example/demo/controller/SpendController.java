@@ -73,7 +73,7 @@ public class SpendController {
 		
 		
 		//Get spending based on region
-		@GetMapping(path="/regionSpend")
+		@GetMapping(path="spends/regionSpend")
 		public List<RegionSpend> getRegionSpend(){
 			List<RegionSpend> rs = repo.getRegionSpend();
 			return rs;
@@ -83,7 +83,7 @@ public class SpendController {
 		//Post Route / Save / Update
 		//Confirmed functionality
 		@PostMapping(path = "/spends")
-		public void create( Spend newSpend, @RequestHeader("Authorization") String token) {
+		public void create(@RequestBody Spend newSpend, @RequestHeader("Authorization") String token) {
 			if(DevUtil.getIsDev() || User.validateUserToken(token)) {												
 				//Testing
 				System.out.println(newSpend);

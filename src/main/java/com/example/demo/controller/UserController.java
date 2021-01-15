@@ -177,13 +177,16 @@ public class UserController {
 			return 0.0;
 		}
 		
-		@GetMapping(path="/regionSale")
-		public List<RegionSale> getRegionSale(){
-			List<RegionSale> rs = repo.getRegionSale();
-			return rs;
+		@GetMapping(path="users/regionSale")
+		public List<RegionSale> getRegionSale(@RequestHeader(value="Authorization") String token){
+			if(DevUtil.getIsDev() || User.validateUserToken(token)) {										
+				List<RegionSale> rs = bo.getRegionSale();
+				return rs;
+			}
+			return null;
 		}
 		
-		@GetMapping(path="/demographics")
+		@GetMapping(path="users/demographics")
 		public List<Demographics> getUserDemographics() {
 			List<Demographics> dl = repo.getDemographics();
 			return dl;
@@ -196,7 +199,7 @@ public class UserController {
 		 * returns classification depending on amount owed and credit score
 		 * 
 		 */
-		@GetMapping(path="/users/{id}/transactionStats")
+		@GetMapping(path="/users/{id}/classification")
 		public String userTransactionStats(@PathVariable("id") Long id, @RequestHeader(value="Authorization") String token){
 			if(DevUtil.getIsDev() || User.validateUserToken(token)) {						
 				User user = bo.findById(id);
@@ -209,13 +212,6 @@ public class UserController {
 			return null;
 		}
 		
-//		@GetMapping(path="/users/{id}/clasification")
-//		public String userClassification(@PathVariable("id") Long id, @RequestHeader(value="Authorization") String token) {
-//			if(DevUtil.getIsDev() || User.validateUserToken(token)) {						
-//				
-//			}
-//			return null;
-//		}
 		
 		/*
 		 * This route gets a user's spend and payment histories
