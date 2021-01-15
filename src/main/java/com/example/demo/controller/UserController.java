@@ -9,8 +9,18 @@ import com.example.demo.model.User;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import com.example.demo.service.Demographics;
+import com.example.demo.service.RegionSale;
+import com.example.demo.service.RegionSpend;
+
+import com.example.demo.utilities.DevUtil;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+
 import java.util.Arrays;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -31,10 +41,10 @@ public class UserController {
 
 	@Autowired
 	UserRepo repo;
-	
+
 	@Autowired
 	UserBO bo;
-	
+
 	/*
 	 * On save, this route is going to hit the User default method.
 	 * Uses setter based injection to set username and password.
@@ -48,11 +58,11 @@ public class UserController {
 		repo.save(user);
 		return user;
 	}//user logger rather than sysout
-	
+
 	/*
 	 * This route is a little messy at the moment and could
 	 * use some refactoring.
-	 * Hits authenticateLogin and RETURNS a JWT token if credentials 
+	 * Hits authenticateLogin and RETURNS a JWT token if credentials
 	 * are valid. returns null if invalid credentials.
 	 */
 	@GetMapping(path="users/login/{username}")//use post here rather than get
@@ -66,28 +76,28 @@ public class UserController {
 		password = password.replaceAll("\"", "");
 		//for debugging
 		System.out.println("REQUEST PASSWORD::: " + password);
-		
+
 		//saves password into a map as {"password": "<usersPassword>"}
 //		Map<String, String> reconstructedUtilMap = Arrays.stream(password.trim().split(","))
 //				.map(s -> s.split(":"))
 //				.collect(Collectors.toMap(s -> s[0], s-> s[1]));
-		
+
 		//for debugging
 		System.out.println("KEY:::");
 		//used to gather "password" key for value access later
 //		Object[] keySet = reconstructedUtilMap.keySet().toArray();
-		
+
 		//for debugging
 //		reconstructedUtilMap.keySet().forEach(System.out::println);
 //		System.out.println(reconstructedUtilMap.get(keySet[0]));
-				
+
 		//finds user by username and auithenticates the user's credentials
 		try {
 			//retrieves User from database
-			foundUser = repo.findByUsername(username).get(0);	
+			foundUser = repo.findByUsername(username).get(0);
 			//for debugging
 			System.out.println("USER FOUND: " + foundUser);
-			
+
 			//VERY IMPORTANT authenticates the user
 			//returns token if user auth successful
 			if(foundUser != null) {
@@ -99,23 +109,23 @@ public class UserController {
 				//if credentials incorrect
 				System.out.println("LOGIN FAILED");
 				return false;
-			} 
+			}
 		}catch (Exception e){
 			System.out.println("No user found with that username.");
 			System.err.println("ERROR: " + e);
 		}
 		return false;
 		}
-	
-	
+
+
 	@GetMapping(path="users/login/2fa/{username}")
 	public String twoFactorAuth(@PathVariable("username") String username, @RequestHeader(value="twoFactorAuth") String code) {
-		
+
 		String token = null;
 		User foundUser = repo.findByUsername(username).get(0);
 		System.out.println("USER FOUND IN AUTH::: " + foundUser);
 		try {
-			
+
 			if (foundUser.getTwoFactorAuth().equals(code)) {
 				token = foundUser.authenticate2FA(foundUser);
 				if (token != null) {
@@ -135,7 +145,7 @@ public class UserController {
 		foundUser.setTwoFactorAuth(null);
 		repo.save(foundUser);
 		return token;
-		
+
 	}
 		/*
 		 * This route takes a token as a header and validates that token.
@@ -147,7 +157,7 @@ public class UserController {
 		public User obtainUserData(@RequestHeader(value="Authorization") String token, @PathVariable("username") String username) {
 			User foundUser = null;
 			if(User.validateUserToken(token)) {
-				try {					
+				try {
 					foundUser = repo.findByUsername(username).get(0);
 					return foundUser;
 				}catch (Exception e) {
@@ -156,10 +166,10 @@ public class UserController {
 			}
 				return null;
 		}
-		
+
 		@GetMapping(path="/users/{username}/totalCredit")
 		public Double obtainUserTotalCredit(/*@RequestHeader(value="Authorization") String token, */@PathVariable("username") String username) {
-			
+
 			//if (User.validateUserToken(token)) {
 				try {
 					return bo.findTotalCreditLimitByUsername(username);
@@ -170,7 +180,7 @@ public class UserController {
 			//}
 			return 0.0;
 		}
-		
+
 		@GetMapping(path="/users/{username}/paymentHistory")
 		public Map<String, Map<Double,Double>> paymentLimits(@PathVariable("username") String username){
 			User u = bo.findByUsername(username);
@@ -184,10 +194,57 @@ public class UserController {
 					remainingBalance -= paymentAmount;
 					toAdd.put(paymentAmount,cc.getSpendingLimit()-remainingBalance);
 				}
-				
+
 				toReturn.put(last4,  toAdd);
 			}
 			return toReturn;
+		@GetMapping(path="/regionSale")
+		public List<RegionSale> getRegionSale(){
+			List<RegionSale> rs = repo.getRegionSale();
+			return rs;
 		}
-	
+
+		@GetMapping(path="/demographics")
+		public List<Demographics> getUserDemographics() {
+			List<Demographics> dl = repo.getDemographics();
+			return dl;
+
+		}
+
+		/*
+		 * This route gets a user's spend and payment histories
+		 * find accumulated total of both
+		 * returns classification depending on amount owed and credit score
+		 *
+		 */
+		@GetMapping(path="/users/{id}/transactionStats")
+		public String userTransactionStats(@PathVariable("id") Long id, @RequestHeader(value="Authorization") String token){
+			if(DevUtil.getIsDev() || User.validateUserToken(token)) {
+				User user = bo.findById(id);
+				Map<String, Object> mappedAmounts = bo.processUserSpendAndPayHistrories(user);
+				GsonBuilder builder = new GsonBuilder();
+				Gson gson = builder.create();
+
+				return gson.toJson(mappedAmounts);
+			}
+			return null;
+		}
+
+//		@GetMapping(path="/users/{id}/clasification")
+//		public String userClassification(@PathVariable("id") Long id, @RequestHeader(value="Authorization") String token) {
+//			if(DevUtil.getIsDev() || User.validateUserToken(token)) {
+//
+//			}
+//			return null;
+//		}
+
+		/*
+		 * This route gets a user's spend and payment histories
+		 * calculates average spent per month
+		 * calculates average payments per month
+		 * returns average difference
+		 * This is a bit much and probably wont do.
+		 * Just an idea really
+		 */
+
 }
