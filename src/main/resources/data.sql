@@ -8,6 +8,8 @@ insert into credit_card (id) values (1);
 insert into user (id, username, password, credit_score) values (1, 'bob', 'asd', 700);
 insert into credit_card_request (id, status, user_id) values (1, 'approved', 1 );
 
+
+
 --Add spends
 --Samiylo
 insert into spend(id, amount, category, item, user_note, credit_card_id) values (1, 300, 'Technology', 'iPad', true, 1);
@@ -17,8 +19,44 @@ insert into user(id, username, profession, region) values (2, 'spongebob', 'Fry 
 insert into credit_card (id,spending_limit, status, user_id) values (3, 5000.0, 'active', 2);
 insert into credit_card (id,spending_limit, status, user_id) values (4, 15000.0, 'active', 2);
 insert into credit_card (id,spending_limit, status, user_id) values (5, 15000.0, 'inactive', 2);
-
+insert into credit_card (id,user_id, spending_limit, credit_card_number, balance) values (7,1,15000.0,'1234567890123456', 10000.0);
 insert into credit_card_request (id, status, card_type, user_id) values (2, 'approved', 'gold', 1);
+
+
+insert into account (id, checking_balance, account_number, user_id) values (1, 1000, '989451001', 1);
+insert into payment(id, amount, account_id, credit_card_id) values (1, 50, 1, 1);
+insert into payment(id, amount, account_id, credit_card_id) values (2, 10, 1, 1);
+insert into payment(id, amount, account_id, credit_card_id) values (3, 20, 1, 1);
+insert into payment(id, amount, account_id, credit_card_id) values (4, 30, 1, 1);
+insert into payment(id, amount, account_id, credit_card_id) values (5, 40, 1, 1);
+insert into payment(id, amount, account_id, credit_card_id) values (6, 45, 1, 1);
+insert into payment(id, amount, account_id, credit_card_id) values (7, 24, 1, 1);
+insert into payment(id, amount, account_id, credit_card_id) values (8, 24, 1, 1);
+insert into payment(id, amount, account_id, credit_card_id) values (9, 36, 1, 1);
+insert into payment(id, amount, account_id, credit_card_id) values (10, 46, 1, 1);
+insert into payment(id, amount, account_id, credit_card_id) values (11, 64, 1, 1);
+insert into payment(id, amount, account_id, credit_card_id) values (12, 86, 1, 1);
+insert into payment(id, amount, account_id, credit_card_id) values (13, 23, 1, 1);
+insert into payment(id, amount, account_id, credit_card_id) values (14, 75, 1, 1);
+insert into payment(id, amount, account_id, credit_card_id) values (15, 36, 1, 1); 
+
+
+insert into account (id, checking_balance, account_number, user_id) values (2, 1000, '989451001', 1);
+insert into payment(id, amount, account_id, credit_card_id) values (16, 50, 2, 7);
+insert into payment(id, amount, account_id, credit_card_id) values (17, 10, 2, 7);
+insert into payment(id, amount, account_id, credit_card_id) values (18, 20, 2, 7);
+insert into payment(id, amount, account_id, credit_card_id) values (19, 30, 2, 7);
+insert into payment(id, amount, account_id, credit_card_id) values (20, 40, 2, 7);
+insert into payment(id, amount, account_id, credit_card_id) values (21, 45, 2, 7);
+insert into payment(id, amount, account_id, credit_card_id) values (22, 24, 2, 7);
+insert into payment(id, amount, account_id, credit_card_id) values (23, 24, 2, 7);
+insert into payment(id, amount, account_id, credit_card_id) values (24, 36, 2, 7);
+insert into payment(id, amount, account_id, credit_card_id) values (25, 46, 2, 7);
+insert into payment(id, amount, account_id, credit_card_id) values (26, 64, 2, 7);
+insert into payment(id, amount, account_id, credit_card_id) values (27, 86, 2, 7);
+insert into payment(id, amount, account_id, credit_card_id) values (28, 23, 2, 7);
+insert into payment(id, amount, account_id, credit_card_id) values (29, 75, 2, 7);
+insert into payment(id, amount, account_id, credit_card_id) values (30, 36, 2, 7); 
 
 --user story 36
 --for No of credit card rejected along with reasons

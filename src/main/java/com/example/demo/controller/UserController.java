@@ -3,10 +3,14 @@ package com.example.demo.controller;
 import com.example.demo.bo.UserBO;
 import com.example.demo.dao.UserRepo;
 import com.example.demo.model.CreditCard;
+import com.example.demo.model.Payment;
 //import com.example.demo.model.ConsumerUser;
 import com.example.demo.model.User;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -165,6 +169,26 @@ public class UserController {
 				}
 			//}
 			return 0.0;
+		}
+		
+		@GetMapping(path="/users/{username}/paymentHistory")
+		public Map<String, Map<Double,Double>> paymentLimits(@PathVariable("username") String username){
+			User u = bo.findByUsername(username);
+			Map<String, Map<Double,Double>> toReturn = new LinkedHashMap<>();
+			for (CreditCard cc : u.getCreditCards()) {
+				String last4 = cc.getCreditCardNumber().substring(12);
+				Double remainingBalance = cc.getBalance();
+				LinkedHashMap<Double, Double> toAdd = new LinkedHashMap<>();
+				for (Payment p : cc.getPaymentHistory()) {
+					Double paymentAmount = p.getAmount();
+					remainingBalance -= paymentAmount;
+					toAdd.put(paymentAmount,cc.getSpendingLimit()-remainingBalance);
+				}
+				
+				toReturn.put(last4,  toAdd);
+			}
+			return toReturn;
+			
 		}
 	
 }
