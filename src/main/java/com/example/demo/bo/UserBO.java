@@ -40,9 +40,6 @@ public class UserBO {
 	@Autowired
 	UserRepo repo;
 	
-	public List<RegionSale> getRegionSale(){
-		return repo.getRegionSale();
-	}
 	
 	public User findByUsername(String username) {
 		return repo.findByUsername(username).get(0);
