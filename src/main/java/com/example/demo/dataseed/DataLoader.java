@@ -96,6 +96,17 @@ public class DataLoader implements CommandLineRunner{
 				System.err.println("Issue creating user. ERROR: " + e);
 			}
 			
+			Date date4 = null;
+			try {
+				date4 = new SimpleDateFormat("MM/dd/yyyy").parse("11/07/1996");
+				
+				User user4 = new User("aaiden10", date4, "Aaiden", "Witten", "Chicken Biscuit Rd., 21341", "Texas",
+						790, "musician", "veryGoodPassword", "aaidenw.dev@gmail.com");
+				userRepo.save(user4);
+			}catch (Exception e) {
+				System.err.println("Issue creating user. ERROR: " + e);
+			}
+			
 		}
 	}
 	

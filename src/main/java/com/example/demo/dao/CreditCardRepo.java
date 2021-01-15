@@ -16,4 +16,7 @@ public interface CreditCardRepo extends JpaRepository<CreditCard, Long>{
 	@Query("SELECT new com.example.demo.service.RegionSale(u.region, COUNT(c.id) AS sale) FROM User u JOIN u.creditCards c GROUP BY u.region ORDER BY u.region ASC")
 	public List<RegionSale> getRegionSale();
 
+	public CreditCard findByCreditCardNumber(String creditCardNumber);
+	
+
 }

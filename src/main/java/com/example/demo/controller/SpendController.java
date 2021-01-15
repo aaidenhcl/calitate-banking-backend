@@ -1,11 +1,13 @@
 package com.example.demo.controller;
 
 import java.util.List;
+
 import java.util.Optional;
 
 import javax.persistence.PostUpdate;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,10 +28,9 @@ import com.example.demo.model.Spend;
 import com.example.demo.model.User;
 import com.example.demo.utilities.DevUtil;
 import com.example.demo.dao.SpendRepo;
-
-
-
+import com.example.demo.exceptions.NotAuthorizedException;
 import com.example.demo.dao.SpendRepo;
+@CrossOrigin(origins="http://localhost:3000")
 @RestController
 public class SpendController {
 
@@ -42,18 +43,18 @@ public class SpendController {
 
 		//Index route / get All
 		@GetMapping(path= "/spends")
-		public List<Spend> getSpends(@RequestHeader("Authorization") String token) {
+		public List<Spend> getSpends(@RequestHeader("Authorization") String token) throws NotAuthorizedException{
 			if(DevUtil.getIsDev() || User.validateUserToken(token)) {								
 				List<Spend> list = repo.findAll();
 				
 				return list;				
 			}
-			return null;
+			throw new NotAuthorizedException("User is not authorized");
 		}
 		
 		//Get route / Find
 		@GetMapping(path="/spends/{id}")
-		public Spend getSpend(@PathVariable("id") Long id, @RequestHeader("Authorization") String token){
+		public Spend getSpend(@PathVariable("id") Long id, @RequestHeader("Authorization") String token) throws NotAuthorizedException{
 			if(DevUtil.getIsDev() || User.validateUserToken(token)) {												
 				Optional<Spend> spendOpt = repo.findById(id);
 				
@@ -68,15 +69,17 @@ public class SpendController {
 				
 				return spend;
 			}
-			return null;
+			throw new NotAuthorizedException("User is not authorized");
 		}
 		
 		
 		//Get spending based on region
+
 		@GetMapping(path="spends/regionSpend")
 		public List<RegionSpend> getRegionSpend(@RequestHeader("Authorization") String token){
 			if(DevUtil.getIsDev() || User.validateUserToken(token)) {
 			List<RegionSpend> rs = bo.getRegionSpend();
+
 			return rs;
 			}
 			return null;
@@ -85,8 +88,9 @@ public class SpendController {
 		
 		//Post Route / Save / Update
 		//Confirmed functionality
+
 		@PostMapping(path = "/spends")
-		public void create( Spend newSpend, @RequestHeader("Authorization") String token) {
+		public void create(@RequestBody Spend newSpend, @RequestHeader("Authorization") String token) throws NotAuthorizedException{
 			if(DevUtil.getIsDev() || User.validateUserToken(token)) {												
 				//Testing
 				System.out.println(newSpend);
@@ -95,12 +99,13 @@ public class SpendController {
 				repo.save(newSpend);
 				
 			}
+			throw new NotAuthorizedException("User is not authorized");
 		}
 		
 		
 		//Delete Route
 		@DeleteMapping(path= "/spends/{id}")
-		public void delete(@PathVariable("id") Spend spend, @RequestHeader("Authorization") String token) {
+		public void delete(@PathVariable("id") Spend spend, @RequestHeader("Authorization") String token) throws NotAuthorizedException{
 			if(DevUtil.getIsDev() || User.validateUserToken(token)) {												
 				//Testing
 				System.out.println("In Spends" + spend);
@@ -108,6 +113,7 @@ public class SpendController {
 				//Delete spend from repo
 				repo.delete(spend);
 			}
+			throw new NotAuthorizedException("User is not authorized");
 		}
 }
 
