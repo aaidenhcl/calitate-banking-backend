@@ -1,11 +1,13 @@
 package com.example.demo.controller;
 
 import java.util.List;
+
 import java.util.Optional;
 
 import javax.persistence.PostUpdate;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,6 +30,7 @@ import com.example.demo.utilities.DevUtil;
 import com.example.demo.dao.SpendRepo;
 import com.example.demo.exceptions.NotAuthorizedException;
 import com.example.demo.dao.SpendRepo;
+@CrossOrigin(origins="http://localhost:3000")
 @RestController
 public class SpendController {
 
@@ -71,7 +74,8 @@ public class SpendController {
 		
 		
 		//Get spending based on region
-		@GetMapping(path="spends/regionSpend")
+
+		@GetMapping(path="/spends/regionSpend")
 		public List<RegionSpend> getRegionSpend(){
 			List<RegionSpend> rs = repo.getRegionSpend();
 			return rs;
@@ -80,6 +84,7 @@ public class SpendController {
 		
 		//Post Route / Save / Update
 		//Confirmed functionality
+
 		@PostMapping(path = "/spends")
 		public void create(@RequestBody Spend newSpend, @RequestHeader("Authorization") String token) throws NotAuthorizedException{
 			if(DevUtil.getIsDev() || User.validateUserToken(token)) {												

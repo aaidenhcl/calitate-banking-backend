@@ -22,6 +22,7 @@ INSERT INTO CREDIT_CARD(ID,USER_ID) VALUES (8,5);
 insert into credit_card (id, apr, balance, credit_card_number, cvv, expiration_date, spending_limit, status, type, user_id) values (11, 0.20, 154.00, 1234567891532458, 4567, '2021-02-15 11:00:09.472', 5000.00, 'active', 'silver', 1);
 insert into credit_card (id, user_id, spending_limit, credit_card_number, balance) values (9,1,15000.0,'1234567890123456', 10000.0);
 insert into credit_card (id,user_id, spending_limit, credit_card_number, balance) values (10,1,15000.0,'12345678901234', 10000.0);
+
 --account dump
 insert into account (id, checking_balance, account_number, user_id) values (2, 1000, '989451001', 1);
 --credit_card_request dump

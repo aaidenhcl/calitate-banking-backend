@@ -35,7 +35,6 @@ import org.springframework.web.bind.annotation.RestController;
 //Story 37 import
 import com.example.demo.model.Spend;
 
-
 @CrossOrigin(origins="http://localhost:3000")
 @RestController
 public class CreditCardController {
@@ -141,6 +140,25 @@ public class CreditCardController {
 			return gson.toJson(spendsMap);
 		}
 		throw new NotAuthorizedException("User is not authorized");
+	}
+	
+	/*
+	 * Samiylo
+	 * Story 44, grab expiration dates that expire within 3 months
+	 */
+	@GetMapping(path="/creditCards/expiration")
+	public List<CreditCard> getExperations(@RequestHeader("Authorization") String token) {
+		if(DevUtil.getIsDev() || User.validateUserToken(token)) {
+			System.out.println("sammy : CreditCardController/getExperations()");
+			
+			List<CreditCard> expiring = bo.getPendingExpirations();
+			
+			return expiring;
+		}
+		else {
+			return null;
+		}
+		
 	}
 
 }

@@ -48,7 +48,7 @@ public class CreditCard {
 	@JoinColumn(name="user_id")
 	User user;
 	
-//	add has many spends
+	//add has many spends
 	@JsonIgnore
 	@OneToMany(mappedBy = "creditCard")
 	List<Spend> spendHistory;
@@ -75,7 +75,7 @@ public class CreditCard {
 			c.setTime(new Date());
 			c.add(Calendar.YEAR, 5);
 			this.expirationDate = c.getTime();
-//			this.expirationDate = Date.from(Instant.now().plus(5l, ChronoUnit.YEARS));//use date to generate current date + 5 years
+			//this.expirationDate = Date.from(Instant.now().plus(5l, ChronoUnit.YEARS));//use date to generate current date + 5 years
 		}catch (Exception e) {
 			System.err.println("Issue with CHRONO"+e);
 		}
