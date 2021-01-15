@@ -11,7 +11,7 @@ INSERT INTO USER(ID,REGION) VALUES (4, 'Michigan');
 INSERT INTO USER(ID,REGION) VALUES (5, 'Michigan');
 --credit_card dump
 insert into credit_card (id,user_id, spending_limit, credit_card_number, balance) values (1,1,15000.0,'12345678901456', 10000.0);
-insert into credit_card (id,user_id) values (2,2);
+insert into credit_card (id,user_id, status, spending_limit) values (2,2, 'active', 600);
 insert into credit_card (id,spending_limit, status, user_id) values (3, 5000.0, 'active', 2);
 insert into credit_card (id,spending_limit, status, user_id) values (4, 15000.0, 'active', 2);
 insert into credit_card (id,spending_limit, status, user_id) values (5, 15000.0, 'inactive', 2);
