@@ -9,6 +9,7 @@ insert into user(id, username, profession, region) values (2, 'spongebob', 'Fry 
 
 
 
+
 --More spends
 --Jeremy
 INSERT INTO USER(ID,REGION) VALUES (3,'Texas');
@@ -21,6 +22,9 @@ insert into credit_card (id,user_id) values (2,2);
 insert into credit_card (id,spending_limit, status, user_id) values (3, 5000.0, 'active', 2);
 insert into credit_card (id,spending_limit, status, user_id) values (4, 15000.0, 'active', 2);
 insert into credit_card (id,spending_limit, status, user_id) values (5, 15000.0, 'inactive', 2);
+insert into credit_card (id,user_id, spending_limit, credit_card_number, balance) values (10,1,15000.0,'1234567890123456', 10000.0);
+
+
 INSERT INTO CREDIT_CARD(ID,USER_ID) VALUES (6,3);
 INSERT INTO CREDIT_CARD(ID,USER_ID) VALUES (7,4);
 INSERT INTO CREDIT_CARD(ID,USER_ID) VALUES (8,5);
@@ -93,3 +97,18 @@ insert into payment(id, amount, account_id, credit_card_id) values (12, 86, 1, 1
 insert into payment(id, amount, account_id, credit_card_id) values (13, 23, 1, 1);
 insert into payment(id, amount, account_id, credit_card_id) values (14, 75, 1, 1);
 insert into payment(id, amount, account_id, credit_card_id) values (15, 36, 1, 1); 
+insert into payment(id, amount, account_id, credit_card_id) values (16, 50, 2, 10);
+insert into payment(id, amount, account_id, credit_card_id) values (17, 10, 2, 10);
+insert into payment(id, amount, account_id, credit_card_id) values (18, 20, 2, 10);
+insert into payment(id, amount, account_id, credit_card_id) values (19, 30, 2, 10);
+insert into payment(id, amount, account_id, credit_card_id) values (20, 40, 2, 10);
+insert into payment(id, amount, account_id, credit_card_id) values (21, 45, 2, 10);
+insert into payment(id, amount, account_id, credit_card_id) values (22, 24, 2, 10);
+insert into payment(id, amount, account_id, credit_card_id) values (23, 24, 2, 10);
+insert into payment(id, amount, account_id, credit_card_id) values (24, 36, 2, 10);
+insert into payment(id, amount, account_id, credit_card_id) values (25, 46, 2, 10);
+insert into payment(id, amount, account_id, credit_card_id) values (26, 64, 2, 10);
+insert into payment(id, amount, account_id, credit_card_id) values (27, 86, 2, 10);
+insert into payment(id, amount, account_id, credit_card_id) values (28, 23, 2, 10);
+insert into payment(id, amount, account_id, credit_card_id) values (29, 75, 2, 10);
+insert into payment(id, amount, account_id, credit_card_id) values (30, 36, 2, 10); 
