@@ -19,7 +19,10 @@ public class CreditCardBO {
 	CreditCardRepo repo;
 	
 	
-
+	public CreditCard findByCreditCardNumber(String creditCardNumber) {
+		return repo.findByCreditCardNumber(creditCardNumber);
+	}
+	
 
 	public CreditCard findById(Long id) {
 		Optional<CreditCard> creditCardOpt = repo.findById(id);

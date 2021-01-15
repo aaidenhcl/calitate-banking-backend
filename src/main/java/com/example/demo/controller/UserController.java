@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.bo.UserBO;
 import com.example.demo.dao.UserRepo;
+import com.example.demo.exceptions.CorruptDatabaseException;
 import com.example.demo.exceptions.NotAuthorizedException;
 import com.example.demo.model.CreditCard;
 import com.example.demo.model.Payment;
@@ -168,17 +169,20 @@ public class UserController {
 		}
 
 		@GetMapping(path="/users/{username}/totalCredit")
-		public Double obtainUserTotalCredit(/*@RequestHeader(value="Authorization") String token, */@PathVariable("username") String username) {
-
-			//if (User.validateUserToken(token)) {
+		public Double obtainUserTotalCredit(@RequestHeader(value="Authorization") String token, @PathVariable("username") String username) throws NotAuthorizedException, CorruptDatabaseException {
+			if(DevUtil.getIsDev() || User.validateUserToken(token)) {														
 				try {
 					return bo.findTotalCreditLimitByUsername(username);
 				}
 				catch(Exception e) {
-					System.err.println("Error in totalCredit");
+					if(e instanceof NullPointerException) {
+						throw new CorruptDatabaseException("values for credit card status and/or spending_limit cannot be null. check your records");
+					}
+					System.err.println("Error in totalCredit::: " + e);
 				}
-			//}
-			return 0.0;
+				return 0.0;
+			} 
+			throw new NotAuthorizedException("User is not authorized");
 		}
 
 		@GetMapping(path="/users/{username}/paymentHistory")
@@ -222,10 +226,10 @@ public class UserController {
 		 * returns classification depending on amount owed and credit score
 		 *
 		 */
-		@GetMapping(path="/users/{id}/classification")
-		public String userTransactionStats(@PathVariable("id") Long id, @RequestHeader(value="Authorization") String token) throws NotAuthorizedException{
+		@GetMapping(path="/users/{username}/classification")
+		public String userTransactionStats(@PathVariable("username") String username, @RequestHeader(value="Authorization") String token) throws NotAuthorizedException{
 			if(DevUtil.getIsDev() || User.validateUserToken(token)) {						
-				User user = bo.findById(id);
+				User user = bo.findByUsername(username);
 				Map<String, Object> mappedAmounts = bo.processUserSpendAndPayHistrories(user);
 				GsonBuilder builder = new GsonBuilder();
 				Gson gson = builder.create();

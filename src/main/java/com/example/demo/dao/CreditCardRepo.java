@@ -12,5 +12,6 @@ import org.springframework.stereotype.Component;
 @Component
 public interface CreditCardRepo extends JpaRepository<CreditCard, Long>{
 	
-
+	public CreditCard findByCreditCardNumber(String creditCardNumber);
+	
 }

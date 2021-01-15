@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,6 +35,8 @@ import org.springframework.web.bind.annotation.RestController;
 //Story 37 import
 import com.example.demo.model.Spend;
 
+
+@CrossOrigin(origins="http://localhost:3000")
 @RestController
 public class CreditCardController {
 
@@ -85,23 +88,18 @@ public class CreditCardController {
 	//Samiylo - Story36
 	//A Credit card can view statements
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	@GetMapping(path= "/creditCards/{id}/spends")
+	@GetMapping(path= "/creditCards/{accountNo}/spends")
 	
 	//Grab creditCard id from route
-	public List<Spend> getStatement(@PathVariable("id") Long id, @RequestHeader("Authorization") String token) throws NotAuthorizedException{
+	public List<Spend> getStatement(@PathVariable("accountNo") String accountNo, @RequestHeader("Authorization") String token) throws NotAuthorizedException{
 		if(DevUtil.getIsDev() || User.validateUserToken(token)) {												
 			//Test
 			System.out.println("samiylo - CreditCardController/getStatement()");
-			System.out.println(id);
+			System.out.println(accountNo);
 			
-			Optional<CreditCard> history = repo.findById(id);
-//		List<Spend> list = spendRepo.getAllStatement(id);
-			
-			if (history == null) {
-				return null;
-			}
-			
-			List<Spend> spends = history.get().getSpendHistory();
+			CreditCard history = bo.findByCreditCardNumber(accountNo);
+
+			List<Spend> spends = history.getSpendHistory();
 			
 			
 			//I want to return a list of spends for specific credit card
