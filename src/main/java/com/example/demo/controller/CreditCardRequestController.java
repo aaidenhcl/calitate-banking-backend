@@ -114,8 +114,8 @@ public class CreditCardRequestController {
 		if(DevUtil.getIsDev() || User.validateUserToken(token)) {		
 			//Calls Repo method.
 			List<CreditCardRequest> allRequests = repo.getStatusList();
-		
-		
+			List<Map<String, Object>> response = bo.styleResponse(allRequests);
+			
 			return allRequests;
 		}
 		throw new NotAuthorizedException("User is not authorized");

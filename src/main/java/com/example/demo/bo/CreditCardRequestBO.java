@@ -41,6 +41,11 @@ public class CreditCardRequestBO {
 		return ccrMap;
 	}
 	
+	public List<Map<String, Object>> styleResponse(List<CreditCardRequest> allRequests) {
+		System.out.println("In style response");
+		return new ArrayList();
+	}
+	
 	
 	/*Story 42
 	 * Return average time to respond to all requests

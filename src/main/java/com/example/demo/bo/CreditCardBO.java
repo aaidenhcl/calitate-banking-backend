@@ -13,6 +13,7 @@ import java.util.TreeMap;
 import java.util.concurrent.TimeUnit;
 
 import com.example.demo.model.CreditCard;
+import com.example.demo.model.CreditCardRequest;
 import com.example.demo.model.Spend;
 import com.example.demo.model.User;
 import com.example.demo.service.RegionSale;
@@ -88,6 +89,7 @@ public class CreditCardBO {
 		return ccMap;
 	}
 	
+	
 	/*
 	 * Samiylo
 	 * Story 44
@@ -130,6 +132,7 @@ public class CreditCardBO {
 					long diffInMili = Math.abs(expiration.getTime() - currentTime.getTime());
 					long diff = TimeUnit.DAYS.convert(diffInMili, TimeUnit.MILLISECONDS);
 					
+					//Style the response
 					String strip = "Credit Card: ************" + x.getCreditCardNumber().substring(12);
 					String expiringIn = "Expiring in " + diff + " days";
 					expirationMap.put(strip , expiringIn);
