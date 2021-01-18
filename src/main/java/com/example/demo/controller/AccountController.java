@@ -24,6 +24,7 @@ public class AccountController {
 	@Autowired
 	AccountBO bo;
 	
+	//methods creates account
 	@PostMapping(path="/account")
 	public Account createUser(@RequestBody Account account, @RequestHeader("Authorization") String token) throws NotAuthorizedException{
 		if(DevUtil.getIsDev() || User.validateUserToken(token)) {								

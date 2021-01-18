@@ -2,7 +2,7 @@ package com.example.demo.utilities;
 
 public class DevUtil {
 
-	private static Boolean isDev = false;
+	private static Boolean isDev = true;
 
 	public static Boolean getIsDev() {
 		return isDev;

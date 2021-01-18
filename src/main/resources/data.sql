@@ -8,9 +8,9 @@ insert into user(id, username, profession, region) values (2, 'spongebob', 'Fry 
 
 --More spends
 --Jeremy
-INSERT INTO USER(ID,REGION) VALUES (3,'Texas');
-INSERT INTO USER(ID,REGION) VALUES (4, 'Michigan');
-INSERT INTO USER(ID,REGION) VALUES (5, 'Michigan');
+INSERT INTO User(ID,REGION) VALUES (3,'Texas');
+INSERT INTO User(ID,REGION) VALUES (4, 'Michigan');
+INSERT INTO User(ID,REGION) VALUES (5, 'Michigan');
 
 --credit_card dump
 insert into credit_card (id,user_id, spending_limit, credit_card_number, balance) values (1,1,15000.0,'12345678901456', 10000.0);
@@ -108,3 +108,20 @@ insert into payment(id, amount, account_id, credit_card_id) values (27, 86, 2, 1
 insert into payment(id, amount, account_id, credit_card_id) values (28, 23, 2, 10);
 insert into payment(id, amount, account_id, credit_card_id) values (29, 75, 2, 10);
 insert into payment(id, amount, account_id, credit_card_id) values (30, 36, 2, 10);
+
+--Jeremy User
+INSERT INTO User (Id, Dob, Address, Credit_Score, Email,First_Name, Last_Name, Password, Profession, Region, Username)
+VALUES(10,  '1995-12-13','Wixom,MI,48393', 700, 'jeremy.mathew@hcl.com', 'Jeremy', 'Mathew', 'password', 'software developer', 'Michigan', 'jmathewhcl');
+
+INSERT INTO Account(Id, Account_Number, Checking_Balance, Checking_Interest_Rate, User_Id)
+VALUES(3,	123451001, 2000.00, .01, 10);
+
+INSERT INTO Credit_Card(Id, Apr, Balance, Credit_Card_Number, Cvv, Spending_Limit, Status, Type, User_Id) 
+VALUES(12, 0.2, 1500.00, '9876543219876543', 333, 2000.00, 'active', 'bronze', 10); 
+INSERT INTO Credit_Card_Request(Id,Card_Type, Offered_APR, Offered_Limit, Reason, Status, User_Id)
+VALUES (12, 'Gold', 0.2, 2000.00, 'Not cool enough', 'rejected', 10);
+
+INSERT INTO Payment(Id, Amount, Item, Account_id, Credit_Card_Id)
+VALUES(31, 100.0, 'Groceries', 3, 12);
+
+INSERT INTO SPEND(Id,Amount,Category,Item,Credit_Card_Id) VALUES(23,100.0,'groceries','food',12);

@@ -26,6 +26,7 @@ import com.example.demo.exceptions.NotAuthorizedException;
 import com.example.demo.model.CreditCard;
 import com.example.demo.model.CreditCardRequest;
 import com.example.demo.model.User;
+import com.example.demo.service.CreditCardDiscontinued;
 import com.example.demo.service.RegionSale;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -81,15 +82,16 @@ public class CreditCardController {
 		throw new NotAuthorizedException("User is not authorized");
 	}
 	
-	
+	//methods returns amount spent in regions based on each User's region
 	@GetMapping(path="creditCards/regionSale")
-	public List<RegionSale> getRegionSale(@RequestHeader(value="Authorization") String token){
+	public List<RegionSale> getRegionSale(@RequestHeader(value="Authorization") String token) throws NotAuthorizedException {
 		if(DevUtil.getIsDev() || User.validateUserToken(token)) {	
 			List<RegionSale> rs = bo.getRegionSale();
 			return rs;
 		}
-		return null;
-	}
+		throw new NotAuthorizedException("User is not authorized");
+    }
+
 	
 	
 	//Samiylo - Story36
@@ -115,7 +117,16 @@ public class CreditCardController {
 		throw new NotAuthorizedException("User is not authorized");
 	}
 	
-
+	@GetMapping(path="creditCards/discontinued")
+	public List<CreditCardDiscontinued> getDiscontinued(@RequestHeader("Authorization") String token) throws NotAuthorizedException { 
+		if(DevUtil.getIsDev() || User.validateUserToken(token)) {														
+			List<CreditCardDiscontinued> ccdList = bo.getDiscontinued();
+			return ccdList;
+			}
+		
+		throw new NotAuthorizedException("User is not authorized");
+	}
+	
 	/*
 	 * returns map of categories with total accumulated amount
 	 * as value
