@@ -110,13 +110,13 @@ public class CreditCardRequestController {
 	
 	//Get Status of CreditCardRequests
 	@GetMapping(path="/creditCardRequests/status")
-	public List<CreditCardRequest> getRequest(@RequestHeader("Authorization") String token) throws NotAuthorizedException {
+	public List<Map<String, Object>> getRequest(@RequestHeader("Authorization") String token) throws NotAuthorizedException {
 		if(DevUtil.getIsDev() || User.validateUserToken(token)) {		
 			//Calls Repo method.
 			List<CreditCardRequest> allRequests = repo.getStatusList();
-		
-		
-			return allRequests;
+			List<Map<String, Object>> response = bo.styleResponse(allRequests);
+			
+			return response;
 		}
 		throw new NotAuthorizedException("User is not authorized");
 	}
