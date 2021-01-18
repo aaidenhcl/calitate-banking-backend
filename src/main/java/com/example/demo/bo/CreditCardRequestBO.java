@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.LinkedHashMap;
 import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,7 +55,7 @@ public class CreditCardRequestBO {
 		
 		//Fill Map
 		for (CreditCardRequest ccr : allRequests) {
-			Map<String, Object> responseMap = new TreeMap<>();
+			LinkedHashMap<String, Object> responseMap = new LinkedHashMap<>();
 			
 			//Add to object map
 			responseMap.put("Request Id: ", ccr.getId());
