@@ -74,7 +74,7 @@ insert into spend(id, amount, category, item, credit_card_id) values(19, 10, 'en
 INSERT INTO SPEND(id,amount,credit_card_id) VALUES (20,10.0,6);
 INSERT INTO SPEND(id,amount,credit_card_id) VALUES (21,15.0,7);
 INSERT INTO SPEND(id,amount,credit_card_id) VALUES (22,15.0,8);
-INSERT INTO SPEND(Id,Amount,Category,Item,Credit_Card_Id) VALUES(23,100.0,'groceries','food',12);
+INSERT INTO SPEND(Id,Amount,Category,Item,Credit_Card_Id) VALUES(33,100.0,'groceries','food',11);
 
 --payment dump
 --for user story 43 need payments to calculate spend and payment differences
@@ -124,7 +124,7 @@ INSERT INTO Credit_Card_Request(Id,Card_Type, Offered_APR, Offered_Limit, Reason
 VALUES (18, 'Gold', 0.2, 2000.00, 'Not cool enough', 'rejected', 7);
 
 INSERT INTO Payment(Id, Amount, Item, Account_id, Credit_Card_Id)
-VALUES(41, 100.0, 'Groceries', 4, 12);
+VALUES(41, 100.0, 'Groceries', 4, 15);
 
 
 
