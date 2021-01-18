@@ -2,6 +2,7 @@ package com.example.demo.bo;
 
 import com.example.demo.dao.CreditCardRequestRepo;
 import com.example.demo.model.CreditCardRequest;
+import com.example.demo.service.CreditCardDiscontinued;
 
 import java.time.Instant;
 import java.util.ArrayList;
@@ -41,6 +42,7 @@ public class CreditCardRequestBO {
 		return ccrMap;
 	}
 	
+
 	/*sammy backlog
 	 * Grabs list of all requests and styles it for a response
 	 */
@@ -69,8 +71,7 @@ public class CreditCardRequestBO {
 		
 		return all;
 	}
-	
-	
+
 	/*Story 42
 	 * Return average time to respond to all requests
 	 */

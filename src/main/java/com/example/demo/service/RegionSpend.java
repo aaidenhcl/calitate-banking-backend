@@ -5,12 +5,12 @@ public class RegionSpend {
 	
 
 	private String region;
-	private Double amount;
+	private Double amount_Spent;
 	
 	
-	public RegionSpend(String region, Double amount){
+	public RegionSpend(String region, Double amount_Spent){
 		this.region = region;
-		this.amount = amount;
+		this.amount_Spent = amount_Spent;
 	}
 
 
@@ -23,13 +23,13 @@ public class RegionSpend {
 	}
 
 
-	public Double getAmount() {
-		return amount;
+	public Double getAmount_Spent() {
+		return amount_Spent;
 	}
 
 
-	public void setAmount(Double amount) {
-		this.amount = amount;
+	public void setAmount_Spent(Double amount_Spent) {
+		this.amount_Spent = amount_Spent;
 	}
 
 	

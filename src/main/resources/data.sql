@@ -8,9 +8,9 @@ insert into user(id, username, profession, region) values (2, 'spongebob', 'Fry 
 
 --More spends
 --Jeremy
-INSERT INTO USER(ID,REGION) VALUES (3,'Texas');
-INSERT INTO USER(ID,REGION) VALUES (4, 'Michigan');
-INSERT INTO USER(ID,REGION) VALUES (5, 'Michigan');
+INSERT INTO User(ID,REGION) VALUES (3,'Texas');
+INSERT INTO User(ID,REGION) VALUES (4, 'Michigan');
+INSERT INTO User(ID,REGION) VALUES (5, 'Michigan');
 
 --credit_card dump
 insert into credit_card (id,user_id, spending_limit, credit_card_number, balance) values (1,1,15000.0,'12345678901456', 10000.0);
@@ -74,6 +74,8 @@ insert into spend(id, amount, category, item, credit_card_id) values(19, 10, 'en
 INSERT INTO SPEND(id,amount,credit_card_id) VALUES (20,10.0,6);
 INSERT INTO SPEND(id,amount,credit_card_id) VALUES (21,15.0,7);
 INSERT INTO SPEND(id,amount,credit_card_id) VALUES (22,15.0,8);
+INSERT INTO SPEND(Id,Amount,Category,Item,Credit_Card_Id) VALUES(33,100.0,'groceries','food',11);
+
 --payment dump
 --for user story 43 need payments to calculate spend and payment differences
 --Aaiden
@@ -108,6 +110,23 @@ insert into payment(id, amount, account_id, credit_card_id) values (27, 86, 2, 1
 insert into payment(id, amount, account_id, credit_card_id) values (28, 23, 2, 10);
 insert into payment(id, amount, account_id, credit_card_id) values (29, 75, 2, 10);
 insert into payment(id, amount, account_id, credit_card_id) values (30, 36, 2, 10);
+
+--Jeremy User
+INSERT INTO User (Id, Dob, Address, Credit_Score, Email,First_Name, Last_Name, Password, Profession, Region, Username)
+VALUES(7,  '1995-12-13','Wixom,MI,48393', 700, 'jeremy.mathew@hcl.com', 'Jeremy', 'Mathew', 'password', 'software developer', 'Michigan', 'jmathewhcl');
+
+INSERT INTO Account(Id, Account_Number, Checking_Balance, Checking_Interest_Rate, User_Id)
+VALUES(4,	123451001, 2000.00, .01, 7);
+
+INSERT INTO Credit_Card(Id, Apr, Balance, Credit_Card_Number, Cvv, Spending_Limit, Status, Type, User_Id) 
+VALUES(15, 0.2, 1500.00, '9876543219876543', 333, 2000.00, 'active', 'bronze', 7); 
+INSERT INTO Credit_Card_Request(Id,Card_Type, Offered_APR, Offered_Limit, Reason, Status, User_Id)
+VALUES (18, 'Gold', 0.2, 2000.00, 'Not cool enough', 'rejected', 7);
+
+INSERT INTO Payment(Id, Amount, Item, Account_id, Credit_Card_Id)
+VALUES(41, 100.0, 'Groceries', 4, 15);
+
+
 
 
 --Aaiden's User:

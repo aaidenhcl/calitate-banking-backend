@@ -2,28 +2,28 @@ package com.example.demo.service;
 
 public class AgeDemographics {
 	
-	private String age;
-	private Integer count;
+	private String age_range;
+	private Integer total;
 	
-	public AgeDemographics(String age, Integer count) {
-		this.age = age;
-		this.count = count;
+	public AgeDemographics(String age_range, Integer total) {
+		this.age_range = age_range;
+		this.total = total;
 	}
 
-	public String getAge() {
-		return age;
+	public String getAge_Range() {
+		return age_range;
 	}
 
-	public void setAge(String age) {
-		this.age = age;
+	public void setAge_Range(String age_range) {
+		this.age_range = age_range;
 	}
 
-	public Integer getCount() {
-		return count;
+	public Integer getTotal() {
+		return total;
 	}
 
-	public void setCount(Integer count) {
-		this.count = count;
+	public void setTotal(Integer total) {
+		this.total = total;
 	}
 	
 }

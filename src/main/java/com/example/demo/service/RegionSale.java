@@ -4,12 +4,12 @@ package com.example.demo.service;
 public class RegionSale{
 
 	private String region;
-	private Long sale;
+	private Long cards_Sold;
 	
 	
-	public RegionSale(String region, Long sale){
+	public RegionSale(String region, Long cards_Sold){
 		this.region = region;
-		this.sale = sale;
+		this.cards_Sold = cards_Sold;
 	}
 
 
@@ -22,13 +22,13 @@ public class RegionSale{
 	}
 
 
-	public Long getSale() {
-		return sale;
+	public Long getCards_Sold() {
+		return cards_Sold;
 	}
 
 
-	public void setSale(Long sale) {
-		this.sale = sale;
+	public void setCards_Sold(Long cards_Sold) {
+		this.cards_Sold = cards_Sold;
 	}
 
 

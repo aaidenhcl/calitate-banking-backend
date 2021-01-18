@@ -6,14 +6,15 @@ import com.example.demo.exceptions.CorruptDatabaseException;
 import com.example.demo.exceptions.NotAuthorizedException;
 import com.example.demo.model.CreditCard;
 import com.example.demo.model.Payment;
+import com.example.demo.model.Spend;
 import com.example.demo.model.User;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import com.example.demo.service.AgeDemographics;
-import com.example.demo.service.Demographics;
-
+import com.example.demo.service.DemographicsProfession;
+import com.example.demo.service.DemographicsRegion;
 import com.example.demo.utilities.DevUtil;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -24,6 +25,7 @@ import java.time.Period;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -174,10 +176,23 @@ public class UserController {
 		}
 
 		@GetMapping(path="/users/{username}/totalCredit")
-		public Double obtainUserTotalCredit(@RequestHeader(value="Authorization") String token, @PathVariable("username") String username) throws NotAuthorizedException, CorruptDatabaseException {
+		public String obtainUserTotalCredit(@RequestHeader(value="Authorization") String token, @PathVariable("username") String username) throws NotAuthorizedException, CorruptDatabaseException {
+			
 			if(DevUtil.getIsDev() || User.validateUserToken(token)) {														
 				try {
-					return bo.findTotalCreditLimitByUsername(username);
+					
+					List<CreditCard> ccs = bo.getAllCreditCardsByUsername(username);
+					StringBuilder sb = new StringBuilder();
+					Double totalLimit = 0.0;
+					for (CreditCard cc : ccs) {
+						sb.append("\nLimit for card ending in ");
+						if (cc.getCreditCardNumber() != null)
+							sb.append(cc.getCreditCardNumber().substring(12));
+						sb.append(String.format(" : $%.2f", cc.getSpendingLimit()));
+						totalLimit += cc.getSpendingLimit();
+					}
+					sb.insert(0,"The total credit limit for user " + username+": $"+String.format("%.2f", totalLimit));
+					return sb.toString();
 				}
 				catch(Exception e) {
 					if(e instanceof NullPointerException) {
@@ -185,13 +200,18 @@ public class UserController {
 					}
 					System.err.println("Error in totalCredit::: " + e);
 				}
-				return 0.0;
+				return "";
 			} 
 			throw new NotAuthorizedException("User is not authorized");
 		}
-
+		
+		
+		
+		@SuppressWarnings("deprecation")
 		@GetMapping(path="/users/{username}/paymentHistory")
-		public Map<String, Map<Double,Double>> paymentLimits(@PathVariable("username") String username){
+		public Map<String, Map<Double, Double>> paymentLimits(@PathVariable("username") String username){
+			
+			// old code
 			User u = bo.findByUsername(username);
 			Map<String, Map<Double,Double>> toReturn = new LinkedHashMap<>();
 			for (CreditCard cc : u.getCreditCards()) {
@@ -206,34 +226,32 @@ public class UserController {
 
 				toReturn.put(last4,  toAdd);
 			}
-			return toReturn;
+			return toReturn; 
 		}
 		
 		//method returns sale based on region
 
 		
-		//method returns count of professions from users
+		//method returns count of users based on profession
 		@GetMapping(path="users/demographics/profession")
-		public List<Demographics> getDemographicsProfession(@RequestHeader(value="Authorization") String token) throws NotAuthorizedException{
+		public List<DemographicsProfession> getDemographicsProfession(@RequestHeader(value="Authorization") String token) throws NotAuthorizedException{
 			if(DevUtil.getIsDev() || User.validateUserToken(token)) {
-				List<Demographics> dl = bo.getDemographicsProfession();
+				List<DemographicsProfession> dl = bo.getDemographicsProfession();
 				return dl;
 			}
 			throw new NotAuthorizedException("User is not authorized");
 		}
 		
 		
-		//method returns count of regions from users
+		//method returns count of users based on region
 		@GetMapping(path="users/demographics/region")
-		public List<Demographics> getDemographicsRegion(@RequestHeader(value="Authorization") String token) throws NotAuthorizedException {
+		public List<DemographicsRegion> getDemographicsRegion(@RequestHeader(value="Authorization") String token) throws NotAuthorizedException{
 			if(DevUtil.getIsDev() || User.validateUserToken(token)){
-				List<Demographics> rl = bo.getDemographicsRegion();
+				List<DemographicsRegion> rl = bo.getDemographicsRegion();
 				return rl;
 			}
 			throw new NotAuthorizedException("User is not authorized");
 		}
-		
-		//method returns dob of users
 		
 		//method returns count of ages of users
 		@GetMapping(path="users/demographics/age")
@@ -251,7 +269,7 @@ public class UserController {
 				}
 				return adl;
 			}	
-			throw new NotAuthorizedException("User is not authorized");			
+			throw new NotAuthorizedException("User is not authorized");
 		}
 	
 		/*

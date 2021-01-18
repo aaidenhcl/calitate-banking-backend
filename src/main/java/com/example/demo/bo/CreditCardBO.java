@@ -16,6 +16,7 @@ import com.example.demo.model.CreditCard;
 import com.example.demo.model.CreditCardRequest;
 import com.example.demo.model.Spend;
 import com.example.demo.model.User;
+import com.example.demo.service.CreditCardDiscontinued;
 import com.example.demo.service.RegionSale;
 import com.example.demo.utilities.DevUtil;
 
@@ -45,6 +46,12 @@ public class CreditCardBO {
 		return creditCard;
 	}
 	
+	//method is called from controller and calls repo method to return list that has credit cards that are discontinued 
+	public List<CreditCardDiscontinued> getDiscontinued(){
+		List<CreditCardDiscontinued> ccdList = repo.getDiscontinued();
+		return ccdList;
+	};
+	
 	/*
 	 * calls BO to map values of accumulated amounts to categories
 	 * maps category to accumulated amount
@@ -62,6 +69,7 @@ public class CreditCardBO {
 		return ccMap;
 	}
 
+	//method is called from controller and calls repo method to return List of region sales
 	public List<RegionSale> getRegionSale(){	
 			List<RegionSale> rs = repo.getRegionSale();
 			return rs;

@@ -24,6 +24,7 @@ import com.example.demo.dao.UserRepo;
 import com.example.demo.exceptions.NotAuthorizedException;
 import com.example.demo.model.CreditCardRequest;
 import com.example.demo.model.User;
+import com.example.demo.service.CreditCardDiscontinued;
 import com.example.demo.utilities.DevUtil;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -43,9 +44,14 @@ public class CreditCardRequestController {
   
 	//Story32
 	@GetMapping(path="/creditCardRequests/dateRange")
-	public Integer requestsByDateRange(@RequestParam String start, @RequestParam String end, @RequestHeader("Authorization") String token)  throws NotAuthorizedException{
-		if(DevUtil.getIsDev() || User.validateUserToken(token)) {	
-				return repo.findByRequestTime(start, end).size();				
+	public String requestsByDateRange(@RequestParam String start, @RequestParam String end, @RequestHeader("Authorization") String token)  throws NotAuthorizedException{
+		
+		if(DevUtil.getIsDev() || User.validateUserToken(token)) {		
+			List<CreditCardRequest> requests = repo.findByRequestTime(start, end);
+			StringBuilder sb = new StringBuilder();
+			sb.append("Number of Credit Card Requests received between "+start+" and "+end+": "+requests.size());
+			repo.findByRequestTime(start, end).stream().forEach(d -> sb.append("\n"+d.toString()));
+			return sb.toString();
 		}
 		throw new NotAuthorizedException("User is not authorized");
 	}
@@ -64,7 +70,7 @@ public class CreditCardRequestController {
 	
 	//Story 35
 	@GetMapping(path="/creditCardRequests/approvals/regionProfession")
-	public Integer approvalsProfessionRegion(@RequestParam String profession, @RequestParam String region, @RequestHeader("Authorization") String token)  throws NotAuthorizedException{
+	public String approvalsProfessionRegion(@RequestParam String profession, @RequestParam String region, @RequestHeader("Authorization") String token)  throws NotAuthorizedException{
 		if(DevUtil.getIsDev() || User.validateUserToken(token)) {											
 			List<CreditCardRequest> approvals = new ArrayList<>();
 			if (!region.isEmpty() && !profession.isEmpty()) {
@@ -77,7 +83,11 @@ public class CreditCardRequestController {
 			else if (!profession.isEmpty()) {
 				approvals = repo.findByUserProfession(profession);
 			}
-			return approvals.size();
+			StringBuilder sb = new StringBuilder();
+			sb.append("Number of Credit Card Approvals with Profession: " + (profession.isEmpty() ? "Not Specified" : profession)+" and Region: "+(region.isEmpty() ? "Not Specified" : region)+" - "+approvals.size());
+			approvals.stream().forEach(d -> sb.append("\n"+d.toString()));
+			
+			return sb.toString();
 		}
 		throw new NotAuthorizedException("User is not authorized");
 	}
