@@ -99,6 +99,8 @@ public class CreditCardBO {
 		List<CreditCard> all = repo.findAll();
 		List<CreditCard> expiring = new ArrayList<>();
 		
+		Map<String, Integer> expirationMap = new TreeMap<>();
+		
 		//Create local calendar with and instantiate current time
 		Calendar localCalendar = Calendar.getInstance(TimeZone.getDefault());
 		
