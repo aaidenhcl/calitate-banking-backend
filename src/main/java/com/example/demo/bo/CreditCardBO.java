@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.TimeZone;
 import java.util.TreeMap;
+import java.util.concurrent.TimeUnit;
 
 import com.example.demo.model.CreditCard;
 import com.example.demo.model.Spend;
@@ -126,8 +127,12 @@ public class CreditCardBO {
 					/*
 					 * If CC is expiring within 3 months, then add it to the map
 					 */
+					long diffInMili = Math.abs(expiration.getTime() - currentTime.getTime());
+					long diff = TimeUnit.DAYS.convert(diffInMili, TimeUnit.MILLISECONDS);
+					
 					String strip = "Credit Card: ************" + x.getCreditCardNumber().substring(12);
-					expirationMap.put(strip , x.getExpirationDate());
+					String expiringIn = "Expiring in " + diff + " days";
+					expirationMap.put(strip , expiringIn);
 				}
 				
 			}
