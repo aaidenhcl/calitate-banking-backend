@@ -65,7 +65,7 @@ public class DataLoader implements CommandLineRunner{
 				date1 = new SimpleDateFormat("MM/dd/yyyy").parse("11/07/1996");
 				
 				User user1 = new User("jeremy_beremy", date1, "Jeremy", "Matthew", "101 Rock and Hardplace drive, 78321", "Michigan",
-						650, "cobbler", "verySecretPassword");
+						650, "cobbler", "asd","verySecretPassword");
 				userRepo.save(user1);
 				System.out.println("IS THIS WORKING?");
 			}catch (Exception e) {

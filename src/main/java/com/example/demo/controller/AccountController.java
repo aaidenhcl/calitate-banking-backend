@@ -24,6 +24,7 @@ public class AccountController {
 	@Autowired
 	AccountBO bo;
 	
+	//methods creates account
 	/*
 	 * this route is responsible for creating an account
 	 */
