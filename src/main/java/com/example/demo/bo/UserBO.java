@@ -45,13 +45,8 @@ public class UserBO {
 		return repo.findByUsername(username).get(0);
 	}
 	
-	public Double findTotalCreditLimitByUsername(String username) {
-		User foundUser = findByUsername(username);
-		double totalLimit = 0.0;
-		for (CreditCard cc : foundUser.getCreditCards())
-			if (cc.getStatus().equals("active"))
-				totalLimit += cc.getSpendingLimit();
-		return totalLimit;
+	public List<CreditCard> getAllCreditCardsByUsername(String username) {
+		return findByUsername(username).getCreditCards();
 	}
 
 
