@@ -131,7 +131,7 @@ VALUES(41, 100.0, 'Groceries', 4, 15);
 
 --Aaiden's User:
 insert into user(id, username, email, DOB, first_name, last_name, address, region, credit_score, profession, date_created)
-values(6, 'aaiden', 'aaidenw.dev@gmail.com', '19961107', 'aaiden', 'witten', '12345 street lane', 'Texas', 800, 'Developer', CURDATE());
+values(6, 'aaiden', 'aaidenw.dev@gmail.com', '19961107', 'aaiden', 'witten', '12345 street lane', 'texas', 800, 'developer', CURDATE());
 
 insert into credit_card(id, spending_limit, apr, balance, expiration_date, credit_card_number, cvv, type, status, date_created, user_id)
 values(12, 60000, .1, 500, '20210211', '1515121213131414', 355, 'platinum', 'actve', '20170101', 6);
@@ -166,23 +166,23 @@ insert into payment(id, amount, account_id, credit_card_id) values (38, 360, 3, 
 insert into payment(id, amount, account_id, credit_card_id) values (39, 360, 3, 12);
 insert into payment(id, amount, account_id, credit_card_id) values (40, 360, 3, 12);
 
-insert into credit_card_request (id, status, offered_limit, offered_apr, card_type, reason, user_id)
-values (12, 'approved', 30000, .1, 'platinum', null, 6);
+insert into credit_card_request (id, status, offered_limit, offered_apr, card_type, reason, user_id, request_time, last_updated)
+values (12, 'approved', 30000, .1, 'platinum', null, 6, CURDATE(), CURDATE()+1);
 
-insert into credit_card_request (id, status, offered_limit, offered_apr, card_type, reason, user_id)
-values (13, 'rejected', 30000, .1, 'platinum', 'Too many requests pending', 6);
+insert into credit_card_request (id, status, offered_limit, offered_apr, card_type, reason, user_id, request_time, last_updated)
+values (13, 'rejected', 30000, .1, 'platinum', 'Too many requests pending', 6, CURDATE(), CURDATE()+1);
 
-insert into credit_card_request (id, status, offered_limit, offered_apr, card_type, reason, user_id)
-values (14, 'accepted', 30000, .1, 'gold', null, 6);
+insert into credit_card_request (id, status, offered_limit, offered_apr, card_type, reason, user_id, request_time, last_updated)
+values (14, 'accepted', 30000, .1, 'gold', null, 6, CURDATE(), CURDATE()+1);
 
-insert into credit_card_request (id, status, offered_limit, offered_apr, card_type, reason, user_id)
-values (15, 'accepted', 30000, .1, 'platinum', null, 6);
+insert into credit_card_request (id, status, offered_limit, offered_apr, card_type, reason, user_id, request_time, last_updated)
+values (15, 'accepted', 30000, .1, 'platinum', null, 6, CURDATE(), CURDATE()+1);
 
-insert into credit_card_request (id, status, offered_limit, offered_apr, card_type, reason, user_id)
-values (16, 'accepted', 30000, .1, 'platinum', null, 6);
+insert into credit_card_request (id, status, offered_limit, offered_apr, card_type, reason, user_id, request_time, last_updated)
+values (16, 'accepted', 30000, .1, 'platinum', null, 6, CURDATE(), CURDATE()+1);
 
-insert into credit_card_request (id, status, offered_limit, offered_apr, card_type, reason, user_id)
-values (17, 'declined', 30000, .1, 'silver', null, 6);
+insert into credit_card_request (id, status, offered_limit, offered_apr, card_type, reason, user_id, request_time, last_updated)
+values (17, 'declined', 30000, .1, 'silver', null, 6, CURDATE(), CURDATE()+1);
 
 insert into loan_request(id, status, reason, offered_amount, offered_apr, term_in_months, minimum_monthly_payment, user_id)
 values (1, 'rejected', 'Too many requests', 30000, .15, 48, 625, 6);
