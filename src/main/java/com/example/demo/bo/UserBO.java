@@ -7,7 +7,8 @@ import com.example.demo.model.Spend;
 import com.example.demo.model.User;
 
 import com.example.demo.service.AgeDemographics;
-import com.example.demo.service.Demographics;
+import com.example.demo.service.DemographicsProfession;
+import com.example.demo.service.DemographicsRegion;
 import com.example.demo.utilities.DevUtil;
 import com.example.demo.service.RegionSale;
 
@@ -59,19 +60,19 @@ public class UserBO {
 		return null;
 	}
 	
-	//method returns count of professions from user database
-	public List<Demographics> getDemographicsProfession(){
-			List<Demographics> dpl = repo.getDemographicsProfession();
+	//method called from controller and calls repo method to return List of amount users based on professions
+	public List<DemographicsProfession> getDemographicsProfession(){
+			List<DemographicsProfession> dpl = repo.getDemographicsProfession();
 			return dpl;
 	}
 	
-	//method returns count of regions from user database
-	public List<Demographics> getDemographicsRegion(){
-		List<Demographics> drl = repo.getDemographicsRegion();
+	//method called from controller and calls repo method to return List of users based on regions
+	public List<DemographicsRegion> getDemographicsRegion(){
+		List<DemographicsRegion> drl = repo.getDemographicsRegion();
 		return drl;
    }	
 	
-	//method returns count of age ranges from user database
+	//method called from controller and calls repo method to return List of user ages
 	public List<User> getDemographicsAge(Integer lower, Integer upper){
 		List<User> ul = repo.getDemographicsAge(lower, upper);
 		return ul;
@@ -92,6 +93,10 @@ public class UserBO {
 		return regMap;
 	}
 	
+	/*
+	 * proccesses the user analyzing total spends and payments along with avg purchase amount
+	 * classifies user based on average purchase 
+	 */
 	public Map<String, Object> processUserSpendAndPayHistrories(User user){
 			
 			//getting total spent amount

@@ -2,6 +2,7 @@ package com.example.demo.bo;
 
 import com.example.demo.dao.CreditCardRequestRepo;
 import com.example.demo.model.CreditCardRequest;
+import com.example.demo.service.CreditCardDiscontinued;
 
 import java.time.Instant;
 import java.util.ArrayList;
@@ -41,7 +42,36 @@ public class CreditCardRequestBO {
 		return ccrMap;
 	}
 	
-	
+
+	/*sammy backlog
+	 * Grabs list of all requests and styles it for a response
+	 */
+	public List<Map<String, Object>> styleResponse(List<CreditCardRequest> allRequests) {
+		System.out.println("In style response");
+		
+
+		List<Map<String, Object>> all = new ArrayList<>();
+		
+		//Fill Map
+		for (CreditCardRequest ccr : allRequests) {
+			Map<String, Object> responseMap = new TreeMap<>();
+			
+			//Add to object map
+			responseMap.put("Request Id: ", ccr.getId());
+			responseMap.put("Status: ", ccr.getStatus());
+			responseMap.put("Offered Limit: ", ccr.getOfferedLimit());
+			responseMap.put("APR: ", ccr.getOfferedApr());
+			responseMap.put("Requested: ", ccr.getRequestTime());
+			
+			//Add object map to list
+			all.add(responseMap);
+		}
+		
+		
+		
+		return all;
+	}
+
 	/*Story 42
 	 * Return average time to respond to all requests
 	 */

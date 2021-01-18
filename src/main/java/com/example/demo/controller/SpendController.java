@@ -73,22 +73,20 @@ public class SpendController {
 		}
 		
 		
-		//Get spending based on region
-
+		//Get spending based on each User's region
 		@GetMapping(path="spends/regionSpend")
-		public List<RegionSpend> getRegionSpend(@RequestHeader("Authorization") String token){
+		public List<RegionSpend> getRegionSpend(@RequestHeader("Authorization") String token) throws NotAuthorizedException{
 			if(DevUtil.getIsDev() || User.validateUserToken(token)) {
 			List<RegionSpend> rs = bo.getRegionSpend();
 
 			return rs;
 			}
-			return null;
+			throw new NotAuthorizedException("User is not authorized");
 		}
 		
 		
 		//Post Route / Save / Update
 		//Confirmed functionality
-
 		@PostMapping(path = "/spends")
 		public void create(@RequestBody Spend newSpend, @RequestHeader("Authorization") String token) throws NotAuthorizedException{
 			if(DevUtil.getIsDev() || User.validateUserToken(token)) {												

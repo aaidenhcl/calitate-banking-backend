@@ -4,9 +4,10 @@ import org.springframework.stereotype.Component;
 
 import com.example.demo.model.CreditCardRequest;
 import com.example.demo.model.User;
+import com.example.demo.service.CreditCardDiscontinued;
 
 import java.util.List;
-
+import java.util.Map;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -24,7 +25,6 @@ public interface CreditCardRequestRepo extends JpaRepository<CreditCardRequest, 
 	@Query(value = "SELECT * FROM credit_card_request WHERE request_time BETWEEN CAST(?1 AS DATE) AND CAST(?2 AS DATE);", nativeQuery = true)
 	List<CreditCardRequest> findByRequestTime(String start, String end);
 	
-	
 	//test
 	@Query(value = "select * from credit_card_request;" , nativeQuery = true)
 	public List<CreditCardRequest> findAllStatus();
@@ -36,5 +36,6 @@ public interface CreditCardRequestRepo extends JpaRepository<CreditCardRequest, 
 	
 //	@Query(value = "SELECT FROM credit_card_request ccr WHERE ccr.status = 'rejected'", nativeQuery = true)
 //	public List<CreditCardRequestRejectedReasonCount> findAllCountRejectedAndReason();
+	
 }
  

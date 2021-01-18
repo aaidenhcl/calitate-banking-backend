@@ -13,8 +13,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import com.example.demo.service.AgeDemographics;
-import com.example.demo.service.Demographics;
-
+import com.example.demo.service.DemographicsProfession;
+import com.example.demo.service.DemographicsRegion;
 import com.example.demo.utilities.DevUtil;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -232,33 +232,30 @@ public class UserController {
 		//method returns sale based on region
 
 		
-		//method returns count of professions from users
+		//method returns count of users based on profession
 		@GetMapping(path="users/demographics/profession")
-		public List<Demographics> getDemographicsProfession(@RequestHeader(value="Authorization") String token){
+		public List<DemographicsProfession> getDemographicsProfession(@RequestHeader(value="Authorization") String token) throws NotAuthorizedException{
 			if(DevUtil.getIsDev() || User.validateUserToken(token)) {
-				List<Demographics> dl = bo.getDemographicsProfession();
+				List<DemographicsProfession> dl = bo.getDemographicsProfession();
 				return dl;
 			}
-			return null;
+			throw new NotAuthorizedException("User is not authorized");
 		}
 		
 		
-		//method returns count of regions from users
+		//method returns count of users based on region
 		@GetMapping(path="users/demographics/region")
-		public List<Demographics> getDemographicsRegion(@RequestHeader(value="Authorization") String token){
+		public List<DemographicsRegion> getDemographicsRegion(@RequestHeader(value="Authorization") String token) throws NotAuthorizedException{
 			if(DevUtil.getIsDev() || User.validateUserToken(token)){
-				List<Demographics> rl = bo.getDemographicsRegion();
+				List<DemographicsRegion> rl = bo.getDemographicsRegion();
 				return rl;
 			}
-			return null;
-			
+			throw new NotAuthorizedException("User is not authorized");
 		}
-		
-		//method returns dob of users
 		
 		//method returns count of ages of users
 		@GetMapping(path="users/demographics/age")
-		public List<AgeDemographics> getDemographicsAge(@RequestHeader(value="Authorization") String token){
+		public List<AgeDemographics> getDemographicsAge(@RequestHeader(value="Authorization") String token) throws NotAuthorizedException{
 			if(DevUtil.getIsDev() || User.validateUserToken(token)){
 				List<AgeDemographics> adl = new ArrayList<AgeDemographics>();
 				
@@ -272,8 +269,7 @@ public class UserController {
 				}
 				return adl;
 			}	
-			return null;
-			
+			throw new NotAuthorizedException("User is not authorized");
 		}
 	
 		/*

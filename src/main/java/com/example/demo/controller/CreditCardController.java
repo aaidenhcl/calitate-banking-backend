@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import java.util.Map;
@@ -26,6 +27,7 @@ import com.example.demo.exceptions.NotAuthorizedException;
 import com.example.demo.model.CreditCard;
 import com.example.demo.model.CreditCardRequest;
 import com.example.demo.model.User;
+import com.example.demo.service.CreditCardDiscontinued;
 import com.example.demo.service.RegionSale;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -81,15 +83,17 @@ public class CreditCardController {
 		throw new NotAuthorizedException("User is not authorized");
 	}
 	
-	
+	//methods returns amount spent in regions based on each User's region
 	@GetMapping(path="creditCards/regionSale")
-	public List<RegionSale> getRegionSale(@RequestHeader(value="Authorization") String token){
+	public List<RegionSale> getRegionSale(@RequestHeader(value="Authorization") String token) throws NotAuthorizedException {
 		if(DevUtil.getIsDev() || User.validateUserToken(token)) {	
 			List<RegionSale> rs = bo.getRegionSale();
+			List<String> array = new ArrayList<>();
 			return rs;
 		}
-		return null;
-	}
+		throw new NotAuthorizedException("User is not authorized");
+    }
+
 	
 	
 	//Samiylo - Story36
@@ -115,10 +119,19 @@ public class CreditCardController {
 		throw new NotAuthorizedException("User is not authorized");
 	}
 	
-
+	@GetMapping(path="creditCards/discontinued")
+	public List<CreditCardDiscontinued> getDiscontinued(@RequestHeader("Authorization") String token) throws NotAuthorizedException { 
+		if(DevUtil.getIsDev() || User.validateUserToken(token)) {														
+			List<CreditCardDiscontinued> ccdList = bo.getDiscontinued();
+			return ccdList;
+			}
+		
+		throw new NotAuthorizedException("User is not authorized");
+	}
+	
 	/*
 	 * returns map of categories with total accumulated amount
-	 * as value
+	 * as value.
 	 */
 	@GetMapping(path="/creditCards/patterns")
 	public String analyzeSpendingPatterns(@RequestHeader("cardNo") String cardNo, @RequestHeader("Authorization") String token) throws NotAuthorizedException{
@@ -155,11 +168,11 @@ public class CreditCardController {
 	 * Story 44, grab expiration dates that expire within 3 months
 	 */
 	@GetMapping(path="/creditCards/expiration")
-	public List<CreditCard> getExperations(@RequestHeader("Authorization") String token) {
+	public Map<String, Object> getExperations(@RequestHeader("Authorization") String token) {
 		if(DevUtil.getIsDev() || User.validateUserToken(token)) {
 			System.out.println("sammy : CreditCardController/getExperations()");
 			
-			List<CreditCard> expiring = bo.getPendingExpirations();
+			Map<String, Object> expiring = bo.getPendingExpirations();
 			
 			return expiring;
 		}

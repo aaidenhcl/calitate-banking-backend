@@ -10,10 +10,13 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.TimeZone;
 import java.util.TreeMap;
+import java.util.concurrent.TimeUnit;
 
 import com.example.demo.model.CreditCard;
+import com.example.demo.model.CreditCardRequest;
 import com.example.demo.model.Spend;
 import com.example.demo.model.User;
+import com.example.demo.service.CreditCardDiscontinued;
 import com.example.demo.service.RegionSale;
 import com.example.demo.utilities.DevUtil;
 
@@ -43,6 +46,12 @@ public class CreditCardBO {
 		return creditCard;
 	}
 	
+	//method is called from controller and calls repo method to return list that has credit cards that are discontinued 
+	public List<CreditCardDiscontinued> getDiscontinued(){
+		List<CreditCardDiscontinued> ccdList = repo.getDiscontinued();
+		return ccdList;
+	};
+	
 	/*
 	 * calls BO to map values of accumulated amounts to categories
 	 * maps category to accumulated amount
@@ -60,6 +69,7 @@ public class CreditCardBO {
 		return ccMap;
 	}
 
+	//method is called from controller and calls repo method to return List of region sales
 	public List<RegionSale> getRegionSale(){	
 			List<RegionSale> rs = repo.getRegionSale();
 			return rs;
@@ -87,17 +97,18 @@ public class CreditCardBO {
 		return ccMap;
 	}
 	
+	
 	/*
 	 * Samiylo
 	 * Story 44
 	 * Grabs all credit cards, then returns list of credit cards
 	 * that expire within 3 months
 	 */
-	public List<CreditCard> getPendingExpirations() {
+	public Map<String, Object> getPendingExpirations() {
 		
 		//Grab all Credit Cards
 		List<CreditCard> all = repo.findAll();
-		List<CreditCard> expiring = new ArrayList<>();
+		Map<String, Object> expirationMap = new TreeMap<>();
 		
 		//Create local calendar with and instantiate current time
 		Calendar localCalendar = Calendar.getInstance(TimeZone.getDefault());
@@ -124,14 +135,20 @@ public class CreditCardBO {
 				else {
 					
 					/*
-					 * If CC is expiring within 3 months, then add it to expiring list
+					 * If CC is expiring within 3 months, then add it to the map
 					 */
-					expiring.add(x);
+					long diffInMili = Math.abs(expiration.getTime() - currentTime.getTime());
+					long diff = TimeUnit.DAYS.convert(diffInMili, TimeUnit.MILLISECONDS);
+					
+					//Style the response
+					String strip = "Credit Card: ************" + x.getCreditCardNumber().substring(12);
+					String expiringIn = "Expiring in " + diff + " days";
+					expirationMap.put(strip , expiringIn);
 				}
 				
 			}
 		}
 		
-		return expiring;
+		return expirationMap;
 	}
 }
