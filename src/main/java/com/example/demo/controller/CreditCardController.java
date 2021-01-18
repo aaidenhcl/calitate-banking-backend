@@ -86,6 +86,7 @@ public class CreditCardController {
 	public List<RegionSale> getRegionSale(@RequestHeader(value="Authorization") String token){
 		if(DevUtil.getIsDev() || User.validateUserToken(token)) {	
 			List<RegionSale> rs = bo.getRegionSale();
+			List<String> array = new ArrayList<>();
 			return rs;
 		}
 		return null;
@@ -118,7 +119,7 @@ public class CreditCardController {
 
 	/*
 	 * returns map of categories with total accumulated amount
-	 * as value
+	 * as value.
 	 */
 	@GetMapping(path="/creditCards/patterns")
 	public String analyzeSpendingPatterns(@RequestHeader("cardNo") String cardNo, @RequestHeader("Authorization") String token) throws NotAuthorizedException{

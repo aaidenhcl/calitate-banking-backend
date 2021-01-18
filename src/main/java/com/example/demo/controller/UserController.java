@@ -214,31 +214,30 @@ public class UserController {
 		
 		//method returns count of professions from users
 		@GetMapping(path="users/demographics/profession")
-		public List<Demographics> getDemographicsProfession(@RequestHeader(value="Authorization") String token){
+		public List<Demographics> getDemographicsProfession(@RequestHeader(value="Authorization") String token) throws NotAuthorizedException{
 			if(DevUtil.getIsDev() || User.validateUserToken(token)) {
 				List<Demographics> dl = bo.getDemographicsProfession();
 				return dl;
 			}
-			return null;
+			throw new NotAuthorizedException("User is not authorized");
 		}
 		
 		
 		//method returns count of regions from users
 		@GetMapping(path="users/demographics/region")
-		public List<Demographics> getDemographicsRegion(@RequestHeader(value="Authorization") String token){
+		public List<Demographics> getDemographicsRegion(@RequestHeader(value="Authorization") String token) throws NotAuthorizedException {
 			if(DevUtil.getIsDev() || User.validateUserToken(token)){
 				List<Demographics> rl = bo.getDemographicsRegion();
 				return rl;
 			}
-			return null;
-			
+			throw new NotAuthorizedException("User is not authorized");
 		}
 		
 		//method returns dob of users
 		
 		//method returns count of ages of users
 		@GetMapping(path="users/demographics/age")
-		public List<AgeDemographics> getDemographicsAge(@RequestHeader(value="Authorization") String token){
+		public List<AgeDemographics> getDemographicsAge(@RequestHeader(value="Authorization") String token) throws NotAuthorizedException{
 			if(DevUtil.getIsDev() || User.validateUserToken(token)){
 				List<AgeDemographics> adl = new ArrayList<AgeDemographics>();
 				
@@ -252,8 +251,7 @@ public class UserController {
 				}
 				return adl;
 			}	
-			return null;
-			
+			throw new NotAuthorizedException("User is not authorized");			
 		}
 	
 		/*

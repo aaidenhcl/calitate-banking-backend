@@ -97,6 +97,10 @@ public class UserBO {
 		return regMap;
 	}
 	
+	/*
+	 * proccesses the user analyzing total spends and payments along with avg purchase amount
+	 * classifies user based on average purchase 
+	 */
 	public Map<String, Object> processUserSpendAndPayHistrories(User user){
 			
 			//getting total spent amount
