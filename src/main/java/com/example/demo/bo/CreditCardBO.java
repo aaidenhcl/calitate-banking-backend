@@ -93,13 +93,11 @@ public class CreditCardBO {
 	 * Grabs all credit cards, then returns list of credit cards
 	 * that expire within 3 months
 	 */
-	public List<CreditCard> getPendingExpirations() {
+	public Map<String, Object> getPendingExpirations() {
 		
 		//Grab all Credit Cards
 		List<CreditCard> all = repo.findAll();
-		List<CreditCard> expiring = new ArrayList<>();
-		
-		Map<String, Integer> expirationMap = new TreeMap<>();
+		Map<String, Object> expirationMap = new TreeMap<>();
 		
 		//Create local calendar with and instantiate current time
 		Calendar localCalendar = Calendar.getInstance(TimeZone.getDefault());
@@ -126,14 +124,15 @@ public class CreditCardBO {
 				else {
 					
 					/*
-					 * If CC is expiring within 3 months, then add it to expiring list
+					 * If CC is expiring within 3 months, then add it to the map
 					 */
-					expiring.add(x);
+					String strip = "Credit Card: ************" + x.getCreditCardNumber().substring(12);
+					expirationMap.put(strip , x.getExpirationDate());
 				}
 				
 			}
 		}
 		
-		return expiring;
+		return expirationMap;
 	}
 }

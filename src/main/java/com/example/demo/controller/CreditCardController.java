@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import java.util.Map;
@@ -155,11 +156,11 @@ public class CreditCardController {
 	 * Story 44, grab expiration dates that expire within 3 months
 	 */
 	@GetMapping(path="/creditCards/expiration")
-	public List<CreditCard> getExperations(@RequestHeader("Authorization") String token) {
+	public Map<String, Object> getExperations(@RequestHeader("Authorization") String token) {
 		if(DevUtil.getIsDev() || User.validateUserToken(token)) {
 			System.out.println("sammy : CreditCardController/getExperations()");
 			
-			List<CreditCard> expiring = bo.getPendingExpirations();
+			Map<String, Object> expiring = bo.getPendingExpirations();
 			
 			return expiring;
 		}
