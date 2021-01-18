@@ -44,9 +44,12 @@ public class CreditCardRequestController {
   
 	//Story32
 	@GetMapping(path="/creditCardRequests/dateRange")
-	public Integer requestsByDateRange(@RequestParam String start, @RequestParam String end, @RequestHeader("Authorization") String token)  throws NotAuthorizedException{
-		if(DevUtil.getIsDev() || User.validateUserToken(token)) {											
-			return repo.findByRequestTime(start, end).size();
+	public Integer requestsByDateRange(@RequestParam(value="start") String start, @RequestParam(value="end") String end, @RequestHeader("Authorization") String token)  throws NotAuthorizedException{
+		System.out.println("HITTING");
+		System.out.println("START:: " + start);
+		System.out.println("END::: " + end);
+		if(DevUtil.getIsDev() || User.validateUserToken(token)) {	
+				return repo.findByRequestTime(start, end).size();				
 		}
 		throw new NotAuthorizedException("User is not authorized");
 	}
@@ -111,13 +114,13 @@ public class CreditCardRequestController {
 	
 	//Get Status of CreditCardRequests
 	@GetMapping(path="/creditCardRequests/status")
-	public List<CreditCardRequest> getRequest(@RequestHeader("Authorization") String token) throws NotAuthorizedException {
+	public List<Map<String, Object>> getRequest(@RequestHeader("Authorization") String token) throws NotAuthorizedException {
 		if(DevUtil.getIsDev() || User.validateUserToken(token)) {		
 			//Calls Repo method.
 			List<CreditCardRequest> allRequests = repo.getStatusList();
-		
-		
-			return allRequests;
+			List<Map<String, Object>> response = bo.styleResponse(allRequests);
+			
+			return response;
 		}
 		throw new NotAuthorizedException("User is not authorized");
 	}

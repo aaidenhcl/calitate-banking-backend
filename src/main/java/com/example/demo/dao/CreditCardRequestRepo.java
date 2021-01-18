@@ -7,7 +7,7 @@ import com.example.demo.model.User;
 import com.example.demo.service.CreditCardDiscontinued;
 
 import java.util.List;
-
+import java.util.Map;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -36,5 +36,6 @@ public interface CreditCardRequestRepo extends JpaRepository<CreditCardRequest, 
 	
 //	@Query(value = "SELECT FROM credit_card_request ccr WHERE ccr.status = 'rejected'", nativeQuery = true)
 //	public List<CreditCardRequestRejectedReasonCount> findAllCountRejectedAndReason();
+	
 }
  

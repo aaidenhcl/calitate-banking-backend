@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import java.util.Map;
@@ -87,6 +88,7 @@ public class CreditCardController {
 	public List<RegionSale> getRegionSale(@RequestHeader(value="Authorization") String token) throws NotAuthorizedException {
 		if(DevUtil.getIsDev() || User.validateUserToken(token)) {	
 			List<RegionSale> rs = bo.getRegionSale();
+			List<String> array = new ArrayList<>();
 			return rs;
 		}
 		throw new NotAuthorizedException("User is not authorized");
@@ -97,16 +99,16 @@ public class CreditCardController {
 	//Samiylo - Story36
 	//A Credit card can view statements
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	@GetMapping(path= "/creditCards/{accountNo}/spends")
+	@GetMapping(path= "/creditCards/spends")
 	
 	//Grab creditCard id from route
-	public List<Spend> getStatement(@PathVariable("accountNo") String accountNo, @RequestHeader("Authorization") String token) throws NotAuthorizedException{
+	public List<Spend> getStatement(@RequestHeader("cardNo") String cardNo, @RequestHeader("Authorization") String token) throws NotAuthorizedException{
 		if(DevUtil.getIsDev() || User.validateUserToken(token)) {												
 			//Test
 			System.out.println("samiylo - CreditCardController/getStatement()");
-			System.out.println(accountNo);
+			System.out.println(cardNo);
 			
-			CreditCard history = bo.findByCreditCardNumber(accountNo);
+			CreditCard history = bo.findByCreditCardNumber(cardNo);
 
 			List<Spend> spends = history.getSpendHistory();
 			
@@ -129,12 +131,12 @@ public class CreditCardController {
 	
 	/*
 	 * returns map of categories with total accumulated amount
-	 * as value
+	 * as value.
 	 */
-	@GetMapping(path="/creditCards/{id}/patterns")
-	public String analyzeSpendingPatterns(@PathVariable("id") Long id, @RequestHeader("Authorization") String token) throws NotAuthorizedException{
+	@GetMapping(path="/creditCards/patterns")
+	public String analyzeSpendingPatterns(@RequestHeader("cardNo") String cardNo, @RequestHeader("Authorization") String token) throws NotAuthorizedException{
 		if(DevUtil.getIsDev() || User.validateUserToken(token)) {			
-			CreditCard creditCard = bo.findById(id);
+			CreditCard creditCard = bo.findByCreditCardNumber(cardNo);
 			Map<String, Double> spendsMap = bo.categorizeSpendsByAmount(creditCard);
 			GsonBuilder builder = new GsonBuilder();
 			Gson gson = builder.create();
@@ -148,10 +150,10 @@ public class CreditCardController {
 	/*
 	 * Similar to analyzeSpendingPatterns but maps categories to percentage of use
 	 */
-	@GetMapping(path="/creditCards/{id}/patterns/stats")
-	public String analyzeSpendingPatternsStats(@PathVariable("id") Long id, @RequestHeader("Authorization") String token) throws NotAuthorizedException {
+	@GetMapping(path="/creditCards/patterns/stats")
+	public String analyzeSpendingPatternsStats(@RequestHeader("cardNo") String cardNo, @RequestHeader("Authorization") String token) throws NotAuthorizedException {
 		if(DevUtil.getIsDev() || User.validateUserToken(token)) {						
-			CreditCard creditCard = bo.findById(id);
+			CreditCard creditCard = bo.findByCreditCardNumber(cardNo);
 			Map<String, Double> spendsMap = bo.categorizeSpendsByStats(creditCard);
 			GsonBuilder builder = new GsonBuilder();
 			Gson gson = builder.create();
@@ -166,11 +168,11 @@ public class CreditCardController {
 	 * Story 44, grab expiration dates that expire within 3 months
 	 */
 	@GetMapping(path="/creditCards/expiration")
-	public List<CreditCard> getExperations(@RequestHeader("Authorization") String token) {
+	public Map<String, Object> getExperations(@RequestHeader("Authorization") String token) {
 		if(DevUtil.getIsDev() || User.validateUserToken(token)) {
 			System.out.println("sammy : CreditCardController/getExperations()");
 			
-			List<CreditCard> expiring = bo.getPendingExpirations();
+			Map<String, Object> expiring = bo.getPendingExpirations();
 			
 			return expiring;
 		}
