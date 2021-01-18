@@ -199,4 +199,3 @@ values (4, 'declined', null, 30000, .15, 48, 625, 6);
 insert into loan(id, principle, apr, term_in_months, minimum_monthly_payment, user_id)
 values(1, 30000, .15, 48, 625, 6);
 
-
