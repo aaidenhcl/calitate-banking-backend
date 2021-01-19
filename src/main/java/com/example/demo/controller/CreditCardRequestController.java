@@ -47,14 +47,14 @@ public class CreditCardRequestController {
   
 	//Story32
 	@GetMapping(path="/creditCardRequests/dateRange")
-	public String requestsByDateRange(@RequestParam String start, @RequestParam String end, @RequestHeader("Authorization") String token)  throws NotAuthorizedException{
+	public Map<String, String> requestsByDateRange(@RequestParam String start, @RequestParam String end, @RequestHeader("Authorization") String token)  throws NotAuthorizedException{
 		
 		if(DevUtil.getIsDev() || User.validateUserToken(token)) {		
 			List<CreditCardRequest> requests = repo.findByRequestTime(start, end);
-			StringBuilder sb = new StringBuilder();
-			sb.append("Number of Credit Card Requests received between "+start+" and "+end+": "+requests.size());
-			repo.findByRequestTime(start, end).stream().forEach(d -> sb.append("\n"+d.toString()));
-			return sb.toString();
+			Map<String, String> toReturn = new LinkedHashMap<>();
+			toReturn.put("Number of Credit Card Requests received between "+start+" and "+end,""+requests.size());
+			repo.findByRequestTime(start, end).stream().forEach(d -> toReturn.put("Request ID: "+d.getId(),"Date: "+d.getRequestTime().toString()));
+			return toReturn;
 		}
 		throw new NotAuthorizedException("User is not authorized");
 	}
