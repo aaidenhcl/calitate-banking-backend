@@ -149,19 +149,19 @@ public class CreditCardRequestController {
 			System.out.println("sammy : CrediCardRequestController/getAverageRequestTime()");
 			Map<String, Object> minutes = new TreeMap<>();
 			
+			//Create respective time
 			Long time = bo.getTimeAvg();
 			Long hours = time/60;
 			Long days = hours/12;
 			
 			minutes.put("Avg. Time in Minutes: ", time);
-			
 			if(hours > 0 ) {
-				minutes.put("Avg. Time in Hours", time/60);
+				minutes.put("Avg. Time in Hours", hours);
+			}
+			if (days > 0) {
+				minutes.put("Avg. Time in Days", days);
 			}
 			
-			if (days > 0) {
-				minutes.put("Avg. Time in Days", (time/60)/12);
-			}
 			return minutes;
 		}
 		throw new NotAuthorizedException("User is not authorized");
