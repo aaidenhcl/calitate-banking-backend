@@ -66,13 +66,13 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
         return ResponseEntity.badRequest().body(new ApiError(new Date(),"failure",body));
     }
     
-//    @ExceptionHandler(Exception.class)
-//    public ResponseEntity<Object> handleAllOtherException(
-//    		Exception ex, WebRequest request) {
-//
-//        Map<String, Object> body = new LinkedHashMap<>();
-//        body.put("message", "System is not available. Please try after sometime. Your patience is appreciated");
-//
-//        return ResponseEntity.badRequest().body(new ApiError(new Date(),"failure",body));
-//    }
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<Object> handleAllOtherException(
+    		Exception ex, WebRequest request) {
+
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("message", "System is not available. Please try after sometime. Your patience is appreciated");
+
+        return ResponseEntity.badRequest().body(new ApiError(new Date(),"failure",body));
+    }
 }
