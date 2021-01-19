@@ -112,7 +112,7 @@ public class CreditCardBO {
 		
 		//Create local calendar with and instantiate current time
 		Calendar localCalendar = Calendar.getInstance(TimeZone.getDefault());
-		
+
         
 		
 		//For each credit card
@@ -137,7 +137,7 @@ public class CreditCardBO {
 					/*
 					 * If CC is expiring within 3 months, then add it to the map
 					 */
-					long diffInMili = Math.abs(expiration.getTime() - currentTime.getTime());
+					long diffInMili = Math.abs(expiration.getTime() - new Date().getTime());
 					long diff = TimeUnit.DAYS.convert(diffInMili, TimeUnit.MILLISECONDS);
 					
 					//Style the response
