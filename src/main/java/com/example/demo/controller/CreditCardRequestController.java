@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.Optional;
 import java.util.List;
 import java.util.Map;
@@ -70,11 +71,10 @@ public class CreditCardRequestController {
 	
 	//Story 35
 	@GetMapping(path="/creditCardRequests/approvals/regionProfession")
-	public String approvalsProfessionRegion(@RequestParam String profession, @RequestParam String region, @RequestHeader("Authorization") String token)  throws NotAuthorizedException{
+	public Map<String, String> approvalsProfessionRegion(@RequestParam String profession, @RequestParam String region, @RequestHeader("Authorization") String token)  throws NotAuthorizedException{
 		if(DevUtil.getIsDev() || User.validateUserToken(token)) {											
 			List<CreditCardRequest> approvals = new ArrayList<>();
 			if (!region.isEmpty() && !profession.isEmpty()) {
-				System.out.println("Both");
 				approvals = repo.findByUserRegionAndUserProfession(region, profession);
 			}
 			else if (!region.isEmpty()) {
@@ -83,11 +83,12 @@ public class CreditCardRequestController {
 			else if (!profession.isEmpty()) {
 				approvals = repo.findByUserProfession(profession);
 			}
-			StringBuilder sb = new StringBuilder();
-			sb.append("Number of Credit Card Approvals with Profession: " + (profession.isEmpty() ? "Not Specified" : profession)+" and Region: "+(region.isEmpty() ? "Not Specified" : region)+" - "+approvals.size());
-			approvals.stream().forEach(d -> sb.append("\n"+d.toString()));
+			Map<String, String> toReturn = new LinkedHashMap<>();
+			toReturn.put("Number of Credit Card Approvals with Profession: " + (profession.isEmpty() ? "Not Specified" : profession)+" and Region: "+(region.isEmpty() ? "Not Specified" : region),""+approvals.size());
+			approvals.stream().forEach(d -> toReturn.put("Request ID: "+d.getId(), "Username: "+d.getUser().getUsername()+", Status: "+d.getStatus()));
 			
-			return sb.toString();
+			return toReturn;
+			
 		}
 		throw new NotAuthorizedException("User is not authorized");
 	}
