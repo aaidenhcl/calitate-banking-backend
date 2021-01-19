@@ -119,6 +119,7 @@ public class CreditCardController {
 		throw new NotAuthorizedException("User is not authorized");
 	}
 	
+	//method returns back list of credit cards that are discontinued with region and demographic stats
 	@GetMapping(path="creditCards/discontinued")
 	public List<CreditCardDiscontinued> getDiscontinued(@RequestHeader("Authorization") String token) throws NotAuthorizedException { 
 		if(DevUtil.getIsDev() || User.validateUserToken(token)) {														
