@@ -188,13 +188,25 @@ insert into loan_request(id, status, reason, offered_amount, offered_apr, term_i
 values (1, 'rejected', 'Too many requests', 30000, .15, 48, 625, 6);
 
 insert into loan_request(id, status, reason, offered_amount, offered_apr, term_in_months, minimum_monthly_payment, user_id)
-values (2, 'approved', null, 30000, .15, 48, 625, 6);
+values (2, 'rejected', 'Too many requests', 30000, .15, 48, 625, 6);
 
 insert into loan_request(id, status, reason, offered_amount, offered_apr, term_in_months, minimum_monthly_payment, user_id)
-values (3, 'accepted', null, 30000, .15, 48, 625, 6);
+values (3, 'rejected', 'Bad credit history', 30000, .15, 48, 625, 6);
 
 insert into loan_request(id, status, reason, offered_amount, offered_apr, term_in_months, minimum_monthly_payment, user_id)
-values (4, 'declined', null, 30000, .15, 48, 625, 6);
+values (4, 'rejected', 'Bad credit history', 30000, .15, 48, 625, 6);
+
+insert into loan_request(id, status, reason, offered_amount, offered_apr, term_in_months, minimum_monthly_payment, user_id)
+values (5, 'rejected', 'Bad credit history', 30000, .15, 48, 625, 6);
+
+insert into loan_request(id, status, reason, offered_amount, offered_apr, term_in_months, minimum_monthly_payment, user_id)
+values (6, 'approved', null, 30000, .15, 48, 625, 6);
+
+insert into loan_request(id, status, reason, offered_amount, offered_apr, term_in_months, minimum_monthly_payment, user_id)
+values (7, 'accepted', null, 30000, .15, 48, 625, 6);
+
+insert into loan_request(id, status, reason, offered_amount, offered_apr, term_in_months, minimum_monthly_payment, user_id)
+values (8, 'declined', null, 30000, .15, 48, 625, 6);
 
 insert into loan(id, principle, apr, term_in_months, minimum_monthly_payment, user_id)
 values(1, 30000, .15, 48, 625, 6);
