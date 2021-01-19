@@ -91,7 +91,7 @@ public class CreditCardRequestController {
 			}
 			Map<String, String> toReturn = new LinkedHashMap<>();
 			toReturn.put("Number of Credit Card Approvals with Profession: " + (profession.isEmpty() ? "Not Specified" : profession)+" and Region: "+(region.isEmpty() ? "Not Specified" : region),""+approvals.size());
-			approvals.stream().forEach(d -> toReturn.put("Request ID: "+d.getId(), "Username: "+d.getUser().getUsername()+", Status: "+d.getStatus()));
+			approvals.stream().forEach(d -> toReturn.put("Request ID: "+d.getId(), "Username: "+d.getUser().getUsername()+" | Status: "+d.getStatus()));
 			
 			return toReturn;
 			
