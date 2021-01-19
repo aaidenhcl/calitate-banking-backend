@@ -59,11 +59,11 @@ public class CreditCardBO {
 	public Map<String, Double> categorizeSpendsByAmount(CreditCard creditCard) {
 		Map<String, Double> ccMap = new TreeMap<>();
 		for(Spend spend: creditCard.getSpendHistory()) {
-			if(ccMap.containsKey(spend.getCategory())) {
-				Double value = ccMap.get(spend.getCategory());
-				ccMap.put(spend.getCategory(), spend.getAmount()+value);
+			if(ccMap.containsKey(spend.getCategory() + " total cost")) {
+				Double value = ccMap.get(spend.getCategory() + " total cost");
+				ccMap.put(spend.getCategory() + " total cost", spend.getAmount()+value);
 			} else {
-				ccMap.put(spend.getCategory(), spend.getAmount());
+				ccMap.put(spend.getCategory()  + " total cost", spend.getAmount());
 			}
 		}
 		return ccMap;
@@ -92,7 +92,7 @@ public class CreditCardBO {
 			  String key = entry.getKey();
 			  Double value = entry.getValue();
 			  
-			  ccMap.put(key, value/sum*100);
+			  ccMap.put(key+" by percent", value/sum*100);
 		}
 		return ccMap;
 	}

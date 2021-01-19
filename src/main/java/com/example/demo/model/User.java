@@ -299,11 +299,7 @@ public class User {
 
 
 
-	@Override
-	public String toString() {
-		// TODO Auto-generated method stub
-		return this.username;
-	}
+	
 
 //	@Override
 //	public String toString() {
@@ -315,6 +311,8 @@ public class User {
 //				+ ", loans=" + loans + ", creditCardRequests=" + creditCardRequests + ", loanRequests=" + loanRequests
 //				+ ", password=" + password + "]";
 //	}
+
+	
 
 	/*
 	*this function is hit on user creation
@@ -363,6 +361,15 @@ public class User {
 		return hashedPassword;
 	}
 	
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", username=" + username + ", salt=" + Arrays.toString(salt).replace(',', ' ') + ", hash="
+				+ Arrays.toString(hash).replace(',', ' ') + ", DOB=" + DOB + ", firstName=" + firstName + ", lastName=" + lastName
+				+ ", address=" + address + ", region=" + region + ", creditScore=" + creditScore + ", profession="
+				+ profession + ", email=" + email + ", twoFactorAuth=" + twoFactorAuth + ", dateCreated=" + dateCreated
+				+ ", lastUpdated=" + lastUpdated + ", password=" + password + "]";
+	}
+
 	/*
 	 * This is the login method. When the login route is hit this middleware will
 	 * validate that the password is correct. 

@@ -15,6 +15,8 @@ import com.example.demo.service.DemographicsRegion;
 public interface UserRepo extends JpaRepository<User, Long>{
 
 	List<User> findByUsername(String username);
+		
+	List<User> findAll();
 	
 	//Query that retrieves user profession demographics
 	@Query("SELECT new com.example.demo.service.DemographicsProfession(u.profession AS title, COUNT(u.profession) AS total) FROM User u GROUP BY title ORDER BY total DESC")

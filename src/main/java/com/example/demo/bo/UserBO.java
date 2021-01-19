@@ -41,6 +41,14 @@ public class UserBO {
 	@Autowired
 	UserRepo repo;
 	
+	public List<User> findAll(){
+		try {			
+			return repo.findAll();
+		}catch (Exception e) {
+			System.err.println("PROBLEM IN BO:: " + e);
+		}
+		return null;
+	}
 	
 	public User findByUsername(String username) {
 		return repo.findByUsername(username).get(0);
