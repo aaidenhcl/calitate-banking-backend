@@ -176,23 +176,25 @@ public class UserController {
 		}
 
 		@GetMapping(path="/users/{username}/totalCredit")
-		public String obtainUserTotalCredit(@RequestHeader(value="Authorization") String token, @PathVariable("username") String username) throws NotAuthorizedException, CorruptDatabaseException {
+		public Map<String, String> obtainUserTotalCredit(@RequestHeader(value="Authorization") String token, @PathVariable("username") String username) throws NotAuthorizedException, CorruptDatabaseException {
 			
 			if(DevUtil.getIsDev() || User.validateUserToken(token)) {														
 				try {
-					
+					Map<String, String> toReturn = new LinkedHashMap<>();
 					List<CreditCard> ccs = bo.getAllCreditCardsByUsername(username);
-					StringBuilder sb = new StringBuilder();
 					Double totalLimit = 0.0;
 					for (CreditCard cc : ccs) {
-						sb.append("\nLimit for card ending in ");
-						if (cc.getCreditCardNumber() != null)
-							sb.append(cc.getCreditCardNumber().substring(12));
-						sb.append(String.format(" : $%.2f", cc.getSpendingLimit()));
 						totalLimit += cc.getSpendingLimit();
 					}
-					sb.insert(0,"The total credit limit for user " + username+": $"+String.format("%.2f", totalLimit));
-					return sb.toString();
+					toReturn.put("The total credit limit for user " + username,"$"+String.format("%.2f", totalLimit));
+					for (CreditCard cc : ccs) {
+						String entry = "Limit for card ending in ";
+						if (cc.getCreditCardNumber() != null)
+							entry+=cc.getCreditCardNumber().substring(12);
+						
+						toReturn.put(entry+": ", String.format("$%.2f", cc.getSpendingLimit()));
+					}
+					return toReturn;
 				}
 				catch(Exception e) {
 					if(e instanceof NullPointerException) {
@@ -200,7 +202,7 @@ public class UserController {
 					}
 					System.err.println("Error in totalCredit::: " + e);
 				}
-				return "";
+				return null;
 			} 
 			throw new NotAuthorizedException("User is not authorized");
 		}
