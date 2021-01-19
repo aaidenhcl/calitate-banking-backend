@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -48,7 +49,7 @@ public class LoanRequestController {
 	}
 	
 	@GetMapping(path="/loanRequests/approvals/regionProfession")
-	public Integer approvalsProfessionRegion(@RequestParam String profession, @RequestParam String region, @RequestHeader("Authorization") String token)  throws NotAuthorizedException{
+	public Map<String, String> approvalsProfessionRegion(@RequestParam String profession, @RequestParam String region, @RequestHeader("Authorization") String token)  throws NotAuthorizedException{
 		if(DevUtil.getIsDev() || User.validateUserToken(token)) {											
 			List<LoanRequest> approvals = new ArrayList<>();
 			if (!region.isEmpty() && !profession.isEmpty()) {
@@ -61,7 +62,17 @@ public class LoanRequestController {
 			else if (!profession.isEmpty()) {
 				approvals = repo.findByUserProfession(profession);
 			}
-			return approvals.size();
+			
+			for (int i = 0; i < approvals.size(); i ++) {
+				if (approvals.get(i).getStatus().equals("rejected"))
+					approvals.remove(i);
+			}
+			
+			Map<String, String> toReturn = new LinkedHashMap<>();
+			toReturn.put("Number of Loan Approvals with Profession: " + (profession.isEmpty() ? "Not Specified" : profession)+" and Region: "+(region.isEmpty() ? "Not Specified" : region),""+approvals.size());
+			approvals.stream().forEach(d -> toReturn.put("Request ID: "+d.getId(), "Username: "+d.getUser().getUsername()+", Status: "+d.getStatus()));
+			
+			return toReturn;
 		}
 		throw new NotAuthorizedException("User is not authorized");
 	}
