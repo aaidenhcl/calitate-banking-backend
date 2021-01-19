@@ -100,9 +100,6 @@ public class CreditCardRequestBO {
 				
 				System.out.println(diff);
 				
-				//System.out.println("Request time: " + request);
-				//System.out.println("Last Update Time: " + lastUpdate);
-				
 				times.add(diff);
 			}
 			else {

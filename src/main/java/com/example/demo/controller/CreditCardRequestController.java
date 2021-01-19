@@ -6,9 +6,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Optional;
+import java.util.TreeMap;
 import java.util.List;
 import java.util.Map;
 
+import org.hibernate.query.criteria.internal.expression.function.AggregationFunction.AVG;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
@@ -142,13 +144,25 @@ public class CreditCardRequestController {
 	 * Will have to set a minimum wait time
 	 */
 	@GetMapping(path="/creditCardRequests/average")
-	public Long getAverageRequestTime(@RequestHeader("Authorization") String token) throws NotAuthorizedException {
+	public Map<String, Object> getAverageRequestTime(@RequestHeader("Authorization") String token) throws NotAuthorizedException {
 		if(DevUtil.getIsDev() || User.validateUserToken(token)) {
 			System.out.println("sammy : CrediCardRequestController/getAverageRequestTime()");
+			Map<String, Object> minutes = new TreeMap<>();
+			
+			//Create respective time
 			Long time = bo.getTimeAvg();
-			System.out.println("Time in minutes: " + time);
-		
-			return time;
+			Long hours = time/60;
+			Long days = hours/12;
+			
+			minutes.put("Avg. Time in Minutes: ", time);
+			if(hours > 0 ) {
+				minutes.put("Avg. Time in Hours", hours);
+			}
+			if (days > 0) {
+				minutes.put("Avg. Time in Days", days);
+			}
+			
+			return minutes;
 		}
 		throw new NotAuthorizedException("User is not authorized");
 	}
