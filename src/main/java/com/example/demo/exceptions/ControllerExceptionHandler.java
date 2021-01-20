@@ -19,7 +19,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 @ControllerAdvice
 public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
-	
+	/*
 	@Override
 	protected ResponseEntity<Object> handleMethodArgumentNotValid(
 	        MethodArgumentNotValidException ex, HttpHeaders headers, 
@@ -74,5 +74,5 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
         body.put("message", "System is not available. Please try after sometime. Your patience is appreciated");
 
         return ResponseEntity.badRequest().body(new ApiError(new Date(),"failure",body));
-    }
+    }*/
 }

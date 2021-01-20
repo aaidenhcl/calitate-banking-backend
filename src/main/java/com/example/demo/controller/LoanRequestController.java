@@ -48,6 +48,8 @@ public class LoanRequestController {
 		throw new NotAuthorizedException("User is not authorized");
 	}
 	
+	//Gets Loan Requests based on a region and/or a profession
+	//and returns it to the client
 	@GetMapping(path="/loanRequests/approvals/regionProfession")
 	public Map<String, String> approvalsProfessionRegion(@RequestParam String profession, @RequestParam String region, @RequestHeader("Authorization") String token)  throws NotAuthorizedException{
 		if(DevUtil.getIsDev() || User.validateUserToken(token)) {											
