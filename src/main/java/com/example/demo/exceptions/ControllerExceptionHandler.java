@@ -47,7 +47,7 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
     }
     
     @ExceptionHandler(NotAuthorizedException.class)
-    public ResponseEntity<Object> handleDuplicateDepartmentFoundException(
+    public ResponseEntity<Object> NotAuthorizedException(
     		NotAuthorizedException ex, WebRequest request) {
 
         Map<String, Object> body = new LinkedHashMap<>();
@@ -57,7 +57,7 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
     }
     
     @ExceptionHandler(CorruptDatabaseException.class)
-    public ResponseEntity<Object> handleDuplicateDepartmentFoundException(
+    public ResponseEntity<Object> CorruptDatabaseException(
     		CorruptDatabaseException ex, WebRequest request) {
 
         Map<String, Object> body = new LinkedHashMap<>();

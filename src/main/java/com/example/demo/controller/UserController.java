@@ -67,6 +67,33 @@ public class UserController {
 		repo.save(user);
 		return user;
 	}//user logger rather than sysout
+	
+	@GetMapping(path="/users")
+	public String getAllUsers(@RequestHeader(value="Authorization") String token) throws NotAuthorizedException{
+		if(DevUtil.getIsDev() || User.validateUserToken(token)) {						
+			GsonBuilder builder = new GsonBuilder();
+			Gson gson = builder.create();
+			
+			Map<Long, String> mappedUsers = new HashMap<>();
+			List<User> users = null;
+			try{
+//				System.out.println("HELLOOOOO");
+				users = bo.findAll();
+//				System.out.println(users.toString());
+				
+				for(User user: users) {
+					mappedUsers.put(user.getId(), user.toString());
+				}
+				
+				return gson.toJson(mappedUsers);
+//				return mappedUsers;
+			}catch (Exception e) {
+				System.err.println("PROBLEM FOUND"+e);
+			}
+			return null;
+		}
+		throw new NotAuthorizedException("User is not authorized");
+	}
 
 	/*
 	 * This route is a little messy at the moment and could

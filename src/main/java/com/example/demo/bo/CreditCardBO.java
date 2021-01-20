@@ -59,11 +59,11 @@ public class CreditCardBO {
 	public Map<String, Double> categorizeSpendsByAmount(CreditCard creditCard) {
 		Map<String, Double> ccMap = new TreeMap<>();
 		for(Spend spend: creditCard.getSpendHistory()) {
-			if(ccMap.containsKey(spend.getCategory())) {
-				Double value = ccMap.get(spend.getCategory());
-				ccMap.put(spend.getCategory(), spend.getAmount()+value);
+			if(ccMap.containsKey(spend.getCategory() + " total cost")) {
+				Double value = ccMap.get(spend.getCategory() + " total cost");
+				ccMap.put(spend.getCategory() + " total cost", spend.getAmount()+value);
 			} else {
-				ccMap.put(spend.getCategory(), spend.getAmount());
+				ccMap.put(spend.getCategory()  + " total cost", spend.getAmount());
 			}
 		}
 		return ccMap;
@@ -92,7 +92,7 @@ public class CreditCardBO {
 			  String key = entry.getKey();
 			  Double value = entry.getValue();
 			  
-			  ccMap.put(key, value/sum*100);
+			  ccMap.put(key+" by percent", value/sum*100);
 		}
 		return ccMap;
 	}
@@ -112,7 +112,7 @@ public class CreditCardBO {
 		
 		//Create local calendar with and instantiate current time
 		Calendar localCalendar = Calendar.getInstance(TimeZone.getDefault());
-		
+
         
 		
 		//For each credit card
@@ -137,7 +137,7 @@ public class CreditCardBO {
 					/*
 					 * If CC is expiring within 3 months, then add it to the map
 					 */
-					long diffInMili = Math.abs(expiration.getTime() - currentTime.getTime());
+					long diffInMili = Math.abs(expiration.getTime() - new Date().getTime());
 					long diff = TimeUnit.DAYS.convert(diffInMili, TimeUnit.MILLISECONDS);
 					
 					//Style the response
