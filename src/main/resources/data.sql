@@ -52,64 +52,66 @@ insert into credit_card_request (id, status, user_id) values (11, 'approved', 1 
 --user story 38
 --for Credit card usage/spend pattern –E.g., Grocery/ Fitness/ Entertainment etc.
 --(Aaiden)
-insert into spend(id, amount, category, item, user_note, credit_card_id) values (1, 300, 'Technology', 'iPad', true, 2);
+insert into spend(id, amount, category, item, user_note, credit_card_id, date_created) values (1, 300, 'Technology', 'iPad', true, 2, '20010101');
 insert into spend(id, date_created, amount, category, item, credit_card_id) values(2, CURDATE(), 10, 'groceries', 'bananas',1);
-insert into spend(id, amount, category, item, credit_card_id) values(3, 20, 'groceries', 'tatertots',1);
-insert into spend(id, amount, category, item, credit_card_id) values(4, 30, 'groceries', 'apples',1);
-insert into spend(id, amount, category, item, credit_card_id) values(5, 5, 'groceries', 'strawberries',1);
-insert into spend(id, amount, category, item, credit_card_id) values(6, 5, 'groceries', 'milk',1);
-insert into spend(id, amount, category, item, credit_card_id) values(7, 6, 'groceries', 'juice',1);
-insert into spend(id, amount, category, item, credit_card_id) values(8, 22, 'groceries', 'poptarts',1);
-insert into spend(id, amount, category, item, credit_card_id) values(9, 34, 'fitness', 'weights',1);
-insert into spend(id, amount, category, item, credit_card_id) values(10, 23, 'fitness', 'bench',1);
-insert into spend(id, amount, category, item, credit_card_id) values(11, 67, 'fitness', 'p90x',1);
-insert into spend(id, amount, category, item, credit_card_id) values(12, 23, 'fitness', 'protein',1);
-insert into spend(id, amount, category, item, credit_card_id) values(13, 56, 'fitness', 'suppliments',1);
-insert into spend(id, amount, category, item, credit_card_id) values(14, 12, 'fitness', 'creatine',1);
-insert into spend(id, amount, category, item, credit_card_id) values(15, 46, 'entertainment', 'movies',1);
-insert into spend(id, amount, category, item, credit_card_id) values(16, 24, 'entertainment', 'video games',1);
-insert into spend(id, amount, category, item, credit_card_id) values(17, 25, 'entertainment', 'music',1);
-insert into spend(id, amount, category, item, credit_card_id) values(18, 13, 'entertainment', 'ice skating',1);
-insert into spend(id, amount, category, item, credit_card_id) values(19, 10, 'entertainment', 'canoeing',1);
-INSERT INTO SPEND(id,amount,credit_card_id) VALUES (20,10.0,6);
-INSERT INTO SPEND(id,amount,credit_card_id) VALUES (21,15.0,7);
-INSERT INTO SPEND(id,amount,credit_card_id) VALUES (22,15.0,8);
-INSERT INTO SPEND(Id,Amount,Category,Item,Credit_Card_Id) VALUES(41,100.0,'groceries','food',11);
+
+insert into spend(id, amount, category, item, credit_card_id, date_created) values(3, 20, 'groceries', 'tatertots',1, '20010301');
+insert into spend(id, amount, category, item, credit_card_id, date_created) values(4, 30, 'groceries', 'apples',1, '20010401');
+insert into spend(id, amount, category, item, credit_card_id, date_created) values(5, 5, 'groceries', 'strawberries',1, '20010501');
+insert into spend(id, amount, category, item, credit_card_id, date_created) values(6, 5, 'groceries', 'milk',1, '20010510');
+insert into spend(id, amount, category, item, credit_card_id, date_created) values(7, 6, 'groceries', 'juice',1, '20010701');
+insert into spend(id, amount, category, item, credit_card_id, date_created) values(8, 22, 'groceries', 'poptarts',1, '20010801');
+insert into spend(id, amount, category, item, credit_card_id, date_created) values(9, 34, 'fitness', 'weights',1, '20010801');
+insert into spend(id, amount, category, item, credit_card_id, date_created) values(10, 23, 'fitness', 'bench',1, '20010901');
+insert into spend(id, amount, category, item, credit_card_id, date_created) values(11, 67, 'fitness', 'p90x',1, '20011001');
+insert into spend(id, amount, category, item, credit_card_id, date_created) values(12, 23, 'fitness', 'protein',1, '20011101');
+insert into spend(id, amount, category, item, credit_card_id, date_created) values(13, 56, 'fitness', 'suppliments',1, '20011201');
+insert into spend(id, amount, category, item, credit_card_id, date_created) values(14, 12, 'fitness', 'creatine',1, '20020101');
+insert into spend(id, amount, category, item, credit_card_id, date_created) values(15, 46, 'entertainment', 'movies',1, '20020201');
+insert into spend(id, amount, category, item, credit_card_id, date_created) values(16, 24, 'entertainment', 'video games',1, '20020301');
+insert into spend(id, amount, category, item, credit_card_id, date_created) values(17, 25, 'entertainment', 'music',1, '20020304');
+insert into spend(id, amount, category, item, credit_card_id, date_created) values(18, 13, 'entertainment', 'ice skating',1, '20020401');
+insert into spend(id, amount, category, item, credit_card_id, date_created) values(19, 10, 'entertainment', 'canoeing',1, '20020501');
+INSERT INTO SPEND(id,amount,credit_card_id, date_created) VALUES (20,10.0,6, '20020601');
+INSERT INTO SPEND(id,amount,credit_card_id, date_created) VALUES (21,15.0,7, '20020701');
+INSERT INTO SPEND(id,amount,credit_card_id, date_created) VALUES (22,15.0,8, '20020801');
+INSERT INTO SPEND(Id,Amount,Category,Item,Credit_Card_Id, date_created) VALUES(33,100.0,'groceries','food',11, '20020901');
+
 
 --payment dump
 --for user story 43 need payments to calculate spend and payment differences
 --Aaiden
 insert into account (id, checking_balance, account_number, user_id) values (1, 1000, '989451001', 1);
-insert into payment(id, amount, account_id, credit_card_id) values (1, 50, 1, 1);
-insert into payment(id, amount, account_id, credit_card_id) values (2, 10, 1, 1);
-insert into payment(id, amount, account_id, credit_card_id) values (3, 20, 1, 1);
-insert into payment(id, amount, account_id, credit_card_id) values (4, 30, 1, 1);
-insert into payment(id, amount, account_id, credit_card_id) values (5, 40, 1, 1);
-insert into payment(id, amount, account_id, credit_card_id) values (6, 45, 1, 1);
-insert into payment(id, amount, account_id, credit_card_id) values (7, 24, 1, 1);
-insert into payment(id, amount, account_id, credit_card_id) values (8, 24, 1, 1);
-insert into payment(id, amount, account_id, credit_card_id) values (9, 36, 1, 1);
-insert into payment(id, amount, account_id, credit_card_id) values (10, 46, 1, 1);
-insert into payment(id, amount, account_id, credit_card_id) values (11, 64, 1, 1);
-insert into payment(id, amount, account_id, credit_card_id) values (12, 86, 1, 1);
-insert into payment(id, amount, account_id, credit_card_id) values (13, 23, 1, 1);
-insert into payment(id, amount, account_id, credit_card_id) values (14, 75, 1, 1);
-insert into payment(id, amount, account_id, credit_card_id) values (15, 36, 1, 1);
-insert into payment(id, amount, account_id, credit_card_id) values (16, 50, 2, 10);
-insert into payment(id, amount, account_id, credit_card_id) values (17, 10, 2, 10);
-insert into payment(id, amount, account_id, credit_card_id) values (18, 20, 2, 10);
-insert into payment(id, amount, account_id, credit_card_id) values (19, 30, 2, 10);
-insert into payment(id, amount, account_id, credit_card_id) values (20, 40, 2, 10);
-insert into payment(id, amount, account_id, credit_card_id) values (21, 45, 2, 10);
-insert into payment(id, amount, account_id, credit_card_id) values (22, 24, 2, 10);
-insert into payment(id, amount, account_id, credit_card_id) values (23, 24, 2, 10);
-insert into payment(id, amount, account_id, credit_card_id) values (24, 36, 2, 10);
-insert into payment(id, amount, account_id, credit_card_id) values (25, 46, 2, 10);
-insert into payment(id, amount, account_id, credit_card_id) values (26, 64, 2, 10);
-insert into payment(id, amount, account_id, credit_card_id) values (27, 86, 2, 10);
-insert into payment(id, amount, account_id, credit_card_id) values (28, 23, 2, 10);
-insert into payment(id, amount, account_id, credit_card_id) values (29, 75, 2, 10);
-insert into payment(id, amount, account_id, credit_card_id) values (30, 36, 2, 10);
+insert into payment(id, amount, account_id, credit_card_id, date_created) values (1, 50, 1, 1,'20010102');
+insert into payment(id, amount, account_id, credit_card_id, date_created) values (2, 10, 1, 1,'20010202');
+insert into payment(id, amount, account_id, credit_card_id, date_created) values (3, 20, 1, 1,'20010302');
+insert into payment(id, amount, account_id, credit_card_id, date_created) values (4, 30, 1, 1,'20010402');
+insert into payment(id, amount, account_id, credit_card_id, date_created) values (5, 40, 1, 1,'20010502');
+insert into payment(id, amount, account_id, credit_card_id, date_created) values (6, 45, 1, 1,'20010602');
+insert into payment(id, amount, account_id, credit_card_id, date_created) values (7, 24, 1, 1,'20010702');
+insert into payment(id, amount, account_id, credit_card_id, date_created) values (8, 24, 1, 1,'20010802');
+insert into payment(id, amount, account_id, credit_card_id, date_created) values (9, 36, 1, 1,'20010902');
+insert into payment(id, amount, account_id, credit_card_id, date_created) values (10, 46, 1, 1,'20011002');
+insert into payment(id, amount, account_id, credit_card_id, date_created) values (11, 64, 1, 1,'20011102');
+insert into payment(id, amount, account_id, credit_card_id, date_created) values (12, 86, 1, 1,'20011202');
+insert into payment(id, amount, account_id, credit_card_id, date_created) values (13, 23, 1, 1,'20020102');
+insert into payment(id, amount, account_id, credit_card_id, date_created) values (14, 75, 1, 1,'20020103');
+insert into payment(id, amount, account_id, credit_card_id, date_created) values (15, 36, 1, 1,'20020302');
+insert into payment(id, amount, account_id, credit_card_id, date_created) values (16, 50, 2, 10,'20020402');
+insert into payment(id, amount, account_id, credit_card_id, date_created) values (17, 10, 2, 10,'20020403');
+insert into payment(id, amount, account_id, credit_card_id, date_created) values (18, 20, 2, 10,'20020602');
+insert into payment(id, amount, account_id, credit_card_id, date_created) values (19, 30, 2, 10,'20020702');
+insert into payment(id, amount, account_id, credit_card_id, date_created) values (20, 40, 2, 10,'20020802');
+insert into payment(id, amount, account_id, credit_card_id, date_created) values (21, 45, 2, 10,'20020902');
+insert into payment(id, amount, account_id, credit_card_id, date_created) values (22, 24, 2, 10,'20021002');
+insert into payment(id, amount, account_id, credit_card_id, date_created) values (23, 24, 2, 10,'20021102');
+insert into payment(id, amount, account_id, credit_card_id, date_created) values (24, 36, 2, 10,'20021202');
+insert into payment(id, amount, account_id, credit_card_id, date_created) values (25, 46, 2, 10,'20030102');
+insert into payment(id, amount, account_id, credit_card_id, date_created) values (26, 64, 2, 10,'20030202');
+insert into payment(id, amount, account_id, credit_card_id, date_created) values (27, 86, 2, 10,'20030302');
+insert into payment(id, amount, account_id, credit_card_id, date_created) values (28, 23, 2, 10,'20030402');
+insert into payment(id, amount, account_id, credit_card_id, date_created) values (29, 75, 2, 10,'20030502');
+insert into payment(id, amount, account_id, credit_card_id, date_created) values (30, 36, 2, 10,'20030602');
 
 --Jeremy User
 INSERT INTO User (Id, Dob, Address, Credit_Score, Email,First_Name, Last_Name, Password, Profession, Region, Username)
@@ -181,27 +183,27 @@ values(14, 60000, .1, 500, '20210211', '1515121213131412', 357, 'gold', 'inactve
 
 insert into account (id, checking_balance, account_number, user_id) values (3, 1000, '989451002', 6);
 
-insert into spend(id, amount, category, item, credit_card_id) values(23, 360, 'sports', 'soccer',12);
-insert into spend(id, amount, category, item, credit_card_id) values(24, 360, 'sports', 'snowboard',12);
-insert into spend(id, amount, category, item, credit_card_id) values(25, 360, 'sports', 'helmet',12);
-insert into spend(id, amount, category, item, credit_card_id) values(26, 360, 'groceries', 'steak',12);
-insert into spend(id, amount, category, item, credit_card_id) values(27, 360, 'groceries', 'meat',12);
-insert into spend(id, amount, category, item, credit_card_id) values(28, 360, 'groceries', 'eggs',12);
-insert into spend(id, amount, category, item, credit_card_id) values(29, 300, 'entertainment', 'ice skating',12);
-insert into spend(id, amount, category, item, credit_card_id) values(30, 350, 'entertainment', 'movies',12);
-insert into spend(id, amount, category, item, credit_card_id) values(31, 360, 'entertainment', 'movies',12);
-insert into spend(id, amount, category, item, credit_card_id) values(32, 360, 'sports', 'basketball',12);
+insert into spend(id, amount, category, item, credit_card_id, date_created) values(23, 360, 'sports', 'soccer',12,'20170101');
+insert into spend(id, amount, category, item, credit_card_id, date_created) values(24, 360, 'sports', 'snowboard',12,'20170202');
+insert into spend(id, amount, category, item, credit_card_id, date_created) values(25, 360, 'sports', 'helmet',12,'20170302');
+insert into spend(id, amount, category, item, credit_card_id, date_created) values(26, 360, 'groceries', 'steak',12,'20170402');
+insert into spend(id, amount, category, item, credit_card_id, date_created) values(27, 360, 'groceries', 'meat',12,'20170502');
+insert into spend(id, amount, category, item, credit_card_id, date_created) values(28, 360, 'groceries', 'eggs',12,'20170602');
+insert into spend(id, amount, category, item, credit_card_id, date_created) values(29, 300, 'entertainment', 'ice skating',12,'20170702');
+insert into spend(id, amount, category, item, credit_card_id, date_created) values(30, 350, 'entertainment', 'movies',12,'20170802');
+insert into spend(id, amount, category, item, credit_card_id, date_created) values(31, 360, 'entertainment', 'movies',12,'20170902');
+insert into spend(id, amount, category, item, credit_card_id, date_created) values(32, 360, 'sports', 'basketball',12,'20171002');
 
-insert into payment(id, amount, account_id, credit_card_id) values (31, 300, 3, 12);
-insert into payment(id, amount, account_id, credit_card_id) values (32, 350, 3, 12);
-insert into payment(id, amount, account_id, credit_card_id) values (33, 300, 3, 12);
-insert into payment(id, amount, account_id, credit_card_id) values (34, 300, 3, 12);
-insert into payment(id, amount, account_id, credit_card_id) values (35, 360, 3, 12);
-insert into payment(id, amount, account_id, credit_card_id) values (36, 360, 3, 12);
-insert into payment(id, amount, account_id, credit_card_id) values (37, 360, 3, 12);
-insert into payment(id, amount, account_id, credit_card_id) values (38, 360, 3, 12);
-insert into payment(id, amount, account_id, credit_card_id) values (39, 360, 3, 12);
-insert into payment(id, amount, account_id, credit_card_id) values (40, 360, 3, 12);
+insert into payment(id, amount, account_id, credit_card_id, date_created) values (31, 300, 3, 12,'20170102');
+insert into payment(id, amount, account_id, credit_card_id, date_created) values (32, 350, 3, 12,'20170202');
+insert into payment(id, amount, account_id, credit_card_id, date_created) values (33, 300, 3, 12,'20170203');
+insert into payment(id, amount, account_id, credit_card_id, date_created) values (34, 300, 3, 12,'20170402');
+insert into payment(id, amount, account_id, credit_card_id, date_created) values (35, 360, 3, 12,'20170502');
+insert into payment(id, amount, account_id, credit_card_id, date_created) values (36, 360, 3, 12,'20170602');
+insert into payment(id, amount, account_id, credit_card_id, date_created) values (37, 360, 3, 12,'20170702');
+insert into payment(id, amount, account_id, credit_card_id, date_created) values (38, 360, 3, 12,'20170802');
+insert into payment(id, amount, account_id, credit_card_id, date_created) values (39, 360, 3, 12,'20170902');
+insert into payment(id, amount, account_id, credit_card_id, date_created) values (40, 360, 3, 12,'20171002');
 
 insert into credit_card_request (id, status, offered_limit, offered_apr, card_type, reason, user_id, request_time, last_updated)
 values (12, 'approved', 30000, .1, 'platinum', null, 6, CURDATE(), CURDATE()+1);

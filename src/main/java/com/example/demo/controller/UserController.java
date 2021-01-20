@@ -154,6 +154,10 @@ public class UserController {
 		}
 
 
+	/*
+	 * This method accepts the secret code from the user
+	 * and returns an auth token if the code is correct.
+	 */
 	@GetMapping(path="users/login/2fa/{username}")
 	public String twoFactorAuth(@PathVariable("username") String username, @RequestHeader(value="twoFactorAuth") String code) {
 
@@ -203,6 +207,10 @@ public class UserController {
 			throw new NotAuthorizedException("User is not authorized");
 		}
 
+		/*
+		 * This route obtains the total credit limit across all of a
+		 * users Credit Cards and returns them to the client
+		 */
 		@GetMapping(path="/users/{username}/totalCredit")
 		public Map<String, String> obtainUserTotalCredit(@RequestHeader(value="Authorization") String token, @PathVariable("username") String username) throws NotAuthorizedException, CorruptDatabaseException {
 			
@@ -236,13 +244,16 @@ public class UserController {
 		}
 		
 		
-		
+		/*
+		 * This route supplies the client with a user's payment history,
+		 * including whether a sufficient monthly payment has been made.
+		 */
 		@SuppressWarnings("deprecation")
 		@GetMapping(path="/users/{username}/paymentHistory")
-		public Map<String, Map<Double, Double>> paymentLimits(@PathVariable("username") String username){
+		public Map<String, Map<String, Map<String, Map<String, Map<String, String>>>>> paymentLimits(@PathVariable("username") String username){
 			
 			// old code
-			User u = bo.findByUsername(username);
+			/*User u = bo.findByUsername(username);
 			Map<String, Map<Double,Double>> toReturn = new LinkedHashMap<>();
 			for (CreditCard cc : u.getCreditCards()) {
 				String last4 = cc.getCreditCardNumber().substring(12);
@@ -255,7 +266,81 @@ public class UserController {
 				}
 
 				toReturn.put(last4,  toAdd);
+			}*/
+			
+			User u = bo.findByUsername(username);
+			Map<String,Map<String, Map<String, Map<String,Map<String,String>>>>> toReturn = new LinkedHashMap<>();
+			for (CreditCard cc : u.getCreditCards()) {
+				//System.out.println(cc.getDateCreated());
+				if (cc.getDateCreated() == null)
+					continue;
+				
+				LinkedHashMap<String, ArrayList<Double>> payments = new LinkedHashMap<>();
+				Date current = (Date) cc.getDateCreated().clone();
+				while(current.before(new Date())) {
+					payments.put(current.getYear()+""+current.getMonth(), new ArrayList<>());
+					current.setMonth(current.getMonth()+1);
+					//System.out.println(current);
+				}
+				for (Payment p : cc.getPaymentHistory()) {
+					payments.get(p.getDateCreated().getYear()+""+p.getDateCreated().getMonth()).add(p.getAmount());
+				}
+				GsonBuilder builder = new GsonBuilder();
+				Gson gson = builder.create();
+
+				//System.out.println(gson.toJson(payments));
+				
+				
+				LinkedHashMap<String, ArrayList<Double>> spends = new LinkedHashMap<>();
+				current = cc.getDateCreated();
+				while(current.before(new Date())) {
+					spends.put(current.getYear()+""+current.getMonth(), new ArrayList<>());
+					current.setMonth(current.getMonth()+1);
+					//System.out.println(current);
+				}
+				//System.out.println(gson.toJson(spends));
+				for (Spend s : cc.getSpendHistory()) {
+					//System.out.println(s.getDateCreated().getYear()+""+s.getDateCreated().getMonth());
+					spends.get(s.getDateCreated().getYear()+""+s.getDateCreated().getMonth()).add(s.getAmount());
+				}
+				//System.out.println(gson.toJson(spends));
+				
+				
+				
+				Map<String,Map<String, Map<String, Map<String, String>>>> month = new LinkedHashMap<>();
+				double balance = 0.0;
+				for (String i : spends.keySet()) {
+					Map<String, String> spendsPayments = new LinkedHashMap<>();
+					Map<String, Map<String, String>> monthlyPayment = new LinkedHashMap<>();
+					double totalSpends = 0.0, totalPayments = 0.0;
+					for (double s : spends.get(i))
+						totalSpends += s;
+					for (double p : payments.get(i))
+						totalPayments += p;
+					balance += totalSpends;
+					
+					spendsPayments.put("Total Spends: "+totalSpends, "Total Payments: "+totalPayments);
+					
+					if (totalPayments > (.1 * balance) || balance == 0.0) {
+						monthlyPayment.put("Met Monthly Minimum Payment - TRUE",spendsPayments);
+						//System.out.println("true "+i);
+					}
+					else {
+						//System.out.println("false "+i);
+						monthlyPayment.put("Met Monthly Minimum Payment - FALSE",spendsPayments);
+					}
+					String yearS = i.substring(0,3);
+					String monthS = i.substring(3);
+					int yearNumber = 1900 + Integer.parseInt(yearS);
+					int monthNumber = 1+Integer.parseInt(monthS);
+					Map<String, Map<String, Map<String, String>>> balanceMap = new LinkedHashMap<>();
+					balanceMap.put("Balance before payments at end of month: "+balance, monthlyPayment);
+					month.put("Year: "+yearNumber+" - Month: "+monthNumber, balanceMap);
+					balance -= totalPayments;
+				}
+				toReturn.put("For card ending in "+cc.getCreditCardNumber().substring(12), month);
 			}
+			
 			return toReturn; 
 		}
 		

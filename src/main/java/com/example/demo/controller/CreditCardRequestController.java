@@ -45,7 +45,8 @@ public class CreditCardRequestController {
 	@Autowired
 	CreditCardRequestBO bo;
   
-	//Story32
+	//Gets all credit card requests between a date range
+	//and returns it to the client
 	@GetMapping(path="/creditCardRequests/dateRange")
 	public Map<String, String> requestsByDateRange(@RequestParam String start, @RequestParam String end, @RequestHeader("Authorization") String token)  throws NotAuthorizedException{
 		
@@ -71,7 +72,8 @@ public class CreditCardRequestController {
 		throw new NotAuthorizedException("User is not authorized");
 	}
 	
-	//Story 35
+	//gets all credit card requests based on a region and/or a profession
+	//and returns them to the client
 	@GetMapping(path="/creditCardRequests/approvals/regionProfession")
 	public Map<String, String> approvalsProfessionRegion(@RequestParam String profession, @RequestParam String region, @RequestHeader("Authorization") String token)  throws NotAuthorizedException{
 		if(DevUtil.getIsDev() || User.validateUserToken(token)) {											
