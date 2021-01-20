@@ -75,7 +75,7 @@ insert into spend(id, amount, category, item, credit_card_id, date_created) valu
 INSERT INTO SPEND(id,amount,credit_card_id, date_created) VALUES (20,10.0,6, '20020601');
 INSERT INTO SPEND(id,amount,credit_card_id, date_created) VALUES (21,15.0,7, '20020701');
 INSERT INTO SPEND(id,amount,credit_card_id, date_created) VALUES (22,15.0,8, '20020801');
-INSERT INTO SPEND(Id,Amount,Category,Item,Credit_Card_Id, date_created) VALUES(33,100.0,'groceries','food',11, '20020901');
+INSERT INTO SPEND(Id,Amount,Category,Item,Credit_Card_Id, date_created) VALUES(41,100.0,'groceries','food',11, '20020901');
 
 
 --payment dump
@@ -158,11 +158,11 @@ VALUES (20, 'Gold', 0.25, 5000.00, 'low credit score', 'rejected', 7);
 
 --Jeremy Loan Request
 INSERT INTO Loan_Request(id, status, reason, offered_amount, offered_apr, term_in_months, minimum_monthly_payment, user_id)
-VALUES (5, 'approved', 'approved', 2000, .01, 12, 80, 7);
+VALUES (9, 'approved', 'approved', 2000, .01, 12, 80, 7);
 INSERT INTO Loan_Request(id, status, reason, offered_amount, offered_apr, term_in_months, minimum_monthly_payment, user_id)
-VALUES (6, 'declined', 'not enough information provided', 12000, .01, 24, 500, 7);
+VALUES (10, 'declined', 'not enough information provided', 12000, .01, 24, 500, 7);
 INSERT INTO Loan_Request(id, status, reason, offered_amount, offered_apr, term_in_months, minimum_monthly_payment, user_id)
-VALUES (7, 'rejected', 'Too many requests', 30000, .03, 15, 2000, 7);
+VALUES (11, 'rejected', 'Too many requests', 30000, .03, 15, 2000, 7);
 
 --Jeremy Loan
 insert into loan(id, principle, apr, term_in_months, minimum_monthly_payment, user_id)
